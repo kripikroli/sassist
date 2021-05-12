@@ -22,6 +22,7 @@ class StaffUser(models.Model):
     profile_pic=models.ImageField(upload_to='avatars', default='no_photo.png')
     auth_user_id=models.OneToOneField(CustomUser, related_name='staffusers', on_delete=models.CASCADE)
     bio=models.TextField(default="no bio...")
+    is_added_by_admin=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
 
@@ -32,7 +33,7 @@ class StaffUser(models.Model):
 class PartnerUser(models.Model):
     profile_pic=models.ImageField(upload_to='avatars', default='no_photo.png')
     auth_user_id=models.OneToOneField(CustomUser, related_name='partnerusers', on_delete=models.CASCADE)
-    date_of_birth = models.DateTimeField(blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     address_line_1=models.CharField(max_length=255, null=True, blank=True)
     address_line_2=models.CharField(max_length=255, null=True, blank=True)
@@ -40,6 +41,7 @@ class PartnerUser(models.Model):
     address_region=models.CharField(max_length=120, null=True, blank=True)
     address_country=models.CharField(max_length=120, null=True, blank=True)
     address_zip_code=models.CharField(max_length=20, null=True, blank=True)
+    is_added_by_admin=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
 
@@ -58,6 +60,7 @@ class PatientUser(models.Model):
     address_region=models.CharField(max_length=120, null=True, blank=True)
     address_country=models.CharField(max_length=120, null=True, blank=True)
     address_zip_code=models.CharField(max_length=20, null=True, blank=True)
+    is_added_by_admin=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
 
