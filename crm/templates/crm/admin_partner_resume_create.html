@@ -1,0 +1,658 @@
+{% extends "crm/base.html" %}
+
+{% block custom_css %}
+
+<link rel="stylesheet" href="//bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css"/>
+
+<style>
+hr {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  width: 50%;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.preview_image {
+  width: 250px;
+  height: 250px;
+  border-radius: 2%;
+  float: left;
+  overflow: hidden;
+  display:inline-block;
+  vertical-align:center;
+}
+
+.bootstrap-tagsinput{
+    width: 100%;
+}
+
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    Resume
+{% endblock title %}
+
+
+{% block page_title %}
+    Resume
+{% endblock page_title %}
+
+{% block page_content %}
+    
+    <div class="section-body">
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Resume Data Forms</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active show" id="education-tab" data-toggle="tab" href="#education" role="tab" aria-controls="education" aria-selected="true">Education</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="licenses-tab" data-toggle="tab" href="#licences" role="tab" aria-controls="licenses" aria-selected="false">Licenses</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="certifications-tab" data-toggle="tab" href="#certifications" role="tab" aria-controls="contact" aria-selected="false">Certifications</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="references-tab" data-toggle="tab" href="#references" role="tab" aria-controls="contact" aria-selected="false">References</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="skills-tab" data-toggle="tab" href="#skills" role="tab" aria-controls="contact" aria-selected="false">Skills</a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content tab-bordered" id="resume_tab">
+
+                            <div class="tab-pane fade active show" id="education" role="tabpanel" aria-labelledby="education-tab">
+
+                                <!-- Education -------------------------------->
+                                <div class="educ_div">
+
+                                    <div class="row educ_div_row first_educ">
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Degree</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <select class="form-control degree" name="degree">
+                                                        <option value=1>High School</option>
+                                                        <option value=2>Associate</option>
+                                                        <option value=3 selected>Bachelor</option>
+                                                        <option value=4>Master</option>
+                                                        <option value=5>Doctorate</option>
+                                                        <option value=6>Unspecified</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">School</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="school" class="form-control school">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Field</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="field" class="form-control field">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Graduated</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="graduated" class="form-control graduated" placeholder="YYYY-MM-DD">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Address</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <textarea class="form-control school_address" name="school_address"></textarea>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Scanned Image</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="file" name="educ_file" class="form-control educ_file">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label style="display:none" class="col-lg-4 mb-1 educ_img_preview_label">Preview</label>
+                                                <div class="col-lg-12 mt-0">
+                                                   
+                                                    <div class="preview_image">
+                                                        <img style="width:100%;display:none" src="" class="educ_img_preview img-thumbnail">
+                                                    </div>
+                                                       
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr/>
+
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="btn float-right mt-5">
+
+                                    <a href="#remove_educ" class="btn btn-warning remove_educ" id="remove_educ">Remove</a>
+                                    <a href="#add_educ" class="btn btn-primary add_educ" id="add_educ">Add More</a>
+
+                                </div>
+
+                                <!-- endEducation -------------------------------->
+
+
+                            </div>
+
+                            <div class="tab-pane fade" id="licences" role="tabpanel" aria-labelledby="licenses-tab">
+                                <!-- Licenses -------------------------------->
+                                <div class="licenses_div">
+
+                                    <div class="row licenses_div_row first_licenses">
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Name</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="license_name" class="form-control license_name">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Code</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="license_code" class="form-control license_code">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Expiration Date</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="license_expiration_date" class="form-control license_expiration_date" placeholder="YYYY-MM-DD">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Is compact?</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="number" name="license_is_compact" class="form-control license_is_compact">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Address</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <textarea class="form-control license_address" name="license_address"></textarea>
+                                                </div>
+                                            </div>
+
+                                            
+                                        </div>
+
+                                        <div class="col-lg-6">
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Scanned Image</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="file" name="license_file" class="form-control license_file">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label style="display:none" class="col-lg-4 mb-1 license_img_preview_label">Preview</label>
+                                                <div class="col-lg-12 mt-0">
+                                                   
+                                                    <div class="preview_image">
+                                                        <img style="width:100%;display:none" src="" class="license_img_preview img-thumbnail">
+                                                    </div>
+                                                       
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr/>
+
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="btn float-right mt-4">
+
+                                    <a href="#remove_licenses" class="btn btn-warning remove_licenses" id="remove_licenses">Remove</a>
+                                    <a href="#add_licenses" class="btn btn-primary add_licenses" id="add_licenses">Add More</a>
+
+                                </div>
+
+                                <!-- endLicenses -------------------------------->
+                            
+                            </div>
+                            <div class="tab-pane fade" id="certifications" role="tabpanel" aria-labelledby="certifications-tab">
+                                <!-- Certifications -------------------------------->
+                                <div class="certifications_div">
+
+                                    <div class="row certifications_div_row first_certifications">
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Name</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="certification_name" class="form-control certification_name">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Code</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="certification_code" class="form-control certification_code">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Expiration Date</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="certification_expiration_date" class="form-control certification_expiration_date" placeholder="YYYY-MM-DD">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Address</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <textarea class="form-control certification_address" name="certification_address"></textarea>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Scanned Image</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="file" name="certification_file" class="form-control certification_file">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label style="display:none" class="col-lg-4 mb-1 certification_img_preview_label">Preview</label>
+                                                <div class="col-lg-12 mt-0">
+                                                   
+                                                    <div class="preview_image">
+                                                        <img style="width:100%;display:none" src="" class="certification_img_preview img-thumbnail">
+                                                    </div>
+                                                       
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr/>
+
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="btn float-right mt-4">
+
+                                    <a href="#remove_certifications" class="btn btn-warning remove_certifications" id="remove_certifications">Remove</a>
+                                    <a href="#add_certifications" class="btn btn-primary add_certifications" id="add_certifications">Add More</a>
+
+                                </div>
+
+                                <!-- endCertifications -------------------------------->
+                            </div>
+
+
+                            <div class="tab-pane fade" id="references" role="tabpanel" aria-labelledby="references-tab">
+                                <!-- References -------------------------------->
+                                <div class="references_div">
+
+                                    <div class="row references_div_row first_references">
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Name</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="reference_name" class="form-control reference_name">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Position</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="reference_position" class="form-control reference_position">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Phone</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="reference_phone_number" class="form-control reference_phone_number">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Email</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="email" name="reference_email" class="form-control reference_email">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Office Name</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="reference_office_name" class="form-control reference_office_name">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">Office Address</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <textarea class="form-control reference_office_address" name="reference_office_address"></textarea>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-lg-6">
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-12 mb-1">Start Date</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="reference_start_date" class="form-control reference_start_date" placeholder="YYYY-MM-DD">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-4 mb-1">End Date</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="text" name="reference_end_date" class="form-control reference_end_date" placeholder="YYYY-MM-DD">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label class="col-lg-12 mb-1">Scanned Image (optional)</label>
+                                                <div class="col-lg-12 mt-0">
+                                                    <input type="file" name="reference_file" class="form-control reference_file">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2">
+                                                <label style="display:none" class="col-lg-4 mb-1 reference_img_preview_label">Preview</label>
+                                                <div class="col-lg-12 mt-0">
+                                                   
+                                                    <div class="preview_image">
+                                                        <img style="width:100%;display:none" src="" class="reference_img_preview img-thumbnail">
+                                                    </div>
+                                                       
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr/>
+
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="btn float-right mt-4">
+
+                                    <a href="#remove_references" class="btn btn-warning remove_references" id="remove_references">Remove</a>
+                                    <a href="#add_references" class="btn btn-primary add_references" id="add_references">Add More</a>
+
+                                </div>
+
+                                <!-- endReferences -------------------------------->
+                            </div>
+
+
+
+                            <div class="tab-pane fade" id="skills" role="tabpanel" aria-labelledby="skills-tab">
+                                <!-- Skullss -------------------------------->
+                                
+                                <div class="col-lg-12">
+                                    <input type="text" name="skills"  data-role="tagsinput"/>
+                                </div>
+                                        
+                              
+
+                                <!-- endSkills -------------------------------->
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-6 col-sm-12">
+                <div class="card">
+                <div class="card-header">
+                    <h4>Cover Letter</h4>
+                </div>
+                <div class="card-body">
+                    <div class="empty-state" data-height="400" style="height: 400px;">
+                    <div class="empty-state-icon bg-danger">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <h2>HTTP Request Failed</h2>
+                    <p class="lead">
+                        We tried it, but failed when requesting data to the server, sorry. (Code: <a href="#" class="bb">14045</a>)
+                    </p>
+                    <a href="#" class="btn btn-warning mt-4" id="">Try Again</a>
+                    <a href="#" class="mt-4 bb">Cancel</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+
+
+{% endblock page_content %}
+
+
+{% block custom_js %}
+
+<script>
+
+    /*
+        Add education button
+        Remove education button
+    */
+    $(".add_educ").click(function(){
+        if($(".educ_div").find(".educ_div_row").length < 3){
+            var educ_row = $(".first_educ").clone();
+            educ_row.removeClass("first_educ");
+            educ_row.find(".school").val("");
+            educ_row.find(".degree").val(3);
+            educ_row.find(".field").val("");
+            educ_row.find(".school_address").val("");
+            educ_row.find(".educ_img_preview_label").hide();
+            educ_row.find(".educ_img_preview").hide();
+            $(".educ_div").append(educ_row);
+        }
+        
+    });
+
+    $(".remove_educ").click(function(){
+        if($(".educ_div").find(".educ_div_row").length > 1){
+            $(".educ_div").children().last().remove();
+        }
+        else{
+            $(".educ_div").find(".educ_img_preview_label").hide();
+            $(".educ_div").find(".educ_img_preview").hide();
+            $(".educ_div").find(".educ_file").val("");
+        }
+    });
+
+
+    /*
+        Add licenses button
+        Remove licenses button
+    */
+    $(".add_licenses").click(function(){
+        
+        if($(".licenses_div").find(".licenses_div_row").length < 3){
+            var licenses_row = $(".first_licenses").clone();
+            licenses_row.removeClass("first_licenses");
+            licenses_row.find(".license_name").val("");
+            licenses_row.find(".license_code").val("");
+            licenses_row.find(".license_expiration_date").val("");
+            licenses_row.find(".license_is_compact").val("");
+            licenses_row.find(".license_address").val("");
+            licenses_row.find(".license_file").val("");
+            licenses_row.find(".license_img_preview_label").hide();
+            licenses_row.find(".license_img_preview").hide();
+            $(".licenses_div").append(licenses_row);
+        }
+    });
+
+    $(".remove_licenses").click(function(){
+        if($(".licenses_div").find(".licenses_div_row").length > 1){
+            $(".licenses_div").children().last().remove();
+        }
+        else{
+            $(".licenses_div").find(".license_img_preview_label").hide();
+            $(".licenses_div").find(".license_img_preview").hide();
+            $(".licenses_div").find(".license_file").val("");
+        }
+    });
+
+
+    /*
+        Add certifications button
+        Remove certifications button
+    */
+    $(".add_certifications").click(function(){
+        
+        if($(".certifications_div").find(".certifications_div_row").length < 3){
+            var certifications_row = $(".first_certifications").clone();
+            certifications_row.removeClass("first_certifications");
+            certifications_row.find(".certification_name").val("");
+            certifications_row.find(".certification_code").val("");
+            certifications_row.find(".certification_expiration_date").val("");
+            certifications_row.find(".certification_address").val("");
+            certifications_row.find(".certification_file").val("");
+            certifications_row.find(".certification_img_preview_label").hide();
+            certifications_row.find(".certification_img_preview").hide();
+            $(".certifications_div").append(certifications_row);
+        }
+    });
+
+    $(".remove_certifications").click(function(){
+        if($(".certifications_div").find(".certifications_div_row").length > 1){
+            $(".certifications_div").children().last().remove();
+        }
+        else{
+            $(".certifications_div").find(".certification_img_preview_label").hide();
+            $(".certifications_div").find(".certification_img_preview").hide();
+            $(".certifications_div").find(".certification_file").val("");
+        }
+    });
+
+
+    /*
+        Add references button
+        Remove references button
+    */
+    $(".add_references").click(function(){
+        
+        if($(".references_div").find(".references_div_row").length < 3){
+            var references_row = $(".first_references").clone();
+            references_row.removeClass("first_references");
+            references_row.find(".reference_name").val("");
+            references_row.find(".reference_position").val("");
+            references_row.find(".reference_phone_number").val("");
+            references_row.find(".reference_email").val("");
+            references_row.find(".reference_office_name").val("");
+            references_row.find(".reference_office_address").val("");
+            references_row.find(".reference_start_date").val("");
+            references_row.find(".reference_end_date").val("");
+            references_row.find(".reference_img_preview_label").hide();
+            references_row.find(".reference_img_preview").hide();
+            $(".references_div").append(references_row);
+        }
+    });
+
+    $(".remove_references").click(function(){
+        if($(".references_div").find(".references_div_row").length > 1){
+            $(".references_div").children().last().remove();
+        }
+        else{
+            $(".references_div").find(".reference_img_preview_label").hide();
+            $(".references_div").find(".reference_img_preview").hide();
+            $(".references_div").find(".reference_file").val("");
+        }
+    });
+
+    // Preview education
+    $(document).on("change",".educ_file",function(){
+        var img_preview = $(this).parents(".educ_div_row").find(".educ_img_preview");
+        $(".educ_div_row").find(".educ_img_preview_label").show();
+        showPreviewImage(this, img_preview);
+    });
+
+    // Preview license
+    $(document).on("change",".license_file",function(){
+        var img_preview = $(this).parents(".licenses_div_row").find(".license_img_preview");
+        $(".licenses_div_row").find(".license_img_preview_label").show();
+        showPreviewImage(this, img_preview);
+    });
+
+    // Preview certification
+    $(document).on("change",".certification_file",function(){
+        var img_preview = $(this).parents(".certifications_div_row").find(".certification_img_preview");
+        $(".certifications_div_row").find(".certification_img_preview_label").show();
+        showPreviewImage(this, img_preview);
+    });
+
+    // Preview reference
+    $(document).on("change",".reference_file",function(){
+        var img_preview = $(this).parents(".references_div_row").find(".reference_img_preview");
+        $(".references_div_row").find(".reference_img_preview_label").show();
+        showPreviewImage(this, img_preview);
+    });
+
+    function showPreviewImage(input, img_preview){
+        if(input.files && input.files[0]){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                img_preview.attr("src", e.target.result);
+                img_preview.show();
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
+<script src="//bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+{% endblock custom_js %}

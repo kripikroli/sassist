@@ -1,0 +1,48 @@
+{% load static %}
+
+{% comment %} Merchants {% endcomment %}
+{% url 'crm:admin_partner_list_view' as admin_partner_list %}
+{% url 'crm:admin_partner_create_view' as admin_partner_create %}
+{% comment %} {% url 'crm:user_merchant_update_view' id as user_merchant_update %} {% endcomment %}
+
+{% comment %} Categories {% endcomment %}
+{% comment %} {% url 'crm:category_list_view' as category_list %} {% endcomment %}
+{% comment %} {% url 'crm:category_create_view' as category_create %} {% endcomment %}
+{% comment %} {% url 'crm:category_update_view' id as category_update %} {% endcomment %}
+
+{% comment %} SubCategories {% endcomment %}
+{% comment %} {% url 'crm:sub_category_list_view' as sub_category_list %} {% endcomment %}
+{% comment %} {% url 'crm:sub_category_create_view' as sub_category_create %} {% endcomment %}
+{% comment %} {% url 'crm:sub_category_update_view' id as sub_category_update %} {% endcomment %}
+
+{% comment %} Product {% endcomment %}
+{% comment %} {% url 'crm:product_list_view' as product_list %} {% endcomment %}
+{% comment %} {% url 'crm:product_create_view' as product_create %} {% endcomment %}
+
+<div class="main-sidebar sidebar-style-2">
+    <aside id="sidebar-wrapper">
+        <div class="sidebar-brand mt-2">
+            <img src="{% static 'crm/img/logo.png' %}" alt="logo" width="50" class="">
+        </div>
+        <div class="sidebar-brand sidebar-brand-sm">
+            <a href="index.html">CPRx</a>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="menu-header">Dashboard</li>
+
+            {% comment %} Mechants Menu {% endcomment %}
+            <li class="dropdown {% if request.path == admin_partner_list %}active{% endif %}{% if request.path == admin_partner_create %}active{% endif %}">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Partners</span></a>
+                <ul class="dropdown-menu">
+                    <li class='{% if request.path == admin_partner_list %}active{% endif %}'><a class="nav-link" href="{% url 'crm:admin_partner_list_view' %}">All Partners</a></li>
+                    <li class='{% if request.path == admin_partner_create %}active{% endif %}'><a class="nav-link" href="{% url 'crm:admin_partner_create_view' %}">Add Partner</a></li>
+                </ul>
+            </li>
+
+        <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+            <a href="{% url 'crm:logout_view' %}" class="btn btn-primary btn-lg btn-block btn-icon-split">
+            <i class="fas fa-sign-out-alt"></i> LOGOUT
+            </a>
+        </div>   
+    </aside>
+</div>

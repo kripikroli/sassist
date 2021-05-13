@@ -16,6 +16,7 @@ class PartnerEducation(models.Model):
     field_name=models.CharField(max_length=255, blank=True, null=True)
     date_graduated=models.DateTimeField()
     school_address=models.CharField(max_length=255, blank=True, null=True)
+    file=models.FileField(upload_to='partners', blank=True)
     is_added_by_admin=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)

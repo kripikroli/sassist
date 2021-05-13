@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages.views import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
+from django.db.models import Q, fields
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -94,6 +94,63 @@ class UserPartnerCreateView(SuccessMessageMixin, CreateView):
         return HttpResponseRedirect(reverse('crm:admin_partner_list_view'))
 
 
+class UserPartnerUpdateView(SuccessMessageMixin, UpdateView):
+
+    model = CustomUser
+    template_name = 'crm/admin_partner_update.html'
+    success_message = 'Partner updated successfully!'
+    fields = (
+        'first_name',
+        'last_name',
+        'email',
+        'username',
+        'password',
+    )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['partneruser'] = PartnerUser.objects.get(auth_user_id=self.object.pk)
+        return context
+
+    def form_valid(self, form):
+
+        user = form.save(commit=False)
+        user.is_active = True
+        user.user_type = 3
+        user.set_password(form.cleaned_data['password'])
+        user.save()
+
+        # Saving user.partnerusers
+        partneruser = PartnerUser.objects.get(auth_user_id=user.id)
+
+        if self.request.FILES.get('profile_pic', False):
+            partneruser.profile_pic = self.request.FILES['profile_pic']
+
+        print(partneruser.profile_pic)
+
+        partneruser.date_of_birth = date(*map(int, self.request.POST.get('date_of_birth').split('-')))
+     
+        partneruser.phone_number = self.request.POST.get('phone_number')
+        partneruser.address_line_1 = self.request.POST.get('address_line_1')
+        partneruser.address_line_2 = self.request.POST.get('address_line_2')
+        partneruser.address_town = self.request.POST.get('address_town')
+        partneruser.address_region = self.request.POST.get('address_region')
+        partneruser.address_country = self.request.POST.get('address_country')
+        partneruser.address_zip_code = self.request.POST.get('address_zip_code')
+
+        is_added_by_admin = False
+
+        if self.request.POST.get('is_added_by_admin') == 'on':
+            is_added_by_admin = True
+
+        partneruser.is_added_by_admin = is_added_by_admin
+        partneruser.save()
+
+        messages.success(self.request, 'Partner user updated')
+
+        return HttpResponseRedirect(reverse('crm:admin_partner_list_view'))
+
+
 class UserPartnerListView(ListView):
 
     model = CustomUser
@@ -101,7 +158,7 @@ class UserPartnerListView(ListView):
     template_name = 'crm/admin_partner_list.html'
 
     # Number of partners to paginate
-    paginate_by = 1
+    paginate_by = 4
 
     def get_queryset(self):
 
@@ -123,3 +180,12 @@ class UserPartnerListView(ListView):
         context['all_table_fields'] = PartnerUser._meta.get_fields()
 
         return context
+
+
+class UserPartnerResumeCreateView(View):
+
+    def get(self, request, *args, **kwargs):
+        
+        print(self.kwargs.get('pk'))
+
+        return render(request, 'crm/admin_partner_resume_create.html')

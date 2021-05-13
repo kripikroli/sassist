@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>
+    CarePartneRx | {% block title %}{% endblock title %}
+  </title>
+
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="{% static 'crm/modules/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'crm/modules/fontawesome/css/all.min.css' %}">
+
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="{% static 'crm/modules/jqvmap/dist/jqvmap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'crm/modules/summernote/summernote-bs4.css' %}">
+  <link rel="stylesheet" href="{% static 'crm/modules/owlcarousel2/dist/assets/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'crm/modules/owlcarousel2/dist/assets/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{% static 'crm/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'crm/css/components.css' %}">
+
+  {% block custom_css %}
+  {% endblock custom_css %}
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      {% include "crm/navbar.html" %}
+
+      {% include "crm/sidebar.html" with id=form.instance.id %}
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+            <div class="section-header">
+                <h1>{% block page_title %}{% endblock page_title %}</h1>
+            </div>
+            {% if messages %}
+                {% for message in messages %}
+                {% if message.tags == "success" %}
+                  <div id="success-alert" class="alert alert-success">
+                  {{ message }}
+                  </div>
+                {% endif %}
+                {% if message.tags == "danger" %}
+                  <div class="alert alert-danger">
+                  {{ message }}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            
+            {% endif %}
+            {% block page_content %}
+            
+            {% endblock page_content %}
+        </section>
+      </div>
+      {% include "crm/footer.html" %}
+    </div>
+  </div>
+
+  <!-- General JS Scripts -->
+    <script src="{% static 'crm/modules/jquery.min.js' %}" defer></script>
+    <script src="{% static 'crm/modules/popper.js' %}" defer></script>
+    <script src="{% static 'crm/modules/tooltip.js' %}" defer></script>
+    <script src="{% static 'crm/modules/bootstrap/js/bootstrap.min.js' %}" defer></script>
+    <script src="{% static 'crm/modules/nicescroll/jquery.nicescroll.min.js' %}" defer></script>
+    <script src="{% static 'crm/modules/moment.min.js' %}" defer></script>
+    <script src="{% static 'crm/js/stisla.js' %}" defer></script>
+    
+    <!-- JS Libraies -->
+    <script src="{% static 'crm/modules/jquery.sparkline.min.js' %}" defer></script>
+    <script src="{% static 'crm/modules/chart.min.js' %}" defer></script>
+    <script src="{% static 'crm/modules/owlcarousel2/dist/owl.carousel.min.js' %}" defer></script>
+    <script src="{% static 'crm/modules/summernote/summernote-bs4.js' %}" defer></script>
+    <script src="{% static 'crm/modules/chocolat/dist/js/jquery.chocolat.min.js' %}" defer></script>
+
+    <!-- Page Specific JS File -->
+    {% comment %} <script src="{% static 'crm/js/page/index.js' %}"></script> {% endcomment %}
+    
+    <!-- Template JS File -->
+    <script src="{% static 'crm/js/scripts.js' %}" defer></script> 
+    <script src="{% static 'crm/js/custom.js' %}" defer></script>  
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            $("#date_of_birth").datepicker({
+                format:'dd/mm/yyyy',
+            });
+        });
+    </script>
+
+  {% block custom_js %}
+  {% endblock custom_js %}
+</body>
+</html>
