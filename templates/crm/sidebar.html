@@ -1,23 +1,9 @@
 {% load static %}
 
-{% comment %} Merchants {% endcomment %}
+{% comment %} Partners{% endcomment %}
 {% url 'crm:admin_partner_list_view' as admin_partner_list %}
 {% url 'crm:admin_partner_create_view' as admin_partner_create %}
-{% comment %} {% url 'crm:user_merchant_update_view' id as user_merchant_update %} {% endcomment %}
-
-{% comment %} Categories {% endcomment %}
-{% comment %} {% url 'crm:category_list_view' as category_list %} {% endcomment %}
-{% comment %} {% url 'crm:category_create_view' as category_create %} {% endcomment %}
-{% comment %} {% url 'crm:category_update_view' id as category_update %} {% endcomment %}
-
-{% comment %} SubCategories {% endcomment %}
-{% comment %} {% url 'crm:sub_category_list_view' as sub_category_list %} {% endcomment %}
-{% comment %} {% url 'crm:sub_category_create_view' as sub_category_create %} {% endcomment %}
-{% comment %} {% url 'crm:sub_category_update_view' id as sub_category_update %} {% endcomment %}
-
-{% comment %} Product {% endcomment %}
-{% comment %} {% url 'crm:product_list_view' as product_list %} {% endcomment %}
-{% comment %} {% url 'crm:product_create_view' as product_create %} {% endcomment %}
+{% url 'crm:admin_partner_update_view' id as admin_partner_update %}
 
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
@@ -30,8 +16,8 @@
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
 
-            {% comment %} Mechants Menu {% endcomment %}
-            <li class="dropdown {% if request.path == admin_partner_list %}active{% endif %}{% if request.path == admin_partner_create %}active{% endif %}">
+            {% comment %} Partners Menu {% endcomment %}
+            <li class="dropdown {% if request.path == admin_partner_list %}active{% endif %}{% if request.path == admin_partner_create %}active{% endif %}{% if request.path == admin_partner_update %}active{% endif %}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Partners</span></a>
                 <ul class="dropdown-menu">
                     <li class='{% if request.path == admin_partner_list %}active{% endif %}'><a class="nav-link" href="{% url 'crm:admin_partner_list_view' %}">All Partners</a></li>

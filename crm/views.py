@@ -1,4 +1,5 @@
 from datetime import date
+from django.contrib import auth
 
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
@@ -11,6 +12,15 @@ from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView, View
 
 from profiles.models import CustomUser, PartnerUser
+
+from partners.models import (
+    PartnerEducation,
+    PartnerLicense,
+    PartnerCertification,
+    PartnerReference,
+    PartnerSkill,
+    PartnerCoverLetter,
+)
 
 def admin_dashboard_view(request):
     return render(request, 'crm/admin_dashboard.html')
@@ -185,7 +195,133 @@ class UserPartnerListView(ListView):
 class UserPartnerResumeCreateView(View):
 
     def get(self, request, *args, **kwargs):
-        
-        print(self.kwargs.get('pk'))
 
-        return render(request, 'crm/admin_partner_resume_create.html')
+        partner_user = PartnerUser.objects.get(id=self.kwargs['pk'])
+
+        context = {
+            "partner_user": partner_user,
+        }
+
+        return render(request, 'crm/admin_partner_resume_create.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        partner_instance = PartnerUser.objects.get(id=self.kwargs['pk'])
+
+        # PartnerEducation
+        pe_degree_type = request.POST.getlist('degree[]')
+        pe_school_name = request.POST.getlist('school[]')
+        pe_field_name = request.POST.getlist('field[]')
+        pe_date_graduated = request.POST.getlist('graduated[]')
+        pe_school_address = request.POST.getlist('school_address[]')
+        pe_file = request.FILES.getlist('educ_file[]')
+
+        # PartnerLicense
+        pl_license_name = request.POST.getlist('license_name[]')
+        pl_license_code = request.POST.getlist('license_code[]')
+        pl_expiration_date = request.POST.getlist('license_expiration_date[]')
+        pl_address_acquired = request.POST.getlist('license_address[]')
+        pl_file = request.FILES.getlist('license_file[]')
+        pl_is_compact = request.POST.getlist('license_is_compact[]')
+
+        # PartnerCertification
+        pc_cert_name = request.POST.getlist('certification_name[]')
+        pc_cert_code = request.POST.getlist('certification_code[]')
+        pc_expiration_date = request.POST.getlist('certification_expiration_date[]')
+        pc_address_acquired = request.POST.getlist('certification_address[]')
+        pc_file = request.FILES.getlist('certification_file[]')
+
+        # PartnerReference
+        pr_name = request.POST.getlist('reference_name[]')
+        pr_position = request.POST.getlist('reference_position[]')
+        pr_phone_number = request.POST.getlist('reference_phone_number[]')
+        pr_email = request.POST.getlist('reference_email[]')
+        pr_office_name = request.POST.getlist('reference_office_name[]')
+        pr_office_address = request.POST.getlist('reference_office_address[]')
+        pr_file = request.FILES.getlist('reference_file[]')
+        pr_start_date = request.POST.getlist('reference_start_date[]')
+        pr_end_date = request.POST.getlist('reference_end_date[]')
+
+        # PartnerSkill
+        ps_skills = request.POST.get('skills')
+
+        # PartnerCoverLetter
+        cover_letter = request.POST.get('cover_letter')
+
+        # Saving education
+        i = 0
+        for degree_type in pe_degree_type:
+            education_obj = PartnerEducation(
+                degree_type=degree_type,
+                school_name=pe_school_name[i],
+                field_name=pe_field_name[i],
+                date_graduated=pe_date_graduated[i],
+                school_address=pe_school_address[i],
+                file=pe_file[i],
+                auth_user_id=partner_instance
+            )
+            education_obj.save()
+            i += 1
+
+
+        # Saving licenses
+        j = 0
+        for license_name in pl_license_name:
+            license_obj = PartnerLicense(
+                license_name=license_name,
+                license_code=pl_license_code[j],
+                expiration_date=pl_expiration_date[j],
+                address_acquired=pl_address_acquired[j],
+                file=pe_file[j],
+                is_compact=pl_is_compact[j],
+                auth_user_id=partner_instance
+            )
+            license_obj.save()
+            j += 1
+
+
+        # Saving certifications
+        k = 0
+        for cert_name in pc_cert_name:
+            cert_obj = PartnerCertification(
+                cert_name=cert_name,
+                cert_code=pc_cert_code[k],
+                expiration_date=pc_expiration_date[k],
+                address_acquired=pc_address_acquired[k],
+                file=pc_file[k],
+                auth_user_id=partner_instance
+            )
+            cert_obj.save()
+            k += 1
+        
+
+        # Saving references
+        l = 0
+        for reference in pr_name:
+            reference_obj = PartnerReference(
+                name=reference,
+                position=pr_position[l],
+                phone_number=pr_phone_number[l],
+                email=pr_email[l],
+                office_name=pr_office_name[l],
+                office_address=pr_office_address[l],
+                file=pr_file[l],
+                start_date=pr_start_date[l],
+                end_date=pr_end_date[l],
+                auth_user_id=partner_instance
+            )
+            reference_obj.save()
+            l += 1
+
+        # Saving skills
+        skill_list = ps_skills.split(',')
+        for skill in skill_list:
+            skill_obj = PartnerSkill(skill_name=skill, auth_user_id=partner_instance)
+            skill_obj.save()
+
+
+        #Saving cover letter
+        cover_letter_obj = PartnerCoverLetter(letter=cover_letter, auth_user_id=partner_instance)
+        cover_letter_obj.save()
+
+        return HttpResponse("Saved")

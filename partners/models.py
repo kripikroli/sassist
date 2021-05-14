@@ -14,7 +14,7 @@ class PartnerEducation(models.Model):
     degree_type=models.IntegerField(choices=DEGREE_TYPES, default=1)
     school_name=models.CharField(max_length=255, blank=True, null=True)
     field_name=models.CharField(max_length=255, blank=True, null=True)
-    date_graduated=models.DateTimeField()
+    date_graduated=models.DateField(blank=True, null=True)
     school_address=models.CharField(max_length=255, blank=True, null=True)
     file=models.FileField(upload_to='partners', blank=True)
     is_added_by_admin=models.BooleanField(default=False)
@@ -40,7 +40,7 @@ class PartnerEducationMedia(models.Model):
 class PartnerLicense(models.Model):
     license_name=models.CharField(max_length=255, blank=True, null=True)
     license_code=models.CharField(max_length=255, blank=True, null=True)
-    expiration_date=models.DateTimeField(blank=True, null=True)
+    expiration_date=models.DateField(blank=True, null=True)
     address_acquired=models.CharField(max_length=255, blank=True, null=True)
     file=models.FileField(upload_to='partners', blank=True)
     is_compact = models.BooleanField(blank=True, null=True, default=False)
@@ -49,17 +49,23 @@ class PartnerLicense(models.Model):
     updated=models.DateTimeField(auto_now=True)
     auth_user_id=models.ForeignKey(PartnerUser, related_name='partnerlicenses', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.license_name
+
 
 class PartnerCertification(models.Model):
     cert_name=models.CharField(max_length=255, blank=True, null=True)
     cert_code=models.CharField(max_length=255, blank=True, null=True)
-    expiration_date=models.DateTimeField(blank=True, null=True)
+    expiration_date=models.DateField(blank=True, null=True)
     address_acquired=models.CharField(max_length=255, blank=True, null=True)
     file=models.FileField(upload_to='partners', blank=True)
     is_added_by_admin=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
     auth_user_id=models.ForeignKey(PartnerUser, related_name='partnercertifications', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cert_name
 
 class PartnerReference(models.Model):
     name=models.CharField(max_length=255, blank=True, null=True)
@@ -69,12 +75,15 @@ class PartnerReference(models.Model):
     office_name=models.CharField(max_length=255, blank=True, null=True)
     office_address=models.CharField(max_length=255, blank=True, null=True)
     file=models.FileField(upload_to='partners', blank=True)
-    start_date=models.DateTimeField(blank=True, null=True)
-    end_date=models.DateTimeField(blank=True, null=True)
+    start_date=models.DateField(blank=True, null=True)
+    end_date=models.DateField(blank=True, null=True)
     is_added_by_admin=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
     auth_user_id=models.ForeignKey(PartnerUser, related_name='partnerreferences', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class PartnerSkill(models.Model):
@@ -84,6 +93,9 @@ class PartnerSkill(models.Model):
     updated=models.DateTimeField(auto_now=True)
     auth_user_id=models.ForeignKey(PartnerUser, related_name='partnerskills', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.skill_name
+
 
 class PartnerCoverLetter(models.Model):
     letter=models.TextField(default='')
@@ -91,3 +103,6 @@ class PartnerCoverLetter(models.Model):
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
     auth_user_id=models.ForeignKey(PartnerUser, related_name='partnercoverletters', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.created}"
