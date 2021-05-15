@@ -31,11 +31,21 @@
 
                         <div class="float-left">
 
-                            <p class=""><span>SORTED BY</span>: 
-                                <a href="{% url 'crm:admin_partner_list_view' %}?filter={{ filter }}&orderby=id">Date Entered</a> | 
-                                <a href="{% url 'crm:admin_partner_list_view' %}?filter={{ filter }}&orderby=auth_user_id__first_name">Firstname</a> | 
-                                <a href="{% url 'crm:admin_partner_list_view' %}?filter={{ filter }}&orderby=auth_user_id__last_name">Lastname</a>
-                            </p>
+                        
+                            <ul class="list-unstyled list-unstyled-border list-unstyled-noborder">
+                                <li class="media">                     
+                                    <div class="media-body ml-3">
+                                        <div class="media-links">
+                                            SORTED BY : 
+                                            <a href="{% url 'crm:admin_partner_list_view' %}?filter={{ filter }}&orderby=id">DATE ENTERED</a><div class="bullet"></div> 
+                                            <a href="{% url 'crm:admin_partner_list_view' %}?filter={{ filter }}&orderby=auth_user_id__first_name">FIRSTNAME</a><div class="bullet"></div>
+                                            <a href="{% url 'crm:admin_partner_list_view' %}?filter={{ filter }}&orderby=auth_user_id__last_name">LASTNAME  </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+
                         </div>
                         <form method="GET">
                             <div class="input-group float-right">
