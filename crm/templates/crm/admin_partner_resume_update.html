@@ -163,7 +163,7 @@ hr {
 
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Degree</label>
+                                                    <label class="col-lg-12 mb-1">Degree</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <select class="form-control degree" name="degree[]">
                                                             <option value=1 {% if education.degree_type == 1 %} selected{% endif %}>High School</option>
@@ -286,7 +286,7 @@ hr {
 
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Name</label>
+                                                    <label class="col-lg-12 mb-1">Name</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="license_name[]" class="form-control license_name" value="{{ license.license_name }}">
                                                         <input type="hidden" name="license_id[]" value="{{ license.id }}">
@@ -294,33 +294,33 @@ hr {
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Code</label>
+                                                    <label class="col-lg-12 mb-1">Code</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="license_code[]" class="form-control license_code" value="{{ license.license_code }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Expiration Date</label>
+                                                    <label class="col-lg-12 mb-1">Expiration Date</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="license_expiration_date[]" class="form-control license_expiration_date"  value="{{ license.expiration_date }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Address</label>
+                                                    <label class="col-lg-12 mb-1">Address</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <textarea class="form-control license_address" name="license_address[]">{{ license.address_acquired }}</textarea>
                                                     </div>
-                                                </div>        
+                                                </div>    
 
                                                 <div class="form-group mb-2">
-                                                    <label class="custom-switch col-lg-12 mt-2">
-                                                        <input type="checkbox" name="license_is_compact[]" class="custom-switch-input" {% if license.is_compact %}checked{% endif %}>
-                                                        <span class="custom-switch-indicator"></span>
-                                                        <span class="custom-switch-description">Is license compact?</span>
-                                                    </label>
-                                                </div>
+                                                    <label class="col-lg-12 mb-1">Is license compact?</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="license_is_compact[]" class="form-control" value="{{ license.is_compact }}">
+                                                        <small class="form-text text-muted">Hint: Please enter YES or NO</small>
+                                                    </div>
+                                                </div>     
                                                 
                                             </div>
                                             <hr/>
@@ -333,7 +333,7 @@ hr {
                                         <div class="row licenses_div_row first_licenses" style="display:none">
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Name</label>
+                                                    <label class="col-lg-12 mb-1">Name</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="license_name[]" class="form-control license_name">
                                                         <input type="hidden" name="license_id[]" value="blank">
@@ -341,32 +341,32 @@ hr {
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Code</label>
+                                                    <label class="col-lg-12 mb-1">Code</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="license_code[]" class="form-control license_code">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Expiration Date</label>
+                                                    <label class="col-lg-12 mb-1">Expiration Date</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="license_expiration_date[]" class="form-control license_expiration_date">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Address</label>
+                                                    <label class="col-lg-12 mb-1">Address</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <textarea class="form-control license_address" name="license_address[]"></textarea>
                                                     </div>
                                                 </div>        
 
                                                 <div class="form-group mb-2">
-                                                    <label class="custom-switch col-lg-12 mt-2">
-                                                        <input type="checkbox" name="license_is_compact[]" class="custom-switch-input">
-                                                        <span class="custom-switch-indicator"></span>
-                                                        <span class="custom-switch-description">Is license compact?</span>
-                                                    </label>
+                                                    <label class="col-lg-12 mb-1">Is license compact?</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="license_is_compact[]" class="form-control">
+                                                        <small class="form-text text-muted">Hint: Please enter YES or NO</small>
+                                                    </div>
                                                 </div>
                                                 
                                             </div>
@@ -397,7 +397,7 @@ hr {
 
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Name</label>
+                                                    <label class="col-lg-12 mb-1">Name</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="certification_name[]" class="form-control certification_name" value="{{ certification.cert_name }}">
                                                         <input type="hidden" name="certification_id[]" value="{{ certification.id }}">
@@ -405,21 +405,21 @@ hr {
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Code</label>
+                                                    <label class="col-lg-12 mb-1">Code</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="certification_code[]" class="form-control certification_code" value="{{ certification.cert_code }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Expiration Date</label>
+                                                    <label class="col-lg-12 mb-1">Expiration Date</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="certification_expiration_date[]" class="form-control certification_expiration_date" value="{{ certification.expiration_date }}">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Address</label>
+                                                    <label class="col-lg-12 mb-1">Address</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <textarea class="form-control certification_address" name="certification_address[]">{{ certification.address_acquired }}</textarea>
                                                     </div>
@@ -439,7 +439,7 @@ hr {
                                         <div class="row certifications_div_row first_certifications" style="display:none">
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Name</label>
+                                                    <label class="col-lg-12 mb-1">Name</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="certification_name[]" class="form-control certification_name">
                                                         <input type="hidden" name="certification_id[]" value="blank">
@@ -447,21 +447,21 @@ hr {
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Code</label>
+                                                    <label class="col-lg-12 mb-1">Code</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="certification_code[]" class="form-control certification_code">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Expiration Date</label>
+                                                    <label class="col-lg-12 mb-1">Expiration Date</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="certification_expiration_date[]" class="form-control certification_expiration_date" placeholder="YYYY-MM-DD">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Address</label>
+                                                    <label class="col-lg-12 mb-1">Address</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <textarea class="form-control certification_address" name="certification_address[]"></textarea>
                                                     </div>
@@ -497,7 +497,7 @@ hr {
 
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Name</label>
+                                                    <label class="col-lg-12 mb-1">Name</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_name[]" class="form-control reference_name" value="{{ reference.name }}">
                                                         <input type="hidden" name="reference_id[]" value="{{ reference.id }}">
@@ -505,35 +505,35 @@ hr {
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Position</label>
+                                                    <label class="col-lg-12 mb-1">Position</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_position[]" class="form-control reference_position" value="{{ reference.position }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Phone</label>
+                                                    <label class="col-lg-12 mb-1">Phone</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_phone_number[]" class="form-control reference_phone_number" value="{{ reference.phone_number }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Email</label>
+                                                    <label class="col-lg-12 mb-1">Email</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="email" name="reference_email[]" class="form-control reference_email" value="{{ reference.email }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Office Name</label>
+                                                    <label class="col-lg-12 mb-1">Office Name</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_office_name[]" class="form-control reference_office_name" value="{{ reference.office_name }}">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Office Address</label>
+                                                    <label class="col-lg-12 mb-1">Office Address</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <textarea class="form-control reference_office_address[]" name="reference_office_address[]">{{ reference.office_address }}</textarea>
                                                     </div>
@@ -547,7 +547,7 @@ hr {
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">End Date</label>
+                                                    <label class="col-lg-12 mb-1">End Date</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_end_date[]" class="form-control reference_end_date" value="{{ reference.end_date }}">
                                                     </div>
@@ -565,7 +565,7 @@ hr {
                                         <div class="row references_div_row first_references" style="display:none">
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Name</label>
+                                                    <label class="col-lg-12 mb-1">Name</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_name[]" class="form-control reference_name">
                                                         <input type="hidden" name="reference_id[]" value="blank">
@@ -573,35 +573,35 @@ hr {
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Position</label>
+                                                    <label class="col-lg-12 mb-1">Position</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_position[]" class="form-control reference_position">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Phone</label>
+                                                    <label class="col-lg-12 mb-1">Phone</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_phone_number[]" class="form-control reference_phone_number">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Email</label>
+                                                    <label class="col-lg-12 mb-1">Email</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="email" name="reference_email[]" class="form-control reference_email">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Office Name</label>
+                                                    <label class="col-lg-12 mb-1">Office Name</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_office_name[]" class="form-control reference_office_name">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Office Address</label>
+                                                    <label class="col-lg-12 mb-1">Office Address</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <textarea class="form-control reference_office_address[]" name="reference_office_address[]"></textarea>
                                                     </div>
@@ -615,7 +615,7 @@ hr {
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">End Date</label>
+                                                    <label class="col-lg-12 mb-1">End Date</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_end_date[]" class="form-control reference_end_date" placeholder="YYYY-MM-DD">
                                                     </div>
@@ -646,8 +646,19 @@ hr {
                                 <div class="tab-pane fade" id="skills" role="tabpanel" aria-labelledby="skills-tab">
                                     <!-- Skullss -------------------------------->
                                     
-                                    <div class="col-lg-12">
-                                        <input type="text" name="skills" value="{% for skill in p_skill  %} {{skill.skill_name}} , {% endfor %}"  data-role="tagsinput"/>
+                                    <div class="alert alert-info alert-has-icon">
+                                        <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                                        <div class="alert-body">
+                                            <div class="alert-title">Hint</div>
+                                            Work Ethic - Teamwork - Time Management
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label class="col-lg-12 mb-1">List of skills</label>
+                                        <div class="col-lg-12 mt-0">
+                                            <input type="text" name="skills" value="{% for skill in p_skill  %} {{skill.skill_name}} , {% endfor %}"  data-role="tagsinput"/>
+                                            <small id="tagsinputHelp" class="form-text text-muted">e.g. You need to type and hit enter.</small>
+                                        </div>
                                     </div>
                                             
                                 
@@ -697,9 +708,11 @@ hr {
 <script>
     tinymce.init({
         selector: "textarea#cover_letter",
+        force_br_newlines : true,
+        force_p_newlines : false,
         height: 400,
         menubar: false,
-        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify",  
+        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify",  
         setup: 
             editor => {
             editor.on('init', () => {
@@ -715,8 +728,9 @@ hr {
         Remove education button
     */
     $(".add_educ").click(function(){
-        if($(".educ_div").find(".educ_div_row").length < 3){
+        if($(".educ_div").find(".educ_div_row").length + $(".educ_div_data").find(".educ_div_row_data").length <= 3) {
             var educ_row = $(".first_educ").clone();
+            educ_row.show();
             educ_row.removeClass("first_educ");
             educ_row.find(".school").val("");
             educ_row.find(".degree").val(3);
@@ -724,15 +738,11 @@ hr {
             educ_row.find(".school_address").val("");
             $(".educ_div").append(educ_row);
         }
-        
     });
 
-    $(".remove_educ").click(function(){
+    $(".remove_educ").click(function() {
         if($(".educ_div").find(".educ_div_row").length > 1){
             $(".educ_div").children().last().remove();
-        }
-        else{
-
         }
     });
 
@@ -743,8 +753,9 @@ hr {
     */
     $(".add_licenses").click(function(){
         
-        if($(".licenses_div").find(".licenses_div_row").length < 3){
+        if($(".licenses_div").find(".licenses_div_row").length + $(".licenses_div_data").find(".licenses_div_row_data").length <= 3) {
             var licenses_row = $(".first_licenses").clone();
+            licenses_row.show();
             licenses_row.removeClass("first_licenses");
             licenses_row.find(".license_name").val("");
             licenses_row.find(".license_code").val("");
@@ -759,8 +770,6 @@ hr {
         if($(".licenses_div").find(".licenses_div_row").length > 1){
             $(".licenses_div").children().last().remove();
         }
-        else{
-        }
     });
 
 
@@ -770,8 +779,9 @@ hr {
     */
     $(".add_certifications").click(function(){
         
-        if($(".certifications_div").find(".certifications_div_row").length < 3){
+        if($(".certifications_div").find(".certifications_div_row").length + $(".certifications_div_data").find(".certifications_div_row_data").length <= 3) {
             var certifications_row = $(".first_certifications").clone();
+            certifications_row.show();
             certifications_row.removeClass("first_certifications");
             certifications_row.find(".certification_name").val("");
             certifications_row.find(".certification_code").val("");
@@ -785,9 +795,6 @@ hr {
         if($(".certifications_div").find(".certifications_div_row").length > 1){
             $(".certifications_div").children().last().remove();
         }
-        else{
-
-        }
     });
 
 
@@ -797,8 +804,9 @@ hr {
     */
     $(".add_references").click(function(){
         
-        if($(".references_div").find(".references_div_row").length < 3){
+        if($(".references_div").find(".references_div_row").length + $(".references_div_data").find(".references_div_row_data").length <= 3) {
             var references_row = $(".first_references").clone();
+            references_row.show();
             references_row.removeClass("first_references");
             references_row.find(".reference_name").val("");
             references_row.find(".reference_position").val("");
@@ -815,8 +823,6 @@ hr {
     $(".remove_references").click(function(){
         if($(".references_div").find(".references_div_row").length > 1){
             $(".references_div").children().last().remove();
-        }
-        else{
         }
     });
 

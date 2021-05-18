@@ -242,6 +242,7 @@ class UserPartnerResumeCreateView(View):
 
         # PartnerCoverLetter
         cover_letter = request.POST.get('cover_letter')
+        cover_l = "".join(cover_letter.splitlines())
 
         # Saving education
         i = 0
@@ -312,7 +313,7 @@ class UserPartnerResumeCreateView(View):
 
 
         #Saving cover letter
-        cover_letter_obj = PartnerCoverLetter(letter=cover_letter, auth_user_id=partner_instance)
+        cover_letter_obj = PartnerCoverLetter(letter=cover_l, auth_user_id=partner_instance)
         cover_letter_obj.save()
 
         return HttpResponse("Saved")
@@ -357,10 +358,6 @@ class UserPartnerResumeUpdateView(View):
         pe_field_name = request.POST.getlist('field[]')
         pe_date_graduated = request.POST.getlist('graduated[]')
         pe_school_address = request.POST.getlist('school_address[]')
-        pe_file = []
-        if request.FILES.getlist('educ_file[]', False):
-            pe_file = request.FILES.getlist('educ_file[]')
-            print(pe_file, '--------------------------------------------------')
 
         # PartnerLicense
         pl_ids = request.POST.getlist('license_id[]')
@@ -368,7 +365,6 @@ class UserPartnerResumeUpdateView(View):
         pl_license_code = request.POST.getlist('license_code[]')
         pl_expiration_date = request.POST.getlist('license_expiration_date[]')
         pl_address_acquired = request.POST.getlist('license_address[]')
-        pl_file = request.FILES.getlist('license_file[]')
         pl_is_compact = request.POST.getlist('license_is_compact[]')
 
         # PartnerCertification
@@ -387,7 +383,6 @@ class UserPartnerResumeUpdateView(View):
         pr_email = request.POST.getlist('reference_email[]')
         pr_office_name = request.POST.getlist('reference_office_name[]')
         pr_office_address = request.POST.getlist('reference_office_address[]')
-        pr_file = request.FILES.getlist('reference_file[]')
         pr_start_date = request.POST.getlist('reference_start_date[]')
         pr_end_date = request.POST.getlist('reference_end_date[]')
 
@@ -396,150 +391,135 @@ class UserPartnerResumeUpdateView(View):
 
         # PartnerCoverLetter
         cover_letter = request.POST.get('cover_letter')
+        cover_l = "".join(cover_letter.splitlines())
 
         # Saving education
         i = 0
         for degree_type in pe_degree_type:
             pe_id = pe_ids[i]
             if pe_id == 'blank' and pe_school_name[i] != '':
-                if len(pe_file) > 0:  
-                    education_obj = PartnerEducation(
-                        degree_type=degree_type,
-                        school_name=pe_school_name[i],
-                        field_name=pe_field_name[i],
-                        date_graduated=pe_date_graduated[i],
-                        school_address=pe_school_address[i],
-                        file=pe_file[i],
-                        auth_user_id=partner_instance
-                    )
-                    education_obj.save()
-                else:
-                    education_obj = PartnerEducation(
-                        degree_type=degree_type,
-                        school_name=pe_school_name[i],
-                        field_name=pe_field_name[i],
-                        date_graduated=pe_date_graduated[i],
-                        school_address=pe_school_address[i],
-                        auth_user_id=partner_instance
-                    )
-                    education_obj.save()
+                education_obj = PartnerEducation(
+                    degree_type=degree_type,
+                    school_name=pe_school_name[i],
+                    field_name=pe_field_name[i],
+                    date_graduated=pe_date_graduated[i],
+                    school_address=pe_school_address[i],
+                    auth_user_id=partner_instance
+                )
+                education_obj.save()
             else:
                 if pe_school_name[i] != '':
-                    education_obj = PartnerEducation.objects.get(id=pe_id)
-                    if len(pe_file) > 0:
-                        education_obj.file = pe_file[i]       
+                    education_obj = PartnerEducation.objects.get(id=pe_id)      
                     education_obj.degree_type = degree_type
                     education_obj.school_name = pe_school_name[i]
                     education_obj.field_name = pe_field_name[i]
                     education_obj.date_graduated = pe_date_graduated[i]
                     education_obj.school_address = pe_school_address[i]
                     education_obj.auth_user_id = partner_instance
-                    try:
-                        education_obj.save()
-                    except Exception as e:
-                        print(e)
+                    education_obj.save()
+                   
             i += 1
 
 
-        # # Saving licenses
-        # j = 0
-        # for license_name in pl_license_name:
-        #     pl_id = pl_ids[j]
-        #     if pl_id == 'blank':
-        #         license_obj = PartnerLicense(
-        #             license_name=license_name,
-        #             license_code=pl_license_code[j],
-        #             expiration_date=pl_expiration_date[j],
-        #             address_acquired=pl_address_acquired[j],
-        #             file=pe_file[j],
-        #             is_compact=pl_is_compact[j],
-        #             auth_user_id=partner_instance
-        #         )
-        #         license_obj.save()
-        #     else:
-        #         license_obj = PartnerLicense.objects.get(id=pl_id)
-        #         license_obj.license_name=license_name
-        #         license_obj.license_code=pl_license_code[j]
-        #         license_obj.expiration_date=pl_expiration_date[j]
-        #         license_obj.address_acquired=pl_address_acquired[j]
-        #         license_obj.file=pe_file[j]
-        #         license_obj.is_compact=pl_is_compact[j]
-        #         license_obj.auth_user_id=partner_instance
-        #         license_obj.save()
-        #     j += 1
+        # Saving licenses
+        j = 0
+        for license_name in pl_license_name:
+            pl_id = pl_ids[j]
+            if pl_id == 'blank':
+                if license_name != '':
+                    license_obj = PartnerLicense(
+                        license_name=license_name,
+                        license_code=pl_license_code[j],
+                        expiration_date=pl_expiration_date[j],
+                        address_acquired=pl_address_acquired[j],
+                        is_compact=pl_is_compact[j],
+                        auth_user_id=partner_instance
+                    )
+                    license_obj.save()
+            else:
+                if license_name != '' and pl_is_compact[j] != '':
+                    license_obj = PartnerLicense.objects.get(id=pl_id)
+                    license_obj.license_name=license_name
+                    license_obj.license_code=pl_license_code[j]
+                    license_obj.expiration_date=pl_expiration_date[j]
+                    license_obj.address_acquired=pl_address_acquired[j]
+                    license_obj.is_compact=pl_is_compact[j]
+                    license_obj.auth_user_id=partner_instance
+                    license_obj.save()
+            j += 1
 
 
-        # # Saving certifications
-        # k = 0
-        # for cert_name in pc_cert_name:
-        #     pc_id = pc_ids[k]
-        #     if pc_id == 'blank':
-        #         cert_obj = PartnerCertification(
-        #             cert_name=cert_name,
-        #             cert_code=pc_cert_code[k],
-        #             expiration_date=pc_expiration_date[k],
-        #             address_acquired=pc_address_acquired[k],
-        #             file=pc_file[k],
-        #             auth_user_id=partner_instance
-        #         )
-        #         cert_obj.save()
-        #     else:
-        #         cert_obj = PartnerCertification.objects.get(id=pc_id)
-        #         cert_obj.cert_name=cert_name
-        #         cert_obj.cert_code=pc_cert_code[k]
-        #         cert_obj.expiration_date=pc_expiration_date[k]
-        #         cert_obj.address_acquired=pc_address_acquired[k]
-        #         cert_obj.file=pc_file[k]
-        #         cert_obj.auth_user_id=partner_instance
-        #         cert_obj.save()
-        #     k += 1
+        # Saving certifications
+        k = 0
+        for cert_name in pc_cert_name:
+            pc_id = pc_ids[k]
+            if pc_id == 'blank':
+                if cert_name != '':
+                    cert_obj = PartnerCertification(
+                        cert_name=cert_name,
+                        cert_code=pc_cert_code[k],
+                        expiration_date=pc_expiration_date[k],
+                        address_acquired=pc_address_acquired[k],
+                        auth_user_id=partner_instance
+                    )
+                    cert_obj.save()
+            else:
+                if cert_name != '':
+                    cert_obj = PartnerCertification.objects.get(id=pc_id)
+                    cert_obj.cert_name=cert_name
+                    cert_obj.cert_code=pc_cert_code[k]
+                    cert_obj.expiration_date=pc_expiration_date[k]
+                    cert_obj.address_acquired=pc_address_acquired[k]
+                    cert_obj.auth_user_id=partner_instance
+                    cert_obj.save()
+            k += 1
         
 
-        # # Saving references
-        # l = 0
-        # for reference in pr_name:
-        #     pr_id = pr_ids[l]
-        #     if pr_id == 'blank':
-        #         reference_obj = PartnerReference(
-        #             name=reference,
-        #             position=pr_position[l],
-        #             phone_number=pr_phone_number[l],
-        #             email=pr_email[l],
-        #             office_name=pr_office_name[l],
-        #             office_address=pr_office_address[l],
-        #             file=pr_file[l],
-        #             start_date=pr_start_date[l],
-        #             end_date=pr_end_date[l],
-        #             auth_user_id=partner_instance
-        #         )
-        #         reference_obj.save()
-        #     else:
-        #         reference_obj = PartnerReference.objects.get(id=pr_id)
-        #         reference_obj.name=reference
-        #         reference_obj.position=pr_position[l]
-        #         reference_obj.phone_number=pr_phone_number[l]
-        #         reference_obj.email=pr_email[l]
-        #         reference_obj.office_name=pr_office_name[l]
-        #         reference_obj.office_address=pr_office_address[l]
-        #         reference_obj.file=pr_file[l]
-        #         reference_obj.start_date=pr_start_date[l]
-        #         reference_obj.end_date=pr_end_date[l]
-        #         reference_obj.auth_user_id=partner_instance
-        #         reference_obj.save()
-        #     l += 1
+        # Saving references
+        l = 0
+        for reference in pr_name:
+            pr_id = pr_ids[l]
+            if pr_id == 'blank':
+                if reference != '':
+                    reference_obj = PartnerReference(
+                        name=reference,
+                        position=pr_position[l],
+                        phone_number=pr_phone_number[l],
+                        email=pr_email[l],
+                        office_name=pr_office_name[l],
+                        office_address=pr_office_address[l],
+                        start_date=pr_start_date[l],
+                        end_date=pr_end_date[l],
+                        auth_user_id=partner_instance
+                    )
+                    reference_obj.save()
+            else:
+                if reference != '':
+                    reference_obj = PartnerReference.objects.get(id=pr_id)
+                    reference_obj.name=reference
+                    reference_obj.position=pr_position[l]
+                    reference_obj.phone_number=pr_phone_number[l]
+                    reference_obj.email=pr_email[l]
+                    reference_obj.office_name=pr_office_name[l]
+                    reference_obj.office_address=pr_office_address[l]
+                    reference_obj.start_date=pr_start_date[l]
+                    reference_obj.end_date=pr_end_date[l]
+                    reference_obj.auth_user_id=partner_instance
+                    reference_obj.save()
+            l += 1
 
-        # # Saving skills
-        # PartnerSkill.objects.filter(auth_user_id=partner_instance).delete()
+        # Saving skills
+        PartnerSkill.objects.filter(auth_user_id=partner_instance).delete()
 
-        # skill_list = ps_skills.split(',')
-        # for skill in skill_list:
-        #     skill_obj = PartnerSkill(skill_name=skill, auth_user_id=partner_instance)
-        #     skill_obj.save()
+        skill_list = ps_skills.split(',')
+        for skill in skill_list:
+            skill_obj = PartnerSkill(skill_name=skill, auth_user_id=partner_instance)
+            skill_obj.save()
 
 
-        # #Saving cover letter        
-        # cover_letter_obj = PartnerCoverLetter.objects.get(auth_user_id=partner_instance)
-        # cover_letter.letter = cover_letter
-        # cover_letter_obj.save()
+        #Saving cover letter        
+        cover_letter_obj = PartnerCoverLetter.objects.get(auth_user_id=partner_instance)
+        cover_letter_obj.letter = cover_l
+        cover_letter_obj.save()
 
         return HttpResponse("Saved")
