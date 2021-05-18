@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block custom_css %}
-<link rel="stylesheet" href="{% static 'crm/js/datepicker/datepicker.css' %}"/>
+
 <link rel="stylesheet" href="//bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css"/>
 
 <style>
@@ -44,18 +44,18 @@ hr {
 {% endblock custom_css %}
 
 {% block title %}
-    Create Resume
+    Update Resume
 {% endblock title %}
 
 
 {% block page_title %}
-    Create Resume
+    Update Resume
 {% endblock page_title %}
 
 {% block page_content %}
     
     <div class="section-body">
-        <form id="resumeForm" autocomplete="off" enctype="multipart/form-data">
+        <form id="resumeForm">
         {% csrf_token %}
             <div class="row">
                 <div class="col-12 col-md-6 col-sm-12">
@@ -155,9 +155,10 @@ hr {
                                 <div class="tab-pane fade active show" id="education" role="tabpanel" aria-labelledby="education-tab">
 
                                     <!-- Education -------------------------------->
-                                    <div class="educ_div">
+                                    {% for education in p_education %}
+                                    <div class="educ_div_data">
 
-                                        <div class="row educ_div_row first_educ">
+                                        <div class="row educ_div_row_data">
 
 
                                             <div class="col-lg-12">
@@ -165,10 +166,63 @@ hr {
                                                     <label class="col-lg-4 mb-1">Degree</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <select class="form-control degree" name="degree[]">
+                                                            <option value=1 {% if education.degree_type == 1 %} selected{% endif %}>High School</option>
+                                                            <option value=2 {% if education.degree_type == 2 %} selected{% endif %}>Associate</option>
+                                                            <option value=3 {% if education.degree_type == 3 %} selected{% endif %}>Bachelor</option>
+                                                            <option value=4 {% if education.degree_type == 4 %} selected{% endif %}>Master</option>
+                                                            <option value=5 {% if education.degree_type == 5 %} selected{% endif %}>Doctorate</option>
+                                                            <option value=6 {% if education.degree_type == 6 %} selected{% endif %}>Unspecified</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-12 mb-1">School</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="school[]" class="form-control school" value="{{ education.school_name }}">
+                                                        <input type="hidden" name="education_id[]" value="{{ education.id }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-12 mb-1">Field</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="field[]" class="form-control field" value="{{ education.field_name }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-12 mb-1">Graduated</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="graduated[]" class="form-control graduated" value="{{ education.date_graduated }}">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-12 mb-1">Address</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <textarea class="form-control school_address" name="school_address[]">{{ education.school_address }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr/>
+
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+                                    <div class="educ_div">
+                                        <div class="row educ_div_row first_educ" style="display:none">
+                                            <div class="col-lg-12">
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-12 mb-1">Degree</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <select class="form-control degree" name="degree[]">
                                                             <option value=1>High School</option>
                                                             <option value=2>Associate</option>
-                                                            <option value=3 selected>Bachelor</option>
-                                                            <option value=4>Master</option>
+                                                            <option value=3>Bachelor</option>
+                                                            <option value=4 selected>Master</option>
                                                             <option value=5>Doctorate</option>
                                                             <option value=6>Unspecified</option>
                                                         </select>
@@ -176,37 +230,35 @@ hr {
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">School</label>
+                                                    <label class="col-lg-12 mb-1">School</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="school[]" class="form-control school">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Field</label>
+                                                    <label class="col-lg-12 mb-1">Field</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <input type="text" name="field[]" class="form-control field">
+                                                        <input type="hidden" name="education_id[]" value="blank">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Graduated</label>
+                                                    <label class="col-lg-12 mb-1">Graduated</label>
                                                     <div class="col-lg-12 mt-0">
-                                                        <input type="text" name="graduated[]" class="form-control graduated" id="graduated" data-toggle="graduated">
+                                                        <input type="text" name="graduated[]" class="form-control graduated">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Address</label>
+                                                    <label class="col-lg-12 mb-1">Address</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <textarea class="form-control school_address" name="school_address[]"></textarea>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                             <hr/>
-
                                         </div>
                                     </div>
 
@@ -225,17 +277,66 @@ hr {
                                 </div>
 
                                 <div class="tab-pane fade" id="licences" role="tabpanel" aria-labelledby="licenses-tab">
+                                    {% for license in p_license %}
                                     <!-- Licenses -------------------------------->
-                                    <div class="licenses_div">
+                                    <div class="licenses_div_data">
 
-                                        <div class="row licenses_div_row first_licenses">
+                                        <div class="row licenses_div_row_data">
 
 
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
                                                     <label class="col-lg-4 mb-1">Name</label>
                                                     <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="license_name[]" class="form-control license_name" value="{{ license.license_name }}">
+                                                        <input type="hidden" name="license_id[]" value="{{ license.id }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Code</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="license_code[]" class="form-control license_code" value="{{ license.license_code }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Expiration Date</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="license_expiration_date[]" class="form-control license_expiration_date"  value="{{ license.expiration_date }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Address</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <textarea class="form-control license_address" name="license_address[]">{{ license.address_acquired }}</textarea>
+                                                    </div>
+                                                </div>        
+
+                                                <div class="form-group mb-2">
+                                                    <label class="custom-switch col-lg-12 mt-2">
+                                                        <input type="checkbox" name="license_is_compact[]" class="custom-switch-input" {% if license.is_compact %}checked{% endif %}>
+                                                        <span class="custom-switch-indicator"></span>
+                                                        <span class="custom-switch-description">Is license compact?</span>
+                                                    </label>
+                                                </div>
+                                                
+                                            </div>
+                                            <hr/>
+
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+                                    <div class="licenses_div">
+                                        <div class="row licenses_div_row first_licenses" style="display:none">
+                                            <div class="col-lg-12">
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Name</label>
+                                                    <div class="col-lg-12 mt-0">
                                                         <input type="text" name="license_name[]" class="form-control license_name">
+                                                        <input type="hidden" name="license_id[]" value="blank">
                                                     </div>
                                                 </div>
 
@@ -249,28 +350,28 @@ hr {
                                                 <div class="form-group mb-2">
                                                     <label class="col-lg-4 mb-1">Expiration Date</label>
                                                     <div class="col-lg-12 mt-0">
-                                                        <input type="text" name="license_expiration_date[]" class="form-control license_expiration_date" id="license_expiration_date" data-toggle="license_expiration_date">
+                                                        <input type="text" name="license_expiration_date[]" class="form-control license_expiration_date">
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group mb-2">
-                                                    <label class="col-lg-4 mb-1">Is compact?</label>
-                                                    <div class="col-lg-12 mt-0">
-                                                        <input type="number" name="license_is_compact[]" class="form-control license_is_compact">
-                                                    </div>
-                                                </div>
-                                                
                                                 <div class="form-group mb-2">
                                                     <label class="col-lg-4 mb-1">Address</label>
                                                     <div class="col-lg-12 mt-0">
                                                         <textarea class="form-control license_address" name="license_address[]"></textarea>
                                                     </div>
-                                                </div>
+                                                </div>        
 
+                                                <div class="form-group mb-2">
+                                                    <label class="custom-switch col-lg-12 mt-2">
+                                                        <input type="checkbox" name="license_is_compact[]" class="custom-switch-input">
+                                                        <span class="custom-switch-indicator"></span>
+                                                        <span class="custom-switch-description">Is license compact?</span>
+                                                    </label>
+                                                </div>
                                                 
                                             </div>
-                                            <hr/>
 
+                                            <hr/>
                                         </div>
                                     </div>
 
@@ -288,16 +389,60 @@ hr {
                                 </div>
                                 <div class="tab-pane fade" id="certifications" role="tabpanel" aria-labelledby="certifications-tab">
                                     <!-- Certifications -------------------------------->
-                                    <div class="certifications_div">
+                                    {% for certification in p_certification %}
+                                    <div class="certifications_div_data">
 
-                                        <div class="row certifications_div_row first_certifications">
+                                        <div class="row certifications_div_row_data">
 
 
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
                                                     <label class="col-lg-4 mb-1">Name</label>
                                                     <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="certification_name[]" class="form-control certification_name" value="{{ certification.cert_name }}">
+                                                        <input type="hidden" name="certification_id[]" value="{{ certification.id }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Code</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="certification_code[]" class="form-control certification_code" value="{{ certification.cert_code }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Expiration Date</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="certification_expiration_date[]" class="form-control certification_expiration_date" value="{{ certification.expiration_date }}">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Address</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <textarea class="form-control certification_address" name="certification_address[]">{{ certification.address_acquired }}</textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <hr/>
+
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+
+                                    <div class="certifications_div">
+
+                                        <div class="row certifications_div_row first_certifications" style="display:none">
+                                            <div class="col-lg-12">
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Name</label>
+                                                    <div class="col-lg-12 mt-0">
                                                         <input type="text" name="certification_name[]" class="form-control certification_name">
+                                                        <input type="hidden" name="certification_id[]" value="blank">
                                                     </div>
                                                 </div>
 
@@ -344,16 +489,86 @@ hr {
 
                                 <div class="tab-pane fade" id="references" role="tabpanel" aria-labelledby="references-tab">
                                     <!-- References -------------------------------->
-                                    <div class="references_div">
+                                    {% for reference in p_reference %}
+                                    <div class="references_div_data">
 
-                                        <div class="row references_div_row first_references">
+                                        <div class="row references_div_row_data">
 
 
                                             <div class="col-lg-12">
                                                 <div class="form-group mb-2">
                                                     <label class="col-lg-4 mb-1">Name</label>
                                                     <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="reference_name[]" class="form-control reference_name" value="{{ reference.name }}">
+                                                        <input type="hidden" name="reference_id[]" value="{{ reference.id }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Position</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="reference_position[]" class="form-control reference_position" value="{{ reference.position }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Phone</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="reference_phone_number[]" class="form-control reference_phone_number" value="{{ reference.phone_number }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Email</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="email" name="reference_email[]" class="form-control reference_email" value="{{ reference.email }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Office Name</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="reference_office_name[]" class="form-control reference_office_name" value="{{ reference.office_name }}">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Office Address</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <textarea class="form-control reference_office_address[]" name="reference_office_address[]">{{ reference.office_address }}</textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-12 mb-1">Start Date</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="reference_start_date[]" class="form-control reference_start_date" value="{{ reference.start_date }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">End Date</label>
+                                                    <div class="col-lg-12 mt-0">
+                                                        <input type="text" name="reference_end_date[]" class="form-control reference_end_date" value="{{ reference.end_date }}">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <hr/>
+
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+
+                                    <div class="references_div">
+                                        <div class="row references_div_row first_references" style="display:none">
+                                            <div class="col-lg-12">
+                                                <div class="form-group mb-2">
+                                                    <label class="col-lg-4 mb-1">Name</label>
+                                                    <div class="col-lg-12 mt-0">
                                                         <input type="text" name="reference_name[]" class="form-control reference_name">
+                                                        <input type="hidden" name="reference_id[]" value="blank">
                                                     </div>
                                                 </div>
 
@@ -406,7 +621,9 @@ hr {
                                                     </div>
                                                 </div>
 
+
                                             </div>
+
                                             <hr/>
 
                                         </div>
@@ -430,7 +647,7 @@ hr {
                                     <!-- Skullss -------------------------------->
                                     
                                     <div class="col-lg-12">
-                                        <input type="text" name="skills"  data-role="tagsinput"/>
+                                        <input type="text" name="skills" value="{% for skill in p_skill  %} {{skill.skill_name}} , {% endfor %}"  data-role="tagsinput"/>
                                     </div>
                                             
                                 
@@ -444,6 +661,8 @@ hr {
                     </div>
                 </div>
 
+
+                
             </div>
 
             <div class="card mt-4">
@@ -475,30 +694,19 @@ hr {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="{% static 'crm/modules/sweetalert/sweetalert.min.js' %}"></script>
 <script src="{% static 'crm/js/page/modules-sweetalert.js' %}"></script>
-<script src="{% static 'crm/js/datepicker/datepicker.js' %}"></script>
 <script>
     tinymce.init({
         selector: "textarea#cover_letter",
         height: 400,
         menubar: false,
         toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify",  
+        setup: 
+            editor => {
+            editor.on('init', () => {
+                editor.setContent("{{ p_cover.letter|safe }}");
+            });
+        }
     });
-</script>
-
-<script>
-
-    $("#graduated").datepicker({
-        format: 'yyyy-mm-dd'
-    });
-
-    $('[data-toggle="graduated"]').datepicker();
-
-    $("#license_expiration_date").datepicker({
-        format: 'yyyy-mm-dd'
-    });
-
-    $('[data-toggle="license_expiration_date"]').datepicker();
-
 </script>
 
 <script>
@@ -629,7 +837,7 @@ hr {
                 console.log(xhr.responseText);
             }
         }
-        xhr.open("POST","{% url 'crm:admin_partner_resume_create_view' partner_user.id %}", true);
+        xhr.open("POST","{% url 'crm:admin_partner_resume_update_view' partner_user.id %}", true);
 
         $("#progressbar").show();
 
@@ -655,5 +863,4 @@ hr {
 
 </script>
 <script src="//bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
-
 {% endblock custom_js %}
