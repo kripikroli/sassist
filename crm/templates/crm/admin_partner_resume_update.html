@@ -850,11 +850,11 @@ hr {
         xhr.upload.addEventListener("progress", function(ev) {
             if(ev.lengthComputable) {
                 var percentage = (ev.loaded/ev.total*100|0);
-                $("#progressbar").css({"width":""+percentage+"%"}).text("Uploading .."+percentage+"%");
+                $("#progressbar").css({"width":""+percentage+"%"}).text("Uploaded .."+percentage+"%");
                 setTimeout(function(){
                     $(document).ready(function() {
-                        swal('Success', 'You just added the resume!', 'success').then(function() {
-                            window.location.href = "{% url 'crm:admin_partner_list_view' %}";
+                        swal('Success', 'You just updated the resume!', 'success').then(function() {
+                            window.location.href = "{% url 'crm:admin_partner_with_resume_list_view' %}";
                     })});
                 }, 1000);
                 

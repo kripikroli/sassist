@@ -167,7 +167,7 @@ class UserPartnerListView(ListView):
     template_name = 'crm/admin_partner_list.html'
 
     # Number of partners to paginate
-    paginate_by = 4
+    paginate_by = 1
 
     def get_queryset(self):
 
@@ -243,6 +243,7 @@ class UserPartnerResumeCreateView(View):
         # PartnerCoverLetter
         cover_letter = request.POST.get('cover_letter')
         cover_l = "".join(cover_letter.splitlines())
+        cover_l = cover_l.replace("\"", "\'")
 
         # Saving education
         i = 0
@@ -392,6 +393,7 @@ class UserPartnerResumeUpdateView(View):
         # PartnerCoverLetter
         cover_letter = request.POST.get('cover_letter')
         cover_l = "".join(cover_letter.splitlines())
+        cover_l = cover_l.replace("\"", "\'")
 
         # Saving education
         i = 0
@@ -523,3 +525,50 @@ class UserPartnerResumeUpdateView(View):
         cover_letter_obj.save()
 
         return HttpResponse("Saved")
+
+
+class UserPartnerWithResumeListView(ListView):
+
+    model = CustomUser
+    fields = '__all__'
+    template_name = 'crm/admin_partner_with_resume_list.html'
+
+    # Number of partners to paginate
+    paginate_by = 10
+
+    def get_queryset(self):
+
+        filter_val = self.request.GET.get('filter', '')
+        order_by = self.request.GET.get('orderby', 'id')
+
+        if filter_val != '':
+            result = PartnerUser.objects.filter(Q(auth_user_id__first_name__icontains=filter_val) | Q(auth_user_id__last_name__icontains=filter_val))
+        else:
+            result = PartnerUser.objects.all().order_by(order_by)
+
+        return result
+
+    def get_context_data(self, **kwargs):
+
+        context = super(UserPartnerWithResumeListView, self).get_context_data(**kwargs)
+        partner_id = self.request.GET.get('partner_id', None)
+        if partner_id:
+            context['partner_user'] = PartnerUser.objects.get(id=partner_id)
+            context['partner_education'] = PartnerEducation.objects.filter(auth_user_id=partner_id)
+            context['partner_licenses'] = PartnerLicense.objects.filter(auth_user_id=partner_id)
+            context['partner_certifications'] = PartnerCertification.objects.filter(auth_user_id=partner_id)
+            context['partner_references'] = PartnerReference.objects.filter(auth_user_id=partner_id)
+            context['partner_skills'] = PartnerSkill.objects.filter(auth_user_id=partner_id)
+            context['partner_cover'] = PartnerCoverLetter.objects.get(auth_user_id=partner_id)
+
+        page_number = self.request.GET.get('page', None)
+        context['current_id'] = partner_id
+        if page_number:
+            context['page_number'] = page_number
+        context['filter'] = self.request.GET.get('filter', '')
+        context['orderby'] = self.request.GET.get('orderby', 'id')
+        context['all_table_fields'] = PartnerUser._meta.get_fields()
+        
+        
+
+        return context

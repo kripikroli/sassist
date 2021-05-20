@@ -1,3 +1,5 @@
+from datetime import date, timezone
+
 from django.db import models
 from profiles.models import PartnerUser
 
@@ -24,6 +26,9 @@ class PartnerEducation(models.Model):
 
     def __str__(self):
         return self.school_name
+
+    def get_days_ago(self):
+        return ((date.today() - self.created.date()).days)
 
 
 class PartnerEducationMedia(models.Model):
@@ -52,6 +57,9 @@ class PartnerLicense(models.Model):
     def __str__(self):
         return self.license_name
 
+    def get_days_ago(self):
+        return ((date.today() - self.created.date()).days)
+
 
 class PartnerCertification(models.Model):
     cert_name=models.CharField(max_length=255, blank=True, null=True)
@@ -66,6 +74,9 @@ class PartnerCertification(models.Model):
 
     def __str__(self):
         return self.cert_name
+
+    def get_days_ago(self):
+        return ((date.today() - self.created.date()).days)
 
 class PartnerReference(models.Model):
     name=models.CharField(max_length=255, blank=True, null=True)
@@ -85,6 +96,9 @@ class PartnerReference(models.Model):
     def __str__(self):
         return self.name
 
+    def get_days_ago(self):
+        return ((date.today() - self.created.date()).days)
+
 
 class PartnerSkill(models.Model):
     skill_name=models.CharField(max_length=255, null=True, blank=True)
@@ -96,6 +110,9 @@ class PartnerSkill(models.Model):
     def __str__(self):
         return self.skill_name
 
+    def get_days_ago(self):
+        return ((date.today() - self.created.date()).days)
+
 
 class PartnerCoverLetter(models.Model):
     letter=models.TextField(default='')
@@ -106,3 +123,6 @@ class PartnerCoverLetter(models.Model):
 
     def __str__(self):
         return f"{self.created}"
+
+    def get_days_ago(self):
+        return ((date.today() - self.created.date()).days)

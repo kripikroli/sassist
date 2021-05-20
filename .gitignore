@@ -1,5 +1,9 @@
 db.sqlite3
 media
-static
+static/crm/css
+static/crm/fonts
+static/crm/img
+static/crm/backup
+static/crm/modules
 templates/crm/backup
 sassist/settings.py

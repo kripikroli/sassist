@@ -8,6 +8,7 @@ from .views import (
     UserPartnerUpdateView,
     UserPartnerResumeCreateView,
     UserPartnerResumeUpdateView,
+    UserPartnerWithResumeListView,
 )
 
 app_name = 'crm'
@@ -26,5 +27,6 @@ urlpatterns = [
     path('admin/partner_list/', UserPartnerListView.as_view(), name='admin_partner_list_view'),
     path('admin/partner_resume_create/<slug:pk>/', UserPartnerResumeCreateView.as_view(), name='admin_partner_resume_create_view'),
     path('admin/partner_resume_update/<slug:pk>/', UserPartnerResumeUpdateView.as_view(), name='admin_partner_resume_update_view'),
+    path('admin/partner_with_resume_list/', UserPartnerWithResumeListView.as_view(), name='admin_partner_with_resume_list_view'),
 
 ]

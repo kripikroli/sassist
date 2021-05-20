@@ -4,6 +4,7 @@
 {% url 'crm:admin_partner_list_view' as admin_partner_list %}
 {% url 'crm:admin_partner_create_view' as admin_partner_create %}
 {% url 'crm:admin_partner_update_view' id as admin_partner_update %}
+{% url 'crm:admin_partner_with_resume_list_view' as admin_partner_with_resume_list %}
 
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
@@ -17,11 +18,12 @@
             <li class="menu-header">Dashboard</li>
 
             {% comment %} Partners Menu {% endcomment %}
-            <li class="dropdown {% if request.path == admin_partner_list %}active{% endif %}{% if request.path == admin_partner_create %}active{% endif %}{% if request.path == admin_partner_update %}active{% endif %}">
+            <li class="dropdown {% if request.path == admin_partner_list %}active{% endif %}{% if request.path == admin_partner_create %}active{% endif %}{% if request.path == admin_partner_update %}active{% endif %}{% if request.path == admin_partner_with_resume_list %}active{% endif %}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Partners</span></a>
                 <ul class="dropdown-menu">
                     <li class='{% if request.path == admin_partner_list %}active{% endif %}'><a class="nav-link" href="{% url 'crm:admin_partner_list_view' %}">All Partners</a></li>
                     <li class='{% if request.path == admin_partner_create %}active{% endif %}'><a class="nav-link" href="{% url 'crm:admin_partner_create_view' %}">Add Partner</a></li>
+                    <li class='{% if request.path == admin_partner_with_resume_list %}active{% endif %}'><a class="nav-link" href="{% url 'crm:admin_partner_with_resume_list_view' %}">Resume List</a></li>
                 </ul>
             </li>
 

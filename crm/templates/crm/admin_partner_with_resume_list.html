@@ -1,0 +1,279 @@
+{% extends "crm/base.html" %}
+
+{% load static %}
+
+{% block custom_css %}
+<style>
+
+.circular_image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  float: left;
+  overflow: hidden;
+  background-color: blue;
+  display:inline-block;
+  vertical-align:center;
+}
+
+.circular_image_prime {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  float: left;
+  overflow: hidden;
+  background-color: blue;
+  display:inline-block;
+  vertical-align:center;
+}
+
+.valid-feedback {
+    display:block;
+}
+
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    Partner List Resume
+{% endblock title %}
+
+
+{% block page_title %}
+    Partner List Resume
+{% endblock page_title %}
+
+{% block page_content %}
+    
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>User Resume Progress</h4>
+                </div>
+                <div class="card-body">
+                    <form method="GET">
+                        <div class="input-group float-right">
+                            <input type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" name="filter" value="{{ filter }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-body">
+                    <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
+                        {% for partner in partneruser_list %}
+                        <li class="media">
+                            <div class="circular_image">
+                                <img alt="image" class="mr-5 rounded-circle" width="100%" src="/media/{{ partner.profile_pic }}">
+                            </div>
+                            <div class="media-body ml-3">
+                                <div class="media-title">{{ partner.auth_user_id.first_name }} {{ partner.auth_user_id.last_name }}</div>
+                                <div class="text-job text-muted">{{ partner.auth_user_id.username }}</div>
+                            </div>
+                            <div class="media-progressbar">
+                                <div class="progress-text">30%</div>
+                                <div class="progress" data-height="6">
+                                <div class="progress-bar bg-primary" data-width="30%"></div>
+                                </div>
+                            </div>
+                            <form method="GET">
+                                <div class="media-cta">
+                                    <a class="btn btn-icon btn-primary" href="{% url 'crm:admin_partner_with_resume_list_view' %}?filter={{ filter }}&orderby=id&partner_id={{ partner.id }}&page={{ page_number }}" class="btn btn-info"><i class="fas fa-info-circle"></i> Details</a>
+                                </div>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <nav aria-label="partner Pagination">
+                                <ul class="pagination">
+                                    {% if page_obj.has_previous %}
+                                        <li class="page-item"><a class="page-link" href="{% url 'crm:admin_partner_with_resume_list_view' %}?filter={{ filter }}&orderby={{ orderby }}&partner_id={{ partner.id }}&page={{ page_obj.previous_page_number }}">Previous</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                    {% endif %}
+                                    {% for i in paginator.page_range %}
+                                            <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link" href="{% url 'crm:admin_partner_with_resume_list_view' %}?filter={{ filter }}&orderby={{ orderby }}&partner_id={{ partner.id }}&page={{ i }}">{{ i }}</a></li>
+                                    {% endfor %}
+                                    {% if page_obj.has_next %}
+                                        <li class="page-item"><a class="page-link" href="{% url 'crm:admin_partner_with_resume_list_view' %}?filter={{ filter }}&orderby={{ orderby }}&partner_id={{ partner.id }}&page={{ page_obj.next_page_number }}">Next</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                    {% endif %}
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+
+        <div class="col-12 col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Resume Details</h4>
+                </div>
+                {% if current_id %}
+                <div class="card-body">
+                    <div class="list-group">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start active">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ partner_user.auth_user_id.first_name }} {{ partner_user.auth_user_id.last_name }}</h5>
+                                <small class="text-success">ACTIVE</small>
+                            </div>
+                            <p class="mb-1">
+                                <i class="fas fa-mobile-alt mr-2"></i>  {{ partner_user.phone_number }}<br>
+                                <i class="fas fa-birthday-cake mr-2"></i>  {{ partner_user.date_of_birth|date:'Y-m-d' }}<br>
+                                <i class="fas fa-map-marker-alt mr-2"></i>{% if partner_user.address_line_1 %}
+                                            {{ partner_user.address_line_1 }}
+                                        {% endif %}
+                                        {% if partner_user.address_line_2 %}
+                                            , {{ partner_user.address_line_2 }}
+                                        {% endif %}
+                                        {% if partner_user.address_town %}
+                                            , {{ partner_user.address_town }}
+                                        {% endif %}
+                                        {% if partner_user.address_region %}
+                                            , {{ partner_user.address_region }}
+                                        {% endif %}
+                                        {% if partner_user.address_country %}
+                                            , {{ partner_user.address_country }}
+                                        {% endif %}
+                                        {% if partner_user.address_zip_code %}
+                                                {{ partner_user.address_zip_code }}
+                                        {% endif %}
+                            </p>
+                            <small class="float-right">
+                                <a href="{% url 'crm:admin_partner_resume_update_view' current_id %}" class="text-light">EDIT</a>
+                                <div class="bullet"></div>
+                                <a href="#" class="text-light">MESSAGE</a>
+                                <div class="bullet"></div>
+                                <a href="" class="text-danger">DEACTIVATE</a>
+                            </small>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Education</h5>
+                                <small class="text-muted">{% with partner_education|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            {% for e in partner_education|slice:":1" %}
+                            <p class="mb-0">{{ e.get_degree_type_display }} | {{ e.field_name }} | {{ e.school_name }} | {{ e.date_graduated }}
+                            <br>{{ e.school_address }}</p>
+                            {% endfor %}
+                            <small class="text-muted">There were {{ partner_education|length }} other entries.</small>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Licenses</h5>
+                                <small class="text-muted">{% with partner_licenses|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            {% for l in partner_licenses|slice:":1" %}
+                            <p class="mb-0">{{ l.license_name }} | {{ l.license_code }} | {{ l.expiration_date }}
+                                <br>{{ l.address_acquired }}
+                            </p>
+                            {% endfor %}
+                            <small class="text-muted">There were {{ partner_licenses|length }} other entries.</small>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Licenses</h5>
+                                <small class="text-muted">{% with partner_certifications|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            {% for c in partner_certifications|slice:":1" %}
+                            <p class="mb-0">{{ c.cert_name }} | {{ c.cert_code }} | {{ c.expiration_date }}
+                                <br>{{ c.address_acquired }}
+                            </p>
+                            {% endfor %}
+                            <small class="text-muted">There were {{ partner_certifications|length }} other entries.</small>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Skills</h5>
+                            <small class="text-muted">{% with partner_skills|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            <p class="mb-1">
+                                {% for s in partner_skills|slice:":2" %}
+                                    {{ s.skill_name }}<br>
+                                {% endfor %}
+                            
+                            </p>
+                            <small class="text-muted">There were {{ partner_skills|length }} other entries.</small>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">References</h5>
+                            <small class="text-muted">{% with partner_references|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            {% for r in partner_references|slice:":1" %}
+                            <p class="mb-0">{{ r.name }} | {{ r.position }} | {{ r.phone_number }} | {{ r.email }}
+                                <br>{{ r.office_name }} | {{ r.office_name }}
+                            </p>
+                            {% endfor %}
+                            <small class="text-muted">There were {{ partner_references|length }} other entries.</small>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start active">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Bio</h5>
+                                <small class="text-light">{{ partner_cover.get_days_ago }} days ago</small>
+                            </div>
+                            
+                            <p class="mb-0">{{ partner_cover.letter|safe|truncatewords:50 }}</p>
+                           
+                        </div>
+
+                        
+                    </div>
+                </div>
+
+                {% else %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state" data-height="400" style="height: 400px;">
+                            <div class="empty-state-icon">
+                                <i class="fas fa-question"></i>
+                            </div>
+                            <h2>We couldn't find any data</h2>
+                            <p class="lead">
+                                Sorry we can't find any data, to get rid of this message, click at least 1 entry.
+                            </p>
+                            <a href="#" class="btn btn-primary mt-4">Create new One</a>
+                            <a href="#" class="mt-4 bb">Need Help?</a>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+        
+
+
+{% endblock page_content %}
+
+
+{% block custom_js %}
+
+
+{% endblock custom_js %}
