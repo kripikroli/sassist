@@ -41,6 +41,7 @@ class PartnerUser(models.Model):
     address_region=models.CharField(max_length=120, null=True, blank=True)
     address_country=models.CharField(max_length=120, null=True, blank=True)
     address_zip_code=models.CharField(max_length=20, null=True, blank=True)
+    progress_mark=models.IntegerField(default=20)
     is_added_by_admin=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)

@@ -639,7 +639,7 @@ hr {
                 setTimeout(function(){
                     $(document).ready(function() {
                         swal('Success', 'You just added the resume!', 'success').then(function() {
-                            window.location.href = "{% url 'crm:admin_partner_list_view' %}";
+                            window.location.href = "{% url 'crm:admin_partner_with_resume_list_view' %}?filter={{ partner_user.id }}&partner_id={{ partner_user.id }}";
                     })});
                 }, 1000);
                 

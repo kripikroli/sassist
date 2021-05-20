@@ -70,19 +70,25 @@
                             <div class="circular_image">
                                 <img alt="image" class="mr-5 rounded-circle" width="100%" src="/media/{{ partner.profile_pic }}">
                             </div>
+                            
                             <div class="media-body ml-3">
                                 <div class="media-title">{{ partner.auth_user_id.first_name }} {{ partner.auth_user_id.last_name }}</div>
                                 <div class="text-job text-muted">{{ partner.auth_user_id.username }}</div>
                             </div>
                             <div class="media-progressbar">
-                                <div class="progress-text">30%</div>
+                                <div class="progress-text">{{ partner.progress_mark }}%</div>
                                 <div class="progress" data-height="6">
-                                <div class="progress-bar bg-primary" data-width="30%"></div>
+                                <div class="progress-bar bg-primary" data-width="{{ partner.progress_mark }}%"></div>
                                 </div>
                             </div>
                             <form method="GET">
                                 <div class="media-cta">
-                                    <a class="btn btn-icon btn-primary" href="{% url 'crm:admin_partner_with_resume_list_view' %}?filter={{ filter }}&orderby=id&partner_id={{ partner.id }}&page={{ page_number }}" class="btn btn-info"><i class="fas fa-info-circle"></i> Details</a>
+                                    {% if partner.progress_mark >= 80 %}
+                                        <a class="btn btn-icon btn-primary" href="{% url 'crm:admin_partner_with_resume_list_view' %}?filter={{ filter }}&orderby=id&partner_id={{ partner.id }}&page={{ page_number }}"><i class="fas fa-info-circle"></i> Details</a>
+                                    {% else %}
+                                        <a class="btn btn-icon btn-light" href="{% url 'crm:admin_partner_resume_create_view' partner.id %}"><i class="fas fa-plus"></i> Create</a>
+                                    {% endif %}
+                                    
                                 </div>
                             </form>
                         </li>
@@ -245,21 +251,21 @@
                 </div>
 
                 {% else %}
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="empty-state" data-height="400" style="height: 400px;">
-                            <div class="empty-state-icon">
-                                <i class="fas fa-question"></i>
-                            </div>
-                            <h2>We couldn't find any data</h2>
-                            <p class="lead">
-                                Sorry we can't find any data, to get rid of this message, click at least 1 entry.
-                            </p>
-                            <a href="#" class="btn btn-primary mt-4">Create new One</a>
-                            <a href="#" class="mt-4 bb">Need Help?</a>
-                            </div>
+                    
+                    <div class="card-body">
+                        <div class="empty-state" data-height="400" style="height: 400px;">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-question"></i>
+                        </div>
+                        <h2>We couldn't find any data</h2>
+                        <p class="lead">
+                            Sorry we can't find any data, to get rid of this message, click at least 1 entry.
+                        </p>
+                        <a href="#" class="btn btn-primary mt-4">Create new One</a>
+                        <a href="#" class="mt-4 bb">Need Help?</a>
                         </div>
                     </div>
+                 
 
                 {% endif %}
             </div>

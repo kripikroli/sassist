@@ -317,6 +317,9 @@ class UserPartnerResumeCreateView(View):
         cover_letter_obj = PartnerCoverLetter(letter=cover_l, auth_user_id=partner_instance)
         cover_letter_obj.save()
 
+        partner_instance.progress_mark = 80
+        partner_instance.save()
+
         return HttpResponse("Saved")
 
 
@@ -542,7 +545,7 @@ class UserPartnerWithResumeListView(ListView):
         order_by = self.request.GET.get('orderby', 'id')
 
         if filter_val != '':
-            result = PartnerUser.objects.filter(Q(auth_user_id__first_name__icontains=filter_val) | Q(auth_user_id__last_name__icontains=filter_val))
+            result = PartnerUser.objects.filter(Q(auth_user_id__first_name__icontains=filter_val) | Q(auth_user_id__last_name__icontains=filter_val) | Q(id__icontains=filter_val))
         else:
             result = PartnerUser.objects.all().order_by(order_by)
 
