@@ -49,9 +49,11 @@
     <div class="row">
         <div class="col-12 col-md-6 col-sm-12">
             <div class="card">
+
                 <div class="card-header">
                     <h4>User Resume Progress</h4>
                 </div>
+
                 <div class="card-body">
                     <form method="GET">
                         <div class="input-group float-right">
@@ -64,6 +66,7 @@
                 </div>
 
                 <div class="card-body">
+                    
                     <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
                         {% for partner in partneruser_list %}
                         <li class="media">
@@ -140,7 +143,7 @@
                                 <h5 class="mb-1">{{ partner_user.auth_user_id.first_name }} {{ partner_user.auth_user_id.last_name }}</h5>
                                 <small class="text-success">ACTIVE</small>
                             </div>
-                            <p class="mb-1">
+                            <p class="mb-3">
                                 <i class="fas fa-mobile-alt mr-2"></i>  {{ partner_user.phone_number }}<br>
                                 <i class="fas fa-birthday-cake mr-2"></i>  {{ partner_user.date_of_birth|date:'Y-m-d' }}<br>
                                 <i class="fas fa-map-marker-alt mr-2"></i>{% if partner_user.address_line_1 %}
@@ -162,12 +165,15 @@
                                                 {{ partner_user.address_zip_code }}
                                         {% endif %}
                             </p>
-                            <small class="float-right">
-                                <a href="{% url 'crm:admin_partner_resume_update_view' current_id %}" class="text-light">EDIT</a>
-                                <div class="bullet"></div>
+                            <small class="float-left">
                                 <a href="#" class="text-light">MESSAGE</a>
                                 <div class="bullet"></div>
                                 <a href="" class="text-danger">DEACTIVATE</a>
+                            </small>
+                            <small class="float-right">
+                                <a href="{% url 'crm:admin_partner_resume_update_view' current_id %}" class="text-light">EDIT</a>
+                                <div class="bullet"></div>
+                                <a href="{% url 'crm:admin_partner_media_upload_view' partner_user.id %}" class="text-light">DOCUMENTS</a>
                             </small>
                         </div>
 
@@ -180,7 +186,7 @@
                             <p class="mb-0">{{ e.get_degree_type_display }} | {{ e.field_name }} | {{ e.school_name }} | {{ e.date_graduated }}
                             <br>{{ e.school_address }}</p>
                             {% endfor %}
-                            <small class="text-muted">There were {{ partner_education|length }} other entries.</small>
+                            <small class="text-muted">There are {{ partner_education|length }} entries.</small>
                         </div>
 
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
@@ -193,7 +199,7 @@
                                 <br>{{ l.address_acquired }}
                             </p>
                             {% endfor %}
-                            <small class="text-muted">There were {{ partner_licenses|length }} other entries.</small>
+                            <small class="text-muted">There are {{ partner_licenses|length }} entries.</small>
                         </div>
 
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
@@ -206,7 +212,7 @@
                                 <br>{{ c.address_acquired }}
                             </p>
                             {% endfor %}
-                            <small class="text-muted">There were {{ partner_certifications|length }} other entries.</small>
+                            <small class="text-muted">There are {{ partner_certifications|length }} entries.</small>
                         </div>
 
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
@@ -220,7 +226,7 @@
                                 {% endfor %}
                             
                             </p>
-                            <small class="text-muted">There were {{ partner_skills|length }} other entries.</small>
+                            <small class="text-muted">There are {{ partner_skills|length }} entries.</small>
                         </div>
 
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
@@ -233,7 +239,7 @@
                                 <br>{{ r.office_name }} | {{ r.office_name }}
                             </p>
                             {% endfor %}
-                            <small class="text-muted">There were {{ partner_references|length }} other entries.</small>
+                            <small class="text-muted">There are {{ partner_references|length }} entries.</small>
                         </div>
 
                         <div class="list-group-item list-group-item-action flex-column align-items-start active">
@@ -242,7 +248,7 @@
                                 <small class="text-light">{{ partner_cover.get_days_ago }} days ago</small>
                             </div>
                             
-                            <p class="mb-0">{{ partner_cover.letter|safe|truncatewords:50 }}</p>
+                            <div class="text-light mb-0">{{ partner_cover.letter|safe|truncatewords:100 }}</div>
                            
                         </div>
 

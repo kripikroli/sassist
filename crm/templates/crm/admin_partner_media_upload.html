@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block custom_css %}
-
+<link rel="stylesheet" href="{% static 'crm/modules/izitoast/css/iziToast.min.css' %}">
 
 <style>
 .dropzone .dz-message .small-message {
@@ -102,7 +102,7 @@
                                             <th>File Name</th>
                                             <th>Uploaded At</th>
                                             <th>Format</th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
 
                                         {% for media in partner_education_media %}
@@ -126,7 +126,10 @@
                                             {% endif %}
 
 
-                                            <td><a href="#" class="btn btn-secondary">Preview</a></td>
+                                            <td>
+                                                <a href="?remove_ed={{ media.id }}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
+                                                <a target="_blank" href="/media/{{ media.media_content }}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                                            </td>
 
                                         </tr>
                                         {% endfor %}
@@ -152,7 +155,10 @@
                                             {% endif %}
 
 
-                                            <td><a href="#" class="btn btn-secondary">Preview</a></td>
+                                            <td>
+                                                <a href="?remove_lc={{ media.id }}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
+                                                <a target="_blank" href="/media/{{ media.media_content }}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                                            </td>
 
                                         </tr>
                                         {% endfor %}
@@ -178,7 +184,10 @@
                                             {% endif %}
 
 
-                                            <td><a href="#" class="btn btn-secondary">Preview</a></td>
+                                            <td>
+                                                <a href="?remove_od={{ media.id }}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
+                                                <a target="_blank" href="/media/{{ media.media_content }}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                                            </td>
 
                                         </tr>
                                         {% endfor %}
@@ -208,7 +217,7 @@
                                             <span>
                                                 Drop files for Education
                                             </span>
-                                            <p class="small-message text-muted">Choose only <span class="text-success">.PNG</span>, <span class="text-success">.JPG</span> and <span class="text-success">.PDF</span> formats</p>
+                                            <p class="small-message text-muted">Choose only <span class="text-primary">.PNG</span>, <span class="text-primary">.JPG</span> and <span class="text-primary">.PDF</span> formats</p>
                                         </div>
                                         
                                         <div class="fallback">
@@ -228,7 +237,7 @@
                                             <span>
                                                 Drop files for Licenses and Certifications
                                             </span>
-                                            <p class="small-message text-muted">Choose only <span class="text-success">.PNG</span>, <span class="text-success">.JPG</span> and <span class="text-success">.PDF</span> formats</p>
+                                            <p class="small-message text-muted">Choose only <span class="text-primary">.PNG</span>, <span class="text-primary">.JPG</span> and <span class="text-primary">.PDF</span> formats</p>
                                         </div>
                                         
                                         <div class="fallback">
@@ -248,7 +257,7 @@
                                             <span>
                                                 Drop files for Other Documents
                                             </span>
-                                            <p class="small-message text-muted">Choose only <span class="text-success">.PNG</span>, <span class="text-success">.JPG</span> and <span class="text-success">.PDF</span> formats</p>
+                                            <p class="small-message text-muted">Choose only <span class="text-primary">.PNG</span>, <span class="text-primary">.JPG</span> and <span class="text-primary">.PDF</span> formats</p>
                                         </div>
                                         
                                         <div class="fallback">
@@ -273,6 +282,13 @@
 
 
 {% block custom_js %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="{% static 'crm/upload.js' %}" defer></script>
 <script src="{% static 'crm/modules/moment.min.js' %}" defer></script>
+<script src="{% static 'crm/modules/izitoast/js/iziToast.min.js' %}"></script>
+
+<script>
+
+</script>
+
 {% endblock custom_js %}

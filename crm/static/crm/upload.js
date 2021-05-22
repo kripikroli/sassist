@@ -1,47 +1,39 @@
 const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
-const alertBoxEduc = document.getElementById('alert-box-educ')
-const alertBoxLC = document.getElementById('alert-box-lc')
-const alertBoxOther = document.getElementById('alert-box-other')
 const partnerID = document.getElementById('partner-id').value
 const mediaEduc = document.getElementById('media_files')
 const mediaFiles = document.getElementById("inside-tbody")
 
 
 firstTR = `
-        <tr>
-            <th>
-            </th>
-            <th>File Name</th>
-            <th>Uploaded At</th>
-            <th>Format</th>
-            <th>Action</th>
-        </tr>
-    `
+    <tr>
+        <th>
+        </th>
+        <th>File Name</th>
+        <th>Uploaded At</th>
+        <th>Format</th>
+        <th>Actions</th>
+    </tr>
+`
 
 Dropzone.autoDiscover = false
 
-const handleEducAlerts = (type, msg) => {
-    alertBoxEduc.innerHTML = `
-        <div class="alert alert-${type}">
-            ${msg}
-        </div>
-    `
-}
+const handleAlerts = (type) => {
 
-const handleLCAlerts = (type, msg) => {
-    alertBoxLC.innerHTML = `
-        <div class="alert alert-${type}">
-            ${msg}
-        </div>
-    `
-}
-
-const handleOtherAlerts = (type, msg) => {
-    alertBoxOther.innerHTML = `
-        <div class="alert alert-${type}">
-            ${msg}
-        </div>
-    `
+    if (type == 'success') {
+        iziToast.success({
+            title: 'File uploaded!',
+            message: 'Add more by dragging files',
+            position: 'topRight'
+        });
+    }
+    else {
+        iziToast.error({
+            title: 'File already exist!',
+            message: 'Please upload a different file',
+            position: 'topRight'
+        });
+    }
+    
 }
 
 const handleShowMedia = (data) => {
@@ -57,10 +49,10 @@ const handleShowMedia = (data) => {
 
 const handleBadge = (format) => {
     if (format == 1) {
-        return 'info'
+        return 'success'
     }
     if (format == 2) {
-        return 'success'
+        return 'info'
     }
     if (format == 3) {
         return 'warning'
@@ -87,32 +79,82 @@ const handleFileName = (filename) => {
     return filename.split('.').slice(0, -1).join('.').slice(0, 5)
 }
 
-const handleMediaFiles = (data, type) => {
+const handleMediaFiles = (data_ed, data_lc, data_od) => {
+
+    console.log(data_ed)
     
-    html = ''
-    if (type == 'ed') {
-        
-        for (i=0; i<data.length; i++) {
-            html += `
-                <tr>
-                    <td class="p-0 text-center text-muted">
-                        ED
-                    </td>
+    html_ed = ''
+    html_lc = ''
+    html_od = ''
+    
+    for (i=0; i<data_ed.length; i++) {
+        html_ed += `
+            <tr>
+                <td class="p-0 text-center text-muted">
+                    ED
+                </td>
 
-                    <td>${handleFileName(data[i].fields.media_filename)}</td>
-                    
-                    <td>${handleDateFormat(data[i].fields.created)}</td>
+                <td>${handleFileName(data_ed[i].fields.media_filename)}</td>
+                
+                <td>${handleDateFormat(data_ed[i].fields.created)}</td>
 
-                    <td><div class="badge badge-${handleBadge(data[i].fields.media_format)}">${handleFormat(data[i].fields.media_format)}</div></td>
+                <td><div class="badge badge-${handleBadge(data_ed[i].fields.media_format)}">${handleFormat(data_ed[i].fields.media_format)}</div></td>
 
-                    <td><a href="#" class="btn btn-secondary">Preview</a></td>
+                <td>
+                    <a href="?remove_ed=${data_ed[i].pk}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
+                    <a target="_blank" href="/media/${data_ed[i].fields.media_content}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                </td>
 
-                </tr>
-            `     
-        }
+            </tr>
+        `     
     }
 
-    mediaFiles.innerHTML = firstTR + html
+    for (i=0; i<data_lc.length; i++) {
+        html_ed += `
+            <tr>
+                <td class="p-0 text-center text-muted">
+                    LC
+                </td>
+
+                <td>${handleFileName(data_lc[i].fields.media_filename)}</td>
+                
+                <td>${handleDateFormat(data_lc[i].fields.created)}</td>
+
+                <td><div class="badge badge-${handleBadge(data_lc[i].fields.media_format)}">${handleFormat(data_lc[i].fields.media_format)}</div></td>
+
+                <td>
+                    <a href="?remove_lc=${data_lc[i].pk}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
+                    <a target="_blank" href="/media/${data_lc[i].fields.media_content}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                </td>
+
+            </tr>
+        `     
+    }
+
+    for (i=0; i<data_od.length; i++) {
+        html_ed += `
+            <tr>
+                <td class="p-0 text-center text-muted">
+                    OD
+                </td>
+
+                <td>${handleFileName(data_od[i].fields.media_filename)}</td>
+                
+                <td>${handleDateFormat(data_od[i].fields.created)}</td>
+
+                <td><div class="badge badge-${handleBadge(data_od[i].fields.media_format)}">${handleFormat(data_od[i].fields.media_format)}</div></td>
+
+                <td>
+                    <a href="?remove_od=${data_od[i].pk}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
+                    <a target="_blank" href="/media/${data_od[i].fields.media_content}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                </td>
+
+            </tr>
+        `     
+    }
+
+
+    mediaFiles.innerHTML = firstTR + html_ed + html_lc + html_od
 }
 
 const uploadEducDropzone = new Dropzone('#educdropzone', {
@@ -126,14 +168,17 @@ const uploadEducDropzone = new Dropzone('#educdropzone', {
         })
         this.on('success', function(file, response){
             const ex = response.ex
-            const ey = JSON.parse(response.ey)
+            const data_ed = JSON.parse(response.data_ed)
+            const data_lc = JSON.parse(response.data_lc)
+            const data_od = JSON.parse(response.data_od)
+
             if (ex) {
-                handleEducAlerts('danger', 'File already exist!')
+                handleAlerts('danger')
             } else {
-                handleEducAlerts('success', 'File uploaded sucessfully!')
+                handleAlerts('success')
             }
             
-            handleMediaFiles(ey, 'ed')
+            handleMediaFiles(data_ed, data_lc, data_od)
             
         })
     },
@@ -153,11 +198,18 @@ const uploadLCDropzone = new Dropzone('#lcdropzone', {
         })
         this.on('success', function(file, response){
             const ex = response.ex
+            const data_ed = JSON.parse(response.data_ed)
+            const data_lc = JSON.parse(response.data_lc)
+            const data_od = JSON.parse(response.data_od)
+
             if (ex) {
-                handleLCAlerts('danger', 'File already exist!')
+                handleAlerts('danger')
             } else {
-                handleLCAlerts('success', 'File uploaded sucessfully!')
+                handleAlerts('success')
             }
+            
+            handleMediaFiles(data_ed, data_lc, data_od)
+
         })
     },
     maxFiles: 3,
@@ -176,14 +228,22 @@ const uploadOtherDropzone = new Dropzone('#otherdropzone', {
         })
         this.on('success', function(file, response){
             const ex = response.ex
+            const data_ed = JSON.parse(response.data_ed)
+            const data_lc = JSON.parse(response.data_lc)
+            const data_od = JSON.parse(response.data_od)
+
             if (ex) {
-                handleOtherAlerts('danger', 'File already exist!')
+                handleAlerts('danger')
             } else {
-                handleOtherAlerts('success', 'File uploaded sucessfully!')
+                handleAlerts('success')
             }
+            
+            handleMediaFiles(data_ed, data_lc, data_od)
+
         })
     },
     maxFiles: 3,
     maxFilesize: 3,
     acceptedFiles: '.png, .jpg, .jpeg, .pdf',
 })
+

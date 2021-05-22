@@ -84,19 +84,29 @@ def educ_media_upload_view(request):
         partner_instance = PartnerUser.objects.get(id=partner_id)
         obj, created = PartnerEducationMedia.objects.get_or_create(auth_user_id=partner_instance, media_filename=media_file_name, media_format=file_format)
 
-        qs = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
-        data = serialize("json", qs, fields=('media_filename',))
-
         if created:
             obj.media_content = media_file
             obj.save()
 
-            qs = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
-            data = serialize("json", qs, fields=('media_filename', 'media_format', 'media_content', 'created', 'get_date_only'))
+            qs_ed = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
+            qs_lc = PartnerLCMedia.objects.filter(auth_user_id=partner_instance)
+            qs_od = PartnerOtherMedia.objects.filter(auth_user_id=partner_instance)
+            data_ed = serialize("json", qs_ed, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
 
-            return JsonResponse({'ex': False,  'ey': data})
+            return JsonResponse({'ex': False, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
+        
+        else:
 
-        return JsonResponse({'ex': True,  'ey': data})
+            qs_ed = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
+            qs_lc = PartnerLCMedia.objects.filter(auth_user_id=partner_instance)
+            qs_od = PartnerOtherMedia.objects.filter(auth_user_id=partner_instance)
+            data_ed = serialize("json", qs_ed, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+
+            return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
 
     return HttpResponse()
 
@@ -107,18 +117,42 @@ def lc_media_upload_view(request):
         media_file = request.FILES.get('file')
 
         # TODO: hash the file size for extra validation in duplication
+        file_format = ''
 
+        if media_file_name.endswith('.jpg') or media_file_name.endswith('.jpeg'):
+            file_format = 1
+        if media_file_name.endswith('.png'):
+            file_format = 2
+        if media_file_name.endswith('.pdf'):
+            file_format = 3
+        
         partner_id = request.POST.get('partner_id')
         partner_instance = PartnerUser.objects.get(id=partner_id)
-        obj, created = PartnerLCMedia.objects.get_or_create(auth_user_id=partner_instance, media_filename=media_file_name)
+        obj, created = PartnerLCMedia.objects.get_or_create(auth_user_id=partner_instance, media_filename=media_file_name, media_format=file_format)
 
         if created:
             obj.media_content = media_file
             obj.save()
 
-            return JsonResponse({'ex': False})
+            qs_ed = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
+            qs_lc = PartnerLCMedia.objects.filter(auth_user_id=partner_instance)
+            qs_od = PartnerOtherMedia.objects.filter(auth_user_id=partner_instance)
+            data_ed = serialize("json", qs_ed, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
 
-        return JsonResponse({'ex': True})
+            return JsonResponse({'ex': False, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
+        
+        else:
+
+            qs_ed = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
+            qs_lc = PartnerLCMedia.objects.filter(auth_user_id=partner_instance)
+            qs_od = PartnerOtherMedia.objects.filter(auth_user_id=partner_instance)
+            data_ed = serialize("json", qs_ed, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+
+            return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
 
     return HttpResponse()
 
@@ -128,18 +162,42 @@ def other_media_upload_view(request):
         media_file = request.FILES.get('file')
 
         # TODO: hash the file size for extra validation in duplication
+        file_format = ''
 
+        if media_file_name.endswith('.jpg') or media_file_name.endswith('.jpeg'):
+            file_format = 1
+        if media_file_name.endswith('.png'):
+            file_format = 2
+        if media_file_name.endswith('.pdf'):
+            file_format = 3
+        
         partner_id = request.POST.get('partner_id')
         partner_instance = PartnerUser.objects.get(id=partner_id)
-        obj, created = PartnerOtherMedia.objects.get_or_create(auth_user_id=partner_instance, media_filename=media_file_name)
+        obj, created = PartnerOtherMedia.objects.get_or_create(auth_user_id=partner_instance, media_filename=media_file_name, media_format=file_format)
 
         if created:
             obj.media_content = media_file
             obj.save()
 
-            return JsonResponse({'ex': False})
+            qs_ed = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
+            qs_lc = PartnerLCMedia.objects.filter(auth_user_id=partner_instance)
+            qs_od = PartnerOtherMedia.objects.filter(auth_user_id=partner_instance)
+            data_ed = serialize("json", qs_ed, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
 
-        return JsonResponse({'ex': True})
+            return JsonResponse({'ex': False, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
+        
+        else:
+
+            qs_ed = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
+            qs_lc = PartnerLCMedia.objects.filter(auth_user_id=partner_instance)
+            qs_od = PartnerOtherMedia.objects.filter(auth_user_id=partner_instance)
+            data_ed = serialize("json", qs_ed, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+            data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
+
+            return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
 
     return HttpResponse()
 
@@ -665,6 +723,28 @@ class UserPartnerWithResumeListView(ListView):
 class UserPartnerMediaUpload(View):
 
     def get(self, request, *args, **kwargs):
+
+        remove_file_ed = self.request.GET.get('remove_ed', None)
+        remove_file_lc = self.request.GET.get('remove_lc', None)
+        remove_file_od = self.request.GET.get('remove_od', None)
+
+        if remove_file_ed:
+            try:
+                PartnerEducationMedia.objects.get(id=remove_file_ed).delete()
+            except:
+                pass
+
+        if remove_file_lc:
+            try:
+                PartnerLCMedia.objects.get(id=remove_file_lc).delete()
+            except:
+                pass
+
+        if remove_file_od:
+            try:
+                PartnerOtherMedia.objects.get(id=remove_file_od).delete()
+            except:
+                pass
 
         partner_user = PartnerUser.objects.get(id=self.kwargs['pk'])
         partner_education_media = PartnerEducationMedia.objects.filter(auth_user_id=partner_user)
