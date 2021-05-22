@@ -1,3 +1,5 @@
+import os
+
 from datetime import date
 from django.contrib import auth
 from pathlib import Path
@@ -6,8 +8,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages.views import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.serializers import serialize
 from django.db.models import Q, fields
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView, View
@@ -21,6 +24,9 @@ from partners.models import (
     PartnerReference,
     PartnerSkill,
     PartnerCoverLetter,
+    PartnerEducationMedia,
+    PartnerLCMedia,
+    PartnerOtherMedia
 )
 
 def admin_dashboard_view(request):
@@ -57,6 +63,85 @@ def logout_view(request):
 
     logout(request)
     return redirect('crm:login_view')
+
+
+def educ_media_upload_view(request):
+    if request.method == 'POST':
+        media_file_name = request.FILES.get('file').name
+        media_file = request.FILES.get('file')
+
+        # TODO: hash the file size for extra validation in duplication
+        file_format = ''
+
+        if media_file_name.endswith('.jpg') or media_file_name.endswith('.jpeg'):
+            file_format = 1
+        if media_file_name.endswith('.png'):
+            file_format = 2
+        if media_file_name.endswith('.pdf'):
+            file_format = 3
+        
+        partner_id = request.POST.get('partner_id')
+        partner_instance = PartnerUser.objects.get(id=partner_id)
+        obj, created = PartnerEducationMedia.objects.get_or_create(auth_user_id=partner_instance, media_filename=media_file_name, media_format=file_format)
+
+        qs = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
+        data = serialize("json", qs, fields=('media_filename',))
+
+        if created:
+            obj.media_content = media_file
+            obj.save()
+
+            qs = PartnerEducationMedia.objects.filter(auth_user_id=partner_instance)
+            data = serialize("json", qs, fields=('media_filename', 'media_format', 'media_content', 'created', 'get_date_only'))
+
+            return JsonResponse({'ex': False,  'ey': data})
+
+        return JsonResponse({'ex': True,  'ey': data})
+
+    return HttpResponse()
+
+
+def lc_media_upload_view(request):
+    if request.method == 'POST':
+        media_file_name = request.FILES.get('file').name
+        media_file = request.FILES.get('file')
+
+        # TODO: hash the file size for extra validation in duplication
+
+        partner_id = request.POST.get('partner_id')
+        partner_instance = PartnerUser.objects.get(id=partner_id)
+        obj, created = PartnerLCMedia.objects.get_or_create(auth_user_id=partner_instance, media_filename=media_file_name)
+
+        if created:
+            obj.media_content = media_file
+            obj.save()
+
+            return JsonResponse({'ex': False})
+
+        return JsonResponse({'ex': True})
+
+    return HttpResponse()
+
+def other_media_upload_view(request):
+    if request.method == 'POST':
+        media_file_name = request.FILES.get('file').name
+        media_file = request.FILES.get('file')
+
+        # TODO: hash the file size for extra validation in duplication
+
+        partner_id = request.POST.get('partner_id')
+        partner_instance = PartnerUser.objects.get(id=partner_id)
+        obj, created = PartnerOtherMedia.objects.get_or_create(auth_user_id=partner_instance, media_filename=media_file_name)
+
+        if created:
+            obj.media_content = media_file
+            obj.save()
+
+            return JsonResponse({'ex': False})
+
+        return JsonResponse({'ex': True})
+
+    return HttpResponse()
 
 
 class UserPartnerCreateView(SuccessMessageMixin, CreateView):
@@ -537,7 +622,7 @@ class UserPartnerWithResumeListView(ListView):
     template_name = 'crm/admin_partner_with_resume_list.html'
 
     # Number of partners to paginate
-    paginate_by = 10
+    paginate_by = 2
 
     def get_queryset(self):
 
@@ -575,3 +660,22 @@ class UserPartnerWithResumeListView(ListView):
         
 
         return context
+
+
+class UserPartnerMediaUpload(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(id=self.kwargs['pk'])
+        partner_education_media = PartnerEducationMedia.objects.filter(auth_user_id=partner_user)
+        partner_lc_media = PartnerLCMedia.objects.filter(auth_user_id=partner_user)
+        partner_other_media = PartnerOtherMedia.objects.filter(auth_user_id=partner_user)
+
+        context = {
+            "partner_user": partner_user,
+            "partner_education_media": partner_education_media,
+            "partner_lc_media": partner_lc_media,
+            "partner_other_media": partner_other_media
+        }
+
+        return render(request, 'crm/admin_partner_media_upload.html', context)

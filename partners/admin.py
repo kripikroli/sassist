@@ -6,6 +6,9 @@ from .models import (
     PartnerReference,
     PartnerSkill,
     PartnerCoverLetter,
+    PartnerEducationMedia,
+    PartnerLCMedia,
+    PartnerOtherMedia
 )
 
 admin.site.register(PartnerEducation)
@@ -14,4 +17,7 @@ admin.site.register(PartnerCertification)
 admin.site.register(PartnerReference)
 admin.site.register(PartnerSkill)
 admin.site.register(PartnerCoverLetter)
+admin.site.register(PartnerEducationMedia)
+admin.site.register(PartnerLCMedia)
+admin.site.register(PartnerOtherMedia)
 

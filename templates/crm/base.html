@@ -19,9 +19,15 @@
   <link rel="stylesheet" href="{% static 'crm/modules/owlcarousel2/dist/assets/owl.carousel.min.css' %}">
   <link rel="stylesheet" href="{% static 'crm/modules/owlcarousel2/dist/assets/owl.theme.default.min.css' %}">
 
+
+  <!-- Dropzone js -->
+  <link rel="stylesheet" href="{% static 'dropzone.css' %}">
+
   <!-- Template CSS -->
   <link rel="stylesheet" href="{% static 'crm/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'crm/css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'custom.css' %}">
+
 
   {% block custom_css %}
   {% endblock custom_css %}
@@ -86,6 +92,7 @@
     <!-- Template JS File -->
     <script src="{% static 'crm/js/scripts.js' %}" defer></script> 
     <script src="{% static 'crm/js/custom.js' %}" defer></script>  
+    <script src="{% static 'dropzone.js' %}" defer></script>
 
   {% block custom_js %}
   {% endblock custom_js %}

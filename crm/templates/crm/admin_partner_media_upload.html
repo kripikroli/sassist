@@ -1,0 +1,278 @@
+{% extends "crm/base.html" %}
+
+{% load static %}
+
+{% block custom_css %}
+
+
+<style>
+.dropzone .dz-message .small-message {
+  font-size: 14px;
+}
+
+.circular_image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  float: left;
+  overflow: hidden;
+  background-color: blue;
+  display:inline-block;
+  vertical-align:center;
+}
+
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    Partner Add Media
+{% endblock title %}
+
+
+{% block page_title %}
+    Partner Add Media
+{% endblock page_title %}
+
+{% block page_content %}
+    
+    <div class="section-body">
+
+            <div class="row">
+                <div class="col-12 col-md-6 col-sm-12">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Partner</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled list-unstyled-border list-unstyled-noborder">
+                                <li class="media">
+                                    <div class="circular_image">
+                                        <img alt="image" class="mr-5 rounded-circle" width="100%" src="/media/{{ partner_user.profile_pic }}">
+                                    </div>
+                                    <div class="media-body ml-3">
+                                        <div class="media-right"><div class="text-primary">ACTIVE</div></div>
+                                        <div class="media-title mb-1">{{ partner_user.auth_user_id.first_name }} {{ partner_user.auth_user_id.last_name }}</div>
+                                        <div class="text-time">@{{ partner_user.auth_user_id.username }}</div>
+                                        <div class="media-description text-muted">
+                                            {{ partner_user.phone_number }}<br>
+                                            {{ partner_user.date_of_birth|date:'m-d-Y' }} <br>
+                                            {% if partner_user.address_line_1 %}
+                                                {{ partner_user.address_line_1 }}
+                                            {% endif %}
+                                            {% if partner_user.address_line_2 %}
+                                                , {{ partner_user.address_line_2 }}
+                                            {% endif %}
+                                            {% if partner_user.address_town %}
+                                                , {{ partner_user.address_town }}
+                                            {% endif %}
+                                            {% if partner_user.address_region %}
+                                                , {{ partner_user.address_region }}
+                                            {% endif %}
+                                            {% if partner_user.address_country %}
+                                                , {{ partner_user.address_country }}
+                                            {% endif %}
+                                            {% if partner_user.address_zip_code %}
+                                                {{ partner_user.address_zip_code }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="media-links">
+                                            <a href="{% url 'crm:admin_partner_update_view' partner_user.auth_user_id.id %}">EDIT</a>
+                                            <div class="bullet"></div>
+                                            <a href="{% url 'crm:admin_partner_list_view' %}">MESSAGE</a>
+                                            <div class="bullet"></div>
+                                            <a href="#" class="text-danger">DEACTIVATE</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        
+                        <div id="media_files" class="card-body">
+                            <div class="lead mb-2">All Files</div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tbody id="inside-tbody">
+                                        <tr>
+                                            <th>
+                                            </th>
+                                            <th>File Name</th>
+                                            <th>Uploaded At</th>
+                                            <th>Format</th>
+                                            <th>Action</th>
+                                        </tr>
+
+                                        {% for media in partner_education_media %}
+                                        <tr>
+                                            <td class="p-0 text-center text-muted">
+                                                ED
+                                            </td>
+
+                                            <td>{{ media.media_filename|slice:":-4"|slice:":5" }}</td>
+                                            
+                                            <td>{{ media.created|date:"Y-m-d" }}</td>
+
+                                            {% if media.media_format == 1 %}
+                                                <td><div class="badge badge-success">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 2 %}
+                                                <td><div class="badge badge-info">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 3 %}
+                                                <td><div class="badge badge-warning">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+
+
+                                            <td><a href="#" class="btn btn-secondary">Preview</a></td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                        {% for media in partner_lc_media %}
+                                        <tr>
+                                            <td class="p-0 text-center text-muted">
+                                                LC
+                                            </td>
+
+                                            <td>{{ media.media_filename|slice:":-4"|slice:":5" }}</td>
+                                            
+                                            <td>{{ media.created|date:"Y-m-d" }}</td>
+
+                                            {% if media.media_format == 1 %}
+                                                <td><div class="badge badge-success">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 2 %}
+                                                <td><div class="badge badge-info">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 3 %}
+                                                <td><div class="badge badge-warning">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+
+
+                                            <td><a href="#" class="btn btn-secondary">Preview</a></td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                        {% for media in partner_other_media %}
+                                        <tr>
+                                            <td class="p-0 text-center text-muted">
+                                                OD
+                                            </td>
+
+                                            <td>{{ media.media_filename|slice:":-4"|slice:":5" }}</td>
+                                            
+                                            <td>{{ media.created|date:"Y-m-d" }}</td>
+
+                                            {% if media.media_format == 1 %}
+                                                <td><div class="badge badge-success">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 2 %}
+                                                <td><div class="badge badge-info">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 3 %}
+                                                <td><div class="badge badge-warning">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+
+
+                                            <td><a href="#" class="btn btn-secondary">Preview</a></td>
+
+                                        </tr>
+                                        {% endfor %}
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Media</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="lead">Education</div>
+                                    <div id="alert-box-educ"></div>
+                                    <form id="educdropzone" class="dropzone dz">
+                                        {% csrf_token %}
+                                        <input id="partner-id" name="partner_id" type="hidden" value="{{ partner_user.id }}" />
+                                        <div class="dz-message" data-dz-message>
+                                        
+                                            <span>
+                                                Drop files for Education
+                                            </span>
+                                            <p class="small-message text-muted">Choose only <span class="text-success">.PNG</span>, <span class="text-success">.JPG</span> and <span class="text-success">.PDF</span> formats</p>
+                                        </div>
+                                        
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="lead">Licenses and Certifications</div>
+                                    <div id="alert-box-lc"></div>
+                                    <form id="lcdropzone" class="dropzone dz">
+                                        {% csrf_token %}
+                                        <input id="partner-id" name="partner_id" type="hidden" value="{{ partner_user.id }}" />
+                                        <div class="dz-message" data-dz-message>
+                                        
+                                            <span>
+                                                Drop files for Licenses and Certifications
+                                            </span>
+                                            <p class="small-message text-muted">Choose only <span class="text-success">.PNG</span>, <span class="text-success">.JPG</span> and <span class="text-success">.PDF</span> formats</p>
+                                        </div>
+                                        
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="lead">Other Documents</div>
+                                    <div id="alert-box-other"></div>
+                                    <form id="otherdropzone" class="dropzone dz">
+                                        {% csrf_token %}
+                                        <input id="partner-id" name="partner_id" type="hidden" value="{{ partner_user.id }}" />
+                                        <div class="dz-message" data-dz-message>
+                                        
+                                            <span>
+                                                Drop files for Other Documents
+                                            </span>
+                                            <p class="small-message text-muted">Choose only <span class="text-success">.PNG</span>, <span class="text-success">.JPG</span> and <span class="text-success">.PDF</span> formats</p>
+                                        </div>
+                                        
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+    
+    </div>
+        
+
+
+{% endblock page_content %}
+
+
+{% block custom_js %}
+<script src="{% static 'crm/upload.js' %}" defer></script>
+<script src="{% static 'crm/modules/moment.min.js' %}" defer></script>
+{% endblock custom_js %}

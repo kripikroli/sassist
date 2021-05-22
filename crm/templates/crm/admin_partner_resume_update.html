@@ -97,11 +97,11 @@ hr {
                                         {% endif %}
                                     </div>
                                     <div class="media-links">
-                                        <a href="{% url 'crm:admin_partner_list_view' %}">Go to list</a>
+                                        <a href="{% url 'crm:admin_partner_update_view' partner_user.auth_user_id.id %}">EDIT</a>
                                         <div class="bullet"></div>
-                                        <a href="{% url 'crm:admin_partner_update_view' partner_user.auth_user_id.id %}">Edit</a>
+                                        <a href="">MESSAGE</a>
                                         <div class="bullet"></div>
-                                        <a href="#" class="text-danger">Deactivate</a>
+                                        <a href="#" class="text-danger">DEACTIVATE</a>
                                     </div>
                                 </div>
                             </li>

@@ -33,13 +33,56 @@ class PartnerEducation(models.Model):
 
 class PartnerEducationMedia(models.Model):
     MEDIA_TYPE_CHOICES=((1,"Image"),)
+    MEDIA_FORMAT_CHOICES=((1, "JPG"), (2, "PNG"), (3, "PDF"))
+    media_filename=models.CharField(max_length=255, default='no name')
     media_type=models.IntegerField(choices=MEDIA_TYPE_CHOICES, default=1)
-    media_content=models.FileField(upload_to='partners', blank=True)
+    media_format=models.IntegerField(choices=MEDIA_FORMAT_CHOICES, default=1)
+    media_content=models.FileField(upload_to='education_files', blank=True)
     is_active=models.IntegerField(default=1)
     is_added_by_admin=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
     auth_user_id=models.ForeignKey(PartnerUser, related_name='partnereducationmedias', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.media_filename}"
+
+    def get_date_only(self):
+        return f"five"
+
+
+class PartnerLCMedia(models.Model):
+    MEDIA_TYPE_CHOICES=((1,"Image"),)
+    MEDIA_FORMAT_CHOICES=((1, "JPG"), (2, "PNG"), (3, "PDF"))
+    media_filename=models.CharField(max_length=255, default='no name')
+    media_type=models.IntegerField(choices=MEDIA_TYPE_CHOICES, default=1)
+    media_format=models.IntegerField(choices=MEDIA_FORMAT_CHOICES, default=1)
+    media_content=models.FileField(upload_to='lc_files', blank=True)
+    is_active=models.IntegerField(default=1)
+    is_added_by_admin=models.BooleanField(default=False)
+    created=models.DateTimeField(auto_now_add=True)
+    updated=models.DateTimeField(auto_now=True)
+    auth_user_id=models.ForeignKey(PartnerUser, related_name='partnerlcmedias', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.media_filename}"
+
+
+class PartnerOtherMedia(models.Model):
+    MEDIA_TYPE_CHOICES=((1,"Image"),)
+    MEDIA_FORMAT_CHOICES=((1, "JPG"), (2, "PNG"), (3, "PDF"))
+    media_filename=models.CharField(max_length=255, default='no name')
+    media_type=models.IntegerField(choices=MEDIA_TYPE_CHOICES, default=1)
+    media_format=models.IntegerField(choices=MEDIA_FORMAT_CHOICES, default=1)
+    media_content=models.FileField(upload_to='other_files', blank=True)
+    is_active=models.IntegerField(default=1)
+    is_added_by_admin=models.BooleanField(default=False)
+    created=models.DateTimeField(auto_now_add=True)
+    updated=models.DateTimeField(auto_now=True)
+    auth_user_id=models.ForeignKey(PartnerUser, related_name='partnerothermedias', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.media_filename}"
 
 
 class PartnerLicense(models.Model):
