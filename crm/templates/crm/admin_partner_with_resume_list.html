@@ -71,7 +71,7 @@
                         {% for partner in partneruser_list %}
                         <li class="media">
                             <div class="circular_image">
-                                <img alt="image" class="mr-5 rounded-circle" width="100%" src="/media/{{ partner.profile_pic }}">
+                                <img alt="image" class="mr-5 rounded-circle" width="100%" src="{{ partner.profile_pic.url }}">
                             </div>
                             
                             <div class="media-body ml-3">
@@ -243,6 +243,43 @@
                                 {% endfor %}
                             </div>
                         </div>
+
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h6 class="lead mb-2">Work History</h6>
+                            <small class="text-muted">{% with partner_works|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th>Information</th>
+                                                <th>Responsibilities</th>
+                                            </tr>
+                                            {% for w in partner_works %}
+                                            <tr>
+                                                <td>
+                                                    <p class="mb-0" style="line-height: 18px;"><strong>{{ w.designation }}</strong></p>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.phone_number }}</small></p>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.email }}</small></p>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.office_name }}</small></p>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.office_address }}</small></p>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.start_date }} - {{ w.end_date }}</small></p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.responsibilities|safe }}</small></p>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
 
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">

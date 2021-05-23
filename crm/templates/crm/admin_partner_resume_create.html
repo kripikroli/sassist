@@ -29,6 +29,19 @@ hr {
     width: 100%;
 }
 
+.bootstrap-tagsinput .tag {
+    border: 1px solid #ccc !important;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
+    display: inline-block !important;
+    padding: 4px 6px !important;
+    vertical-align: middle !important;
+    border-radius: 4px !important;
+    max-width: 100% !important;
+    line-height: 22px !important;
+    cursor: text !important;
+    font-size: 14px !important;
+}
+
 .circular_image {
   width: 70px;
   height: 70px;
@@ -38,6 +51,12 @@ hr {
   background-color: blue;
   display:inline-block;
   vertical-align:center;
+}
+
+.work-history-form {
+    height:968px;
+    overflow-y:auto;
+    position:relative;
 }
 
 </style>
@@ -158,6 +177,10 @@ hr {
 
                                 <li class="nav-item">
                                     <a class="nav-link" id="skills-tab" data-toggle="tab" href="#skills" role="tab" aria-controls="contact" aria-selected="false">Skills</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" id="work-tab" data-toggle="tab" href="#work" role="tab" aria-controls="contact" aria-selected="false">Work</a>
                                 </li>
                             </ul>
                             <div class="tab-content tab-bordered" id="resume_tab">
@@ -461,6 +484,212 @@ hr {
                                     <!-- endSkills -------------------------------->
                                 </div>
 
+                                <div class="tab-pane fade" id="work" role="tabpanel" aria-labelledby="work-tab">
+
+                                    <!-- Work histories -------------------------------->
+                                    <div id="accordion">
+                                        <div class="accordion">
+                                            <div class="accordion-header collapsed" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="false">
+                                                <h4>Work History #1</h4>
+                                            </div>
+                                            <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion" style="">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Designation</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_designation_1" class="form-control work_designation_1">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Phone</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_phone_number_1" class="form-control work_phone_number_1">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Email</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="email" name="work_email_1" class="form-control work_email_1">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Name</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_office_name_1" class="form-control work_office_name_1">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Address</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input name="work_office_address_1" class="form-control work_office_address_1">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Start Date</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_start_date_1" class="form-control work_start_date_1" placeholder="YYYY-MM-DD">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">End Date</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_end_date_1" class="form-control work_end_date_1" placeholder="YYYY-MM-DD">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Responsibilities</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <textarea class="form-control work_responsibility_1" name="work_responsibility_1" id="work_responsibility_1"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion">
+                                            <div class="accordion-header collapsed" role="button" data-toggle="collapse" data-target="#panel-body-2" aria-expanded="false">
+                                                <h4>Work History #2</h4>
+                                            </div>
+                                            <div class="accordion-body collapse" id="panel-body-2" data-parent="#accordion" style="">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Designation</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_designation_2" class="form-control work_designation_2">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Phone</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_phone_number_2" class="form-control work_phone_number_2">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Email</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="email" name="work_email_2" class="form-control work_email_2">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Name</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_office_name_2" class="form-control work_office_name_2">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Address</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input name="work_office_address_2" class="form-control work_office_address_2">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Start Date</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_start_date_2" class="form-control work_start_date_2" placeholder="YYYY-MM-DD">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">End Date</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_end_date_2" class="form-control work_end_date_2" placeholder="YYYY-MM-DD">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Responsibilities</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <textarea class="form-control work_responsibility_2" name="work_responsibility_2" id="work_responsibility_2"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion">
+                                            <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-3">
+                                                <h4>Work History #3</h4>
+                                            </div>
+                                            <div class="accordion-body collapse" id="panel-body-3" data-parent="#accordion">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Designation</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_designation_3" class="form-control work_designation_3">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Phone</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_phone_number_3" class="form-control work_phone_number_3">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Email</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="email" name="work_email_3" class="form-control work_email_3">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Name</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_office_name_3" class="form-control work_office_name_3">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Office Address</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input name="work_office_address_3" class="form-control work_office_address_3">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Start Date</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_start_date_3" class="form-control work_start_date_3" placeholder="YYYY-MM-DD">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">End Date</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <input type="text" name="work_end_date_3" class="form-control work_end_date_3" placeholder="YYYY-MM-DD">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label class="col-lg-12 mb-1">Responsibilities</label>
+                                                        <div class="col-lg-12 mt-0">
+                                                            <textarea class="form-control work_responsibility_3" name="work_responsibility_3" id="work_responsibility_3"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- endWork -------------------------------->
+
+                
+
+                                </div>
+
 
                             </div>
                         </div>
@@ -504,7 +733,10 @@ hr {
         selector: "textarea#cover_letter",
         height: 300,
         menubar: false,
-        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify",
+        plugins: [
+            "lists",
+        ],
+        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
         force_br_newlines : true,
         force_p_newlines : false,
     });
@@ -515,7 +747,52 @@ hr {
         selector: "textarea#professional_summary",
         height: 300,
         menubar: false,
-        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify",
+        plugins: [
+            "lists",
+        ],
+        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+        force_br_newlines : true,
+        force_p_newlines : false,
+    });
+</script>
+
+<script>
+    tinymce.init({
+        selector: "textarea#work_responsibility_1",
+        height: 300,
+        menubar: false,
+        plugins: [
+            "lists",
+        ],
+        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+        force_br_newlines : true,
+        force_p_newlines : false,
+    });
+</script>
+
+<script>
+    tinymce.init({
+        selector: "textarea#work_responsibility_2",
+        height: 300,
+        menubar: false,
+        plugins: [
+            "lists",
+        ],
+        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+        force_br_newlines : true,
+        force_p_newlines : false,
+    });
+</script>
+
+<script>
+    tinymce.init({
+        selector: "textarea#work_responsibility_3",
+        height: 300,
+        menubar: false,
+        plugins: [
+            "lists",
+        ],
+        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
         force_br_newlines : true,
         force_p_newlines : false,
     });
@@ -646,8 +923,17 @@ hr {
             if (i==0) {
                 form.append("cover_letter", content);
             }
-            else {
+            if (i==1) {
                 form.append("professional_summary", content);
+            }
+            if (i==2) {
+                form.append("work_responsibility_1", content);
+            }
+            if (i==3) {
+                form.append("work_responsibility_2", content);
+            }
+            if (i==4) {
+                form.append("work_responsibility_3", content);
             }
         }
         

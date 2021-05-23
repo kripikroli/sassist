@@ -28,6 +28,7 @@ from partners.models import (
     PartnerLCMedia,
     PartnerOtherMedia, 
     PartnerProfessionalSummary,
+    PartnerWorkHistory,
 )
 
 def admin_dashboard_view(request):
@@ -394,6 +395,45 @@ class UserPartnerResumeCreateView(View):
         summary = "".join(professional_summary.splitlines())
         summary = summary.replace("\"", "\'")
 
+        # PartnerWorkHistory - 1
+        work_designation_1 = request.POST.get('work_designation_1', None)
+        work_phone_number_1 = request.POST.get('work_phone_number_1', None)
+        work_email_1 = request.POST.get('work_email_1', None)
+        work_office_name_1 = request.POST.get('work_office_name_1', None)
+        work_office_address_1 = request.POST.get('work_office_address_1', None)
+        work_start_date_1 = request.POST.get('work_start_date_1', None)
+        work_end_date_1 = request.POST.get('work_end_date_1', None)
+        work_responsibilities_1 = request.POST.get('work_responsibility_1', None)
+
+        work_r_1 = "".join(work_responsibilities_1.splitlines())
+        work_r_1 = work_r_1.replace("\"", "\'")
+
+        # PartnerWorkHistory - 2
+        work_designation_2 = request.POST.get('work_designation_2', None)
+        work_phone_number_2 = request.POST.get('work_phone_number_2', None)
+        work_email_2 = request.POST.get('work_email_2', None)
+        work_office_name_2 = request.POST.get('work_office_name_2', None)
+        work_office_address_2 = request.POST.get('work_office_address_2', None)
+        work_start_date_2 = request.POST.get('work_start_date_2', None)
+        work_end_date_2 = request.POST.get('work_end_date_2', None)
+        work_responsibilities_2 = request.POST.get('work_responsibility_2', None)
+
+        work_r_2 = "".join(work_responsibilities_2.splitlines())
+        work_r_2 = work_r_2.replace("\"", "\'")
+
+        # PartnerWorkHistory - 3
+        work_designation_3 = request.POST.get('work_designation_3', None)
+        work_phone_number_3 = request.POST.get('work_phone_number_3', None)
+        work_email_3 = request.POST.get('work_email_3', None)
+        work_office_name_3 = request.POST.get('work_office_name_3', None)
+        work_office_address_3 = request.POST.get('work_office_address_3', None)
+        work_start_date_3 = request.POST.get('work_start_date_3', None)
+        work_end_date_3 = request.POST.get('work_end_date_3', None)
+        work_responsibilities_3 = request.POST.get('work_responsibility_3', None)
+
+        work_r_3 = "".join(work_responsibilities_3.splitlines())
+        work_r_3 = work_r_3.replace("\"", "\'")
+
         # Saving education
         i = 0
         for degree_type in pe_degree_type:
@@ -470,6 +510,48 @@ class UserPartnerResumeCreateView(View):
         professional_summary_obj = PartnerProfessionalSummary(summary=summary, auth_user_id=partner_instance)
         professional_summary_obj.save()
 
+        # Saving work history 1
+        work_history_1_obj = PartnerWorkHistory(
+            designation=work_designation_1,
+            phone_number=work_phone_number_1,
+            email=work_email_1,
+            office_name=work_office_name_1,
+            office_address=work_office_address_1,
+            start_date=work_start_date_1,
+            end_date=work_end_date_1,
+            responsibilities=work_r_1,
+            auth_user_id=partner_instance,
+        )
+        work_history_1_obj.save()
+
+        # Saving work history 2
+        work_history_2_obj = PartnerWorkHistory(
+            designation=work_designation_2,
+            phone_number=work_phone_number_2,
+            email=work_email_2,
+            office_name=work_office_name_2,
+            office_address=work_office_address_2,
+            start_date=work_start_date_2,
+            end_date=work_end_date_2,
+            responsibilities=work_r_2,
+            auth_user_id=partner_instance,
+        )
+        work_history_2_obj.save()
+
+        # Saving work history 3
+        work_history_3_obj = PartnerWorkHistory(
+            designation=work_designation_3,
+            phone_number=work_phone_number_3,
+            email=work_email_3,
+            office_name=work_office_name_3,
+            office_address=work_office_address_3,
+            start_date=work_start_date_3,
+            end_date=work_end_date_3,
+            responsibilities=work_r_3,
+            auth_user_id=partner_instance,
+        )
+        work_history_3_obj.save()
+
         partner_instance.progress_mark = 80
         partner_instance.save()
 
@@ -487,6 +569,7 @@ class UserPartnerResumeUpdateView(View):
         p_skill = PartnerSkill.objects.filter(auth_user_id=partner_user.id)
         p_cover = PartnerCoverLetter.objects.get(auth_user_id=partner_user.id)
         p_summary = PartnerProfessionalSummary.objects.get(auth_user_id=partner_user.id)
+        p_work = PartnerWorkHistory.objects.filter(auth_user_id=partner_user.id)
 
         context = {
             "partner_user": partner_user,
@@ -497,6 +580,7 @@ class UserPartnerResumeUpdateView(View):
             "p_skill": p_skill,
             "p_cover": p_cover,
             "p_summary": p_summary,
+            "p_work": p_work,
         }
 
         return render(request, 'crm/admin_partner_resume_update.html', context)
@@ -724,6 +808,7 @@ class UserPartnerWithResumeListView(ListView):
             context['partner_skills'] = PartnerSkill.objects.filter(auth_user_id=partner_id)
             context['partner_cover'] = PartnerCoverLetter.objects.get(auth_user_id=partner_id)
             context['partner_summary'] = PartnerProfessionalSummary.objects.get(auth_user_id=partner_id)
+            context['partner_works'] = PartnerWorkHistory.objects.filter(auth_user_id=partner_id)
 
         page_number = self.request.GET.get('page', None)
         context['current_id'] = partner_id
