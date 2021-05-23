@@ -143,9 +143,9 @@
                                 <h5 class="mb-1">{{ partner_user.auth_user_id.first_name }} {{ partner_user.auth_user_id.last_name }}</h5>
                                 <small class="text-success">ACTIVE</small>
                             </div>
-                            <p class="mb-3">
+                            <p class="mb-3 ml-5">
                                 <i class="fas fa-mobile-alt mr-2"></i>  {{ partner_user.phone_number }}<br>
-                                <i class="fas fa-birthday-cake mr-2"></i>  {{ partner_user.date_of_birth|date:'Y-m-d' }}<br>
+                                <i class="fas fa-hourglass-start mr-2"></i>  {{ partner_user.date_of_birth|date:'Y-m-d' }}<br>
                                 <i class="fas fa-map-marker-alt mr-2"></i>{% if partner_user.address_line_1 %}
                                             {{ partner_user.address_line_1 }}
                                         {% endif %}
@@ -179,78 +179,120 @@
 
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Education</h5>
-                                <small class="text-muted">{% with partner_education|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
-                            </div>
-                            {% for e in partner_education|slice:":1" %}
-                            <p class="mb-0">{{ e.get_degree_type_display }} | {{ e.field_name }} | {{ e.school_name }} | {{ e.date_graduated }}
-                            <br>{{ e.school_address }}</p>
-                            {% endfor %}
-                            <small class="text-muted">There are {{ partner_education|length }} entries.</small>
-                        </div>
-
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Licenses</h5>
-                                <small class="text-muted">{% with partner_licenses|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
-                            </div>
-                            {% for l in partner_licenses|slice:":1" %}
-                            <p class="mb-0">{{ l.license_name }} | {{ l.license_code }} | {{ l.expiration_date }}
-                                <br>{{ l.address_acquired }}
-                            </p>
-                            {% endfor %}
-                            <small class="text-muted">There are {{ partner_licenses|length }} entries.</small>
-                        </div>
-
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Licenses</h5>
-                                <small class="text-muted">{% with partner_certifications|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
-                            </div>
-                            {% for c in partner_certifications|slice:":1" %}
-                            <p class="mb-0">{{ c.cert_name }} | {{ c.cert_code }} | {{ c.expiration_date }}
-                                <br>{{ c.address_acquired }}
-                            </p>
-                            {% endfor %}
-                            <small class="text-muted">There are {{ partner_certifications|length }} entries.</small>
-                        </div>
-
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Skills</h5>
-                            <small class="text-muted">{% with partner_skills|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
-                            </div>
-                            <p class="mb-1">
-                                {% for s in partner_skills|slice:":2" %}
-                                    {{ s.skill_name }}<br>
-                                {% endfor %}
-                            
-                            </p>
-                            <small class="text-muted">There are {{ partner_skills|length }} entries.</small>
-                        </div>
-
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">References</h5>
-                            <small class="text-muted">{% with partner_references|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
-                            </div>
-                            {% for r in partner_references|slice:":1" %}
-                            <p class="mb-0">{{ r.name }} | {{ r.position }} | {{ r.phone_number }} | {{ r.email }}
-                                <br>{{ r.office_name }} | {{ r.office_name }}
-                            </p>
-                            {% endfor %}
-                            <small class="text-muted">There are {{ partner_references|length }} entries.</small>
-                        </div>
-
-                        <div class="list-group-item list-group-item-action flex-column align-items-start active">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Bio</h5>
-                                <small class="text-light">{{ partner_cover.get_days_ago }} days ago</small>
+                                <h6 class="lead mb-0">Professional Summary</h6>
+                                <small class="text-muted">{{ partner_summary.get_days_ago }} days ago</small>
                             </div>
                             
-                            <div class="text-light mb-0">{{ partner_cover.letter|safe|truncatewords:100 }}</div>
+                            <div mb-0">{{ partner_summary.summary|safe }}</div>
                            
                         </div>
+
+                        
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="lead mb-2">Education</h6>
+                                <small class="text-muted">{% with partner_education|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                           
+                            {% for e in partner_education %}
+                            <p class="mb-0" style="line-height: 18px;"><strong>{{ e.field_name }} | {{ e.school_name }}</strong></p>
+                            <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ e.get_degree_type_display }}</small></p>
+                            <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ e.school_address }}</small></p>
+                            <p class="mb-3 text-muted" style="line-height: 14px;"><small>{{ e.date_graduated }}</small></p>
+                            {% endfor %}
+                        
+
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="lead mb-2">Licenses</h6>
+                                <small class="text-muted">{% with partner_licenses|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            {% for l in partner_licenses %}
+                            <p class="mb-0" style="line-height: 18px;"><strong>{{ l.license_name }}</strong></p>
+                            <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ l.license_code }}</small></p>
+                            <p class="mb-0 text-muted" style="line-height: 14px;"><small>Acquired in {{ l.address_acquired }}</small></p>
+                            <p class="mb-3 text-muted" style="line-height: 14px;"><small>This is valid until <span class="text-danger">{{ l.expiration_date }}</span></small></p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="lead mb-2">Certifications</h6>
+                                <small class="text-muted">{% with partner_certifications|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            {% for c in partner_certifications %}
+                            <p class="mb-0" style="line-height: 18px;"><strong>{{ c.cert_name }}</strong></p>
+                            <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ c.cert_code }}</small></p>
+                            <p class="mb-0 text-muted" style="line-height: 14px;"><small>Acquired in {{ c.address_acquired }}</small></p>
+                            <p class="mb-3 text-muted" style="line-height: 14px;"><small>This is valid until <span class="text-danger">{{ c.expiration_date }}</span></small></p>
+
+                            {% endfor %}
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h6 class="lead mb-2">Skills</h6>
+                            <small class="text-muted">{% with partner_skills|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            <div class="badges">
+                                {% for s in partner_skills %}
+                                <span class="badge badge-primary">{{ s.skill_name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h6 class="lead mb-2">References</h6>
+                            <small class="text-muted">{% with partner_references|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th>Personnel</th>
+                                                <th>Contact</th>
+                                                <th>Office</th>
+                                            </tr>
+                                            {% for r in partner_references %}
+                                            <tr>
+                                                <td>
+                                                    <p class="mb-0" style="line-height: 18px;"><strong>{{ r.name }}</strong></p>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ r.position }}</small></p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ r.phone_number }}</small></p>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ r.email }}</small></p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ r.office_name }}</small></p>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ r.office_address }}</small></p>
+                                                    <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ r.start_date }} - {{ r.end_date }}</small></p>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="lead mb-0">Letter to Patients</h6>
+                                <small class="text-muted">{{ partner_cover.get_days_ago }} days ago</small>
+                            </div>
+                            
+                            <div mb-0">{{ partner_cover.letter|safe }}</div>
+                           
+                        </div>
+
+                        
 
                         
                     </div>

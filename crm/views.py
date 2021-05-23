@@ -26,7 +26,8 @@ from partners.models import (
     PartnerCoverLetter,
     PartnerEducationMedia,
     PartnerLCMedia,
-    PartnerOtherMedia
+    PartnerOtherMedia, 
+    PartnerProfessionalSummary,
 )
 
 def admin_dashboard_view(request):
@@ -310,7 +311,7 @@ class UserPartnerListView(ListView):
     template_name = 'crm/admin_partner_list.html'
 
     # Number of partners to paginate
-    paginate_by = 1
+    paginate_by = 10
 
     def get_queryset(self):
 
@@ -388,6 +389,11 @@ class UserPartnerResumeCreateView(View):
         cover_l = "".join(cover_letter.splitlines())
         cover_l = cover_l.replace("\"", "\'")
 
+        # PartnerProfessionalSummary
+        professional_summary = request.POST.get('professional_summary')
+        summary = "".join(professional_summary.splitlines())
+        summary = summary.replace("\"", "\'")
+
         # Saving education
         i = 0
         for degree_type in pe_degree_type:
@@ -460,6 +466,10 @@ class UserPartnerResumeCreateView(View):
         cover_letter_obj = PartnerCoverLetter(letter=cover_l, auth_user_id=partner_instance)
         cover_letter_obj.save()
 
+        #Saving professional summary
+        professional_summary_obj = PartnerProfessionalSummary(summary=summary, auth_user_id=partner_instance)
+        professional_summary_obj.save()
+
         partner_instance.progress_mark = 80
         partner_instance.save()
 
@@ -476,10 +486,7 @@ class UserPartnerResumeUpdateView(View):
         p_reference = PartnerReference.objects.filter(auth_user_id=partner_user.id)
         p_skill = PartnerSkill.objects.filter(auth_user_id=partner_user.id)
         p_cover = PartnerCoverLetter.objects.get(auth_user_id=partner_user.id)
-
-
-        
-        print(p_cover.letter)
+        p_summary = PartnerProfessionalSummary.objects.get(auth_user_id=partner_user.id)
 
         context = {
             "partner_user": partner_user,
@@ -489,6 +496,7 @@ class UserPartnerResumeUpdateView(View):
             "p_reference": p_reference,
             "p_skill": p_skill,
             "p_cover": p_cover,
+            "p_summary": p_summary,
         }
 
         return render(request, 'crm/admin_partner_resume_update.html', context)
@@ -540,6 +548,11 @@ class UserPartnerResumeUpdateView(View):
         cover_letter = request.POST.get('cover_letter')
         cover_l = "".join(cover_letter.splitlines())
         cover_l = cover_l.replace("\"", "\'")
+
+        # PartnerProfessionalSummary
+        professional_summary = request.POST.get('professional_summary')
+        summary = "".join(professional_summary.splitlines())
+        summary = summary.replace("\"", "\'")
 
         # Saving education
         i = 0
@@ -664,11 +677,15 @@ class UserPartnerResumeUpdateView(View):
             skill_obj = PartnerSkill(skill_name=skill, auth_user_id=partner_instance)
             skill_obj.save()
 
-
         #Saving cover letter        
         cover_letter_obj = PartnerCoverLetter.objects.get(auth_user_id=partner_instance)
         cover_letter_obj.letter = cover_l
         cover_letter_obj.save()
+
+        #Saving professional summary
+        professional_summary_obj = PartnerProfessionalSummary.objects.get(auth_user_id=partner_instance)
+        professional_summary_obj.summary = summary
+        professional_summary_obj.save()
 
         return HttpResponse("Saved")
 
@@ -680,7 +697,7 @@ class UserPartnerWithResumeListView(ListView):
     template_name = 'crm/admin_partner_with_resume_list.html'
 
     # Number of partners to paginate
-    paginate_by = 2
+    paginate_by = 10
 
     def get_queryset(self):
 
@@ -706,6 +723,7 @@ class UserPartnerWithResumeListView(ListView):
             context['partner_references'] = PartnerReference.objects.filter(auth_user_id=partner_id)
             context['partner_skills'] = PartnerSkill.objects.filter(auth_user_id=partner_id)
             context['partner_cover'] = PartnerCoverLetter.objects.get(auth_user_id=partner_id)
+            context['partner_summary'] = PartnerProfessionalSummary.objects.get(auth_user_id=partner_id)
 
         page_number = self.request.GET.get('page', None)
         context['current_id'] = partner_id

@@ -169,3 +169,50 @@ class PartnerCoverLetter(models.Model):
 
     def get_days_ago(self):
         return ((date.today() - self.created.date()).days)
+
+
+class PartnerProfessionalSummary(models.Model):
+    summary=models.TextField(default='')
+    is_added_by_admin=models.BooleanField(default=False)
+    created=models.DateTimeField(auto_now_add=True)
+    updated=models.DateTimeField(auto_now=True)
+    auth_user_id=models.ForeignKey(PartnerUser, related_name='partnerprofessionalsummaries', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.created}"
+
+    def get_days_ago(self):
+        return ((date.today() - self.created.date()).days)
+
+
+class PartnerWorkHistory(models.Model):
+    designation=models.CharField(max_length=255, blank=True, null=True)
+    phone_number=models.CharField(max_length=255, blank=True, null=True)
+    email=models.CharField(max_length=255, blank=True, null=True)
+    office_name=models.CharField(max_length=255, blank=True, null=True)
+    office_address=models.CharField(max_length=255, blank=True, null=True)
+    start_date=models.CharField(max_length=255, blank=True, null=True)
+    end_date=models.CharField(max_length=255, blank=True, null=True)
+    is_added_by_admin=models.BooleanField(default=False)
+    created=models.DateTimeField(auto_now_add=True)
+    updated=models.DateTimeField(auto_now=True)
+    auth_user_id=models.ForeignKey(PartnerUser, related_name='partnerworkhistories', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.designation
+
+    def get_days_ago(self):
+        return ((date.today() - self.created.date()).days)
+
+
+class PartnerResponsibility(models.Model):
+    position=models.CharField(max_length=255, blank=True, null=True)
+    work_history_id=models.ForeignKey(PartnerWorkHistory, related_name='partnerresponsibilities', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.position
+
+    def get_days_ago(self):
+        return ((date.today() - self.created.date()).days)
+
+

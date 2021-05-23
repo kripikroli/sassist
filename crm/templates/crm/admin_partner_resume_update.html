@@ -109,12 +109,22 @@ hr {
                     </div>
                     </div>
 
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Professional Summary</h4>
+                        </div>
+                        <div class="card-body bg-light">
+                            <div class="col-lg-12">
+                                <textarea class="form-control" name="professional_summary" id="professional_summary"></textarea>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="card">
                         <div class="card-header">
-                            <h4>Cover Letter</h4>
+                            <h4>Letter to Patients</h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body bg-light">
                             <div class="col-lg-12">
                                 <textarea class="form-control" name="cover_letter" id="cover_letter"></textarea>
                             </div>
@@ -710,13 +720,30 @@ hr {
         selector: "textarea#cover_letter",
         force_br_newlines : true,
         force_p_newlines : false,
-        height: 400,
+        height: 300,
         menubar: false,
         toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify",  
         setup: 
             editor => {
             editor.on('init', () => {
                 editor.setContent("{{ p_cover.letter|safe }}");
+            });
+        }
+    });
+</script>
+
+<script>
+    tinymce.init({
+        selector: "textarea#professional_summary",
+        force_br_newlines : true,
+        force_p_newlines : false,
+        height: 300,
+        menubar: false,
+        toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify",  
+        setup: 
+            editor => {
+            editor.on('init', () => {
+                editor.setContent("{{ p_summary.summary|safe }}");
             });
         }
     });
@@ -835,7 +862,16 @@ hr {
 
         
         var form = new FormData($("#resumeForm")[0]);
-        form.append("cover_letter", tinyMCE.activeEditor.getContent());
+        
+        for (i=0; i < tinyMCE.editors.length; i++){
+            var content = tinyMCE.editors[i].getContent();
+            if (i==0) {
+                form.append("cover_letter", content);
+            }
+            else {
+                form.append("professional_summary", content);
+            }
+        }
 
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {

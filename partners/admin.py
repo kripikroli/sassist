@@ -8,7 +8,8 @@ from .models import (
     PartnerCoverLetter,
     PartnerEducationMedia,
     PartnerLCMedia,
-    PartnerOtherMedia
+    PartnerOtherMedia,
+    PartnerProfessionalSummary
 )
 
 admin.site.register(PartnerEducation)
@@ -20,4 +21,5 @@ admin.site.register(PartnerCoverLetter)
 admin.site.register(PartnerEducationMedia)
 admin.site.register(PartnerLCMedia)
 admin.site.register(PartnerOtherMedia)
+admin.site.register(PartnerProfessionalSummary)
 
