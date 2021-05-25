@@ -1,0 +1,209 @@
+{% extends "partners/base.html" %}
+
+{% load static %}
+
+{% block custom_css %}
+<style>
+
+.popover {
+font-size: .700rem;
+}
+
+.popover .popover-body {
+    padding: 10px;
+    line-height: 14px;
+}
+
+.circular_image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  float: left;
+  overflow: hidden;
+  background-color: blue;
+  display:inline-block;
+  vertical-align:center;
+}
+
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    Update Account
+{% endblock title %}
+
+
+{% block page_title %}
+    Update Account
+{% endblock page_title %}
+
+{% block page_content %}
+
+<form id="updateAccountForm">
+{% csrf_token %}
+    
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <div class="alert alert-info alert-has-icon">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <div class="alert-title">Friendly Reminder</div>
+                    By clicking Save My Account, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookies Policy</a>. You may receive SMS Notifications from us and can opt out any time.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <p class="lead">Personal Information</p>
+
+                    <div class="form-group">
+                        <label>Profile picture</label>
+                        <input type="file" name="profile_pic" id="profile_pic" class="form-control">
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-sm-12">
+                            <div class="d-flex justify-content-center">
+                                <div class="form-group">
+                                    <label class="d-flex justify-content-center">Current profile image</label><br>
+                                    <div class="circular_image">
+                                        <img alt="image" class="mr-5" width="100%" src="{{ partner_user.profile_pic.url }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-8 col-sm-12">
+                            <blockquote class="blockquote mt-5">
+                                <p class="mb-0">The best thing about a picture is that it never changes, even when the people in it do.</p>
+                                <footer class="blockquote-footer">Andy Warhol</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input value="{{ partner_user_basic.first_name }}" type="text" name="first_name" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input value="{{ partner_user_basic.last_name }}" type="text" name="last_name" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Birthdate <a href="#" data-toggle="tooltip" title="" data-original-title="Providing your birthday helps make sure you get the right CarePartner App experience. If you want to change who sees this, go to the About section of your profile. For more details, please visit our Data Policy."><i class="fa fa-question-circle"style="cursor: pointer;"></i></a></label>
+                        <input value="{{ partner_user.date_of_birth|date:"Y-m-d" }}" type="text" name="date_of_birth" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input value="{{ partner_user.phone_number }}" type="text" name="phone_number" class="form-control">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <p class="lead">Postal Address <span class="small text-muted">(For cards, paychecks, document deliveries)</span></p>
+                    <div class="form-group">
+                        <label>Address Line 1</label>
+                        <input value="{{ partner_user.address_line_1 }}" type="text" name="address_line_1" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address Line 2</label>
+                        <input value="{{ partner_user.address_line_2 }}" type="text" name="address_line_2" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>City</label>
+                        <input value="{{ partner_user.address_town }}" type="text" name="address_town" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>State</label>
+                        <input value="{{ partner_user.address_region }}" type="text" name="address_region" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input value="{{ partner_user.address_country }}" type="text" name="address_country" class="form-control">
+                    </div>
+                   
+                    <div class="form-group">
+                        <label>Zip code</label>
+                        <input value="{{ partner_user.address_zip_code }}" type="text" name="address_zip_code" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="row mb-5">
+                        <div class="col-lg-12">
+                            <div class='progress mb-3' style="height:auto">
+                                <div class="progress-bar bg-warning" id="progressbar" role="progressbar" data-width="0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="display:none;width: 0%;height: 15px;border-radius: 10px;">0%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-block submit_btn mt-2">SAVE MY ACCOUNT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock page_content %}
+
+{% block custom_js %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static 'partners/modules/sweetalert/sweetalert.min.js' %}"></script>
+<script src="{% static 'partners/js/page/modules-sweetalert.js' %}"></script>
+<script>
+    /*
+        Ajax request
+        Sending data to server
+    */
+    $(".submit_btn").click(function(){
+
+        var form = new FormData($("#updateAccountForm")[0]);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.status == 200){
+                console.log(xhr.responseText);
+            }
+        }
+        xhr.open("POST","{% url 'partners:partner_account_update_view' %}", true);
+
+        $("#progressbar").show();
+
+        xhr.upload.addEventListener("progress", function(ev) {
+            if(ev.lengthComputable) {
+                var percentage = (ev.loaded/ev.total*100|0);
+                $("#progressbar").css({"width":""+percentage+"%"}).text("Uploaded .."+percentage+"%");
+                setTimeout(function(){
+                    $(document).ready(function() {
+                        swal('Success', 'You just updated your account!', 'success').then(function() {
+                            window.location.href = "{% url 'partners:partner_dashboard_view' %}";
+                    })});
+                }, 1000);
+                
+            }
+            
+        });
+
+        xhr.send(form);
+        
+    })
+</script>
+{% endblock custom_js %}
+

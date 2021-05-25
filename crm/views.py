@@ -1,11 +1,7 @@
 import os
 
 from datetime import date
-from django.contrib import auth
-from pathlib import Path
 
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages.views import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.serializers import serialize
@@ -33,39 +29,6 @@ from partners.models import (
 
 def admin_dashboard_view(request):
     return render(request, 'crm/admin_dashboard.html')
-
-def login_view(request):
-    error_message = None
-    form = AuthenticationForm()
-
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                if request.GET.get('next'):
-                    return redirect(request.GET.get('next'))
-                else:
-                    return redirect('crm:admin_dashboard_view')
-
-        else:
-            error_message = 'Oppsss... something went wrong'
-
-    context = {
-        'form': form,
-        'error_message': error_message
-    }
-    return render(request, 'auth/login.html', context)
-
-
-def logout_view(request):
-
-    logout(request)
-    return redirect('crm:login_view')
-
 
 def educ_media_upload_view(request):
     if request.method == 'POST':
@@ -511,35 +474,82 @@ class UserPartnerResumeCreateView(View):
         professional_summary_obj.save()
 
         # Saving work history 1
-        work_history_1_obj = PartnerWorkHistory(
-            designation=work_designation_1,
-            phone_number=work_phone_number_1,
-            email=work_email_1,
-            office_name=work_office_name_1,
-            office_address=work_office_address_1,
-            start_date=work_start_date_1,
-            end_date=work_end_date_1,
-            responsibilities=work_r_1,
-            auth_user_id=partner_instance,
-        )
-        work_history_1_obj.save()
+
+        if work_designation_1 == None and work_phone_number_1 == None and work_email_1 == None:
+            work_history_1_obj = PartnerWorkHistory(
+                designation='',
+                phone_number='',
+                email='',
+                office_name='',
+                office_address='',
+                start_date='',
+                end_date='',
+                responsibilities='',
+                auth_user_id=partner_instance,
+            )
+            work_history_1_obj.save()
+
+        else:
+            work_history_1_obj = PartnerWorkHistory(
+                designation=work_designation_1,
+                phone_number=work_phone_number_1,
+                email=work_email_1,
+                office_name=work_office_name_1,
+                office_address=work_office_address_1,
+                start_date=work_start_date_1,
+                end_date=work_end_date_1,
+                responsibilities=work_r_1,
+                auth_user_id=partner_instance,
+            )
+            work_history_1_obj.save()
+
 
         # Saving work history 2
-        work_history_2_obj = PartnerWorkHistory(
-            designation=work_designation_2,
-            phone_number=work_phone_number_2,
-            email=work_email_2,
-            office_name=work_office_name_2,
-            office_address=work_office_address_2,
-            start_date=work_start_date_2,
-            end_date=work_end_date_2,
-            responsibilities=work_r_2,
-            auth_user_id=partner_instance,
-        )
-        work_history_2_obj.save()
+        if work_designation_2 == None and work_phone_number_2 == None and work_email_2 == None:
+            work_history_2_obj = PartnerWorkHistory(
+                designation='',
+                phone_number='',
+                email='',
+                office_name='',
+                office_address='',
+                start_date='',
+                end_date='',
+                responsibilities='',
+                auth_user_id=partner_instance,
+            )
+            work_history_2_obj.save()
+
+        else:
+            work_history_2_obj = PartnerWorkHistory(
+                designation=work_designation_2,
+                phone_number=work_phone_number_2,
+                email=work_email_2,
+                office_name=work_office_name_2,
+                office_address=work_office_address_2,
+                start_date=work_start_date_2,
+                end_date=work_end_date_2,
+                responsibilities=work_r_2,
+                auth_user_id=partner_instance,
+            )
+            work_history_2_obj.save()
 
         # Saving work history 3
-        work_history_3_obj = PartnerWorkHistory(
+        if work_designation_3 == None and work_phone_number_3 == None and work_email_3 == None:
+            work_history_3_obj = PartnerWorkHistory(
+                designation='',
+                phone_number='',
+                email='',
+                office_name='',
+                office_address='',
+                start_date='',
+                end_date='',
+                responsibilities='',
+                auth_user_id=partner_instance,
+            )
+            work_history_3_obj.save()
+        
+        else:
+            work_history_3_obj = PartnerWorkHistory(
             designation=work_designation_3,
             phone_number=work_phone_number_3,
             email=work_email_3,
@@ -549,8 +559,8 @@ class UserPartnerResumeCreateView(View):
             end_date=work_end_date_3,
             responsibilities=work_r_3,
             auth_user_id=partner_instance,
-        )
-        work_history_3_obj.save()
+            )
+            work_history_3_obj.save()
 
         partner_instance.progress_mark = 80
         partner_instance.save()
@@ -637,6 +647,48 @@ class UserPartnerResumeUpdateView(View):
         professional_summary = request.POST.get('professional_summary')
         summary = "".join(professional_summary.splitlines())
         summary = summary.replace("\"", "\'")
+
+        # PartnerWorkHistory - 1
+        wd_id_1 = request.POST.get('wd_id_1', None)
+        work_designation_1 = request.POST.get('work_designation_1', None)
+        work_phone_number_1 = request.POST.get('work_phone_number_1', None)
+        work_email_1 = request.POST.get('work_email_1', None)
+        work_office_name_1 = request.POST.get('work_office_name_1', None)
+        work_office_address_1 = request.POST.get('work_office_address_1', None)
+        work_start_date_1 = request.POST.get('work_start_date_1', None)
+        work_end_date_1 = request.POST.get('work_end_date_1', None)
+        work_responsibilities_1 = request.POST.get('work_responsibility_1', None)
+
+        work_r_1 = "".join(work_responsibilities_1.splitlines())
+        work_r_1 = work_r_1.replace("\"", "\'")
+
+        # PartnerWorkHistory - 2
+        wd_id_2 = request.POST.get('wd_id_2', None)
+        work_designation_2 = request.POST.get('work_designation_2', None)
+        work_phone_number_2 = request.POST.get('work_phone_number_2', None)
+        work_email_2 = request.POST.get('work_email_2', None)
+        work_office_name_2 = request.POST.get('work_office_name_2', None)
+        work_office_address_2 = request.POST.get('work_office_address_2', None)
+        work_start_date_2 = request.POST.get('work_start_date_2', None)
+        work_end_date_2 = request.POST.get('work_end_date_2', None)
+        work_responsibilities_2 = request.POST.get('work_responsibility_2', None)
+
+        work_r_2 = "".join(work_responsibilities_2.splitlines())
+        work_r_2 = work_r_2.replace("\"", "\'")
+
+        # PartnerWorkHistory - 3
+        wd_id_3 = request.POST.get('wd_id_3', None)
+        work_designation_3 = request.POST.get('work_designation_3', None)
+        work_phone_number_3 = request.POST.get('work_phone_number_3', None)
+        work_email_3 = request.POST.get('work_email_3', None)
+        work_office_name_3 = request.POST.get('work_office_name_3', None)
+        work_office_address_3 = request.POST.get('work_office_address_3', None)
+        work_start_date_3 = request.POST.get('work_start_date_3', None)
+        work_end_date_3 = request.POST.get('work_end_date_3', None)
+        work_responsibilities_3 = request.POST.get('work_responsibility_3', None)
+
+        work_r_3 = "".join(work_responsibilities_3.splitlines())
+        work_r_3 = work_r_3.replace("\"", "\'")
 
         # Saving education
         i = 0
@@ -770,6 +822,81 @@ class UserPartnerResumeUpdateView(View):
         professional_summary_obj = PartnerProfessionalSummary.objects.get(auth_user_id=partner_instance)
         professional_summary_obj.summary = summary
         professional_summary_obj.save()
+
+        #Saving work history 1
+        work_history_1_obj = PartnerWorkHistory.objects.get(id=wd_id_1)
+        if work_designation_1 == None and work_phone_number_1 == None and work_email_1 == None:
+            work_history_1_obj.designation=''
+            work_history_1_obj.phone_number=''
+            work_history_1_obj.email=''
+            work_history_1_obj.office_name=''
+            work_history_1_obj.office_address=''
+            work_history_1_obj.start_date=''
+            work_history_1_obj.end_date=''
+            work_history_1_obj.responsibilities=''
+            work_history_1_obj.auth_user_id=partner_instance
+            work_history_1_obj.save()
+        else:
+            work_history_1_obj.designation=work_designation_1
+            work_history_1_obj.phone_number=work_phone_number_1
+            work_history_1_obj.email=work_email_1
+            work_history_1_obj.office_name=work_office_name_1
+            work_history_1_obj.office_address=work_office_address_1
+            work_history_1_obj.start_date=work_start_date_1
+            work_history_1_obj.end_date=work_end_date_1
+            work_history_1_obj.responsibilities=work_r_1
+            work_history_1_obj.auth_user_id=partner_instance
+            work_history_1_obj.save()
+
+        #Saving work history 2
+        work_history_2_obj = PartnerWorkHistory.objects.get(id=wd_id_2)
+        if work_designation_2 == None and work_phone_number_2 == None and work_email_2 == None:
+            work_history_2_obj.designation=''
+            work_history_2_obj.phone_number=''
+            work_history_2_obj.email=''
+            work_history_2_obj.office_name=''
+            work_history_2_obj.office_address=''
+            work_history_2_obj.start_date=''
+            work_history_2_obj.end_date=''
+            work_history_2_obj.responsibilities=''
+            work_history_2_obj.auth_user_id=partner_instance
+            work_history_2_obj.save()
+        else:
+            work_history_2_obj.designation=work_designation_2
+            work_history_2_obj.phone_number=work_phone_number_2
+            work_history_2_obj.email=work_email_2
+            work_history_2_obj.office_name=work_office_name_2
+            work_history_2_obj.office_address=work_office_address_2
+            work_history_2_obj.start_date=work_start_date_2
+            work_history_2_obj.end_date=work_end_date_2
+            work_history_2_obj.responsibilities=work_r_2
+            work_history_2_obj.auth_user_id=partner_instance
+            work_history_2_obj.save()
+
+        #Saving work history 3
+        work_history_3_obj = PartnerWorkHistory.objects.get(id=wd_id_3)
+        if work_designation_3 == None and work_phone_number_3 == None and work_email_3 == None:
+            work_history_3_obj.designation=''
+            work_history_3_obj.phone_number=''
+            work_history_3_obj.email=''
+            work_history_3_obj.office_name=''
+            work_history_3_obj.office_address=''
+            work_history_3_obj.start_date=''
+            work_history_3_obj.end_date=''
+            work_history_3_obj.responsibilities=''
+            work_history_3_obj.auth_user_id=partner_instance
+            work_history_3_obj.save()
+        else:
+            work_history_3_obj.designation=work_designation_3
+            work_history_3_obj.phone_number=work_phone_number_3
+            work_history_3_obj.email=work_email_3
+            work_history_3_obj.office_name=work_office_name_3
+            work_history_3_obj.office_address=work_office_address_3
+            work_history_3_obj.start_date=work_start_date_3
+            work_history_3_obj.end_date=work_end_date_3
+            work_history_3_obj.responsibilities=work_r_3
+            work_history_3_obj.auth_user_id=partner_instance
+            work_history_3_obj.save()
 
         return HttpResponse("Saved")
 

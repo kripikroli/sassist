@@ -1,8 +1,6 @@
 from django.urls import path
 from .views import (
     admin_dashboard_view, 
-    login_view,
-    logout_view,
     educ_media_upload_view,
     lc_media_upload_view,
     other_media_upload_view,
@@ -22,9 +20,6 @@ urlpatterns = [
     # Dashboard
     path('admin/dashboard/', admin_dashboard_view, name='admin_dashboard_view'),
 
-    # Login
-    path('login/', login_view, name='login_view'),
-    path('logout/', logout_view, name='logout_view'),
     path('educ_media_upload/', educ_media_upload_view, name='educ_media_upload'),
     path('lc_media_upload/', lc_media_upload_view, name='lc_media_upload'),
     path('other_media_upload/', other_media_upload_view, name='other_media_upload'),

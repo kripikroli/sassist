@@ -262,15 +262,19 @@
                                             {% for w in partner_works %}
                                             <tr>
                                                 <td>
+                                                    <br>
                                                     <p class="mb-0" style="line-height: 18px;"><strong>{{ w.designation }}</strong></p>
                                                     <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.phone_number }}</small></p>
                                                     <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.email }}</small></p>
                                                     <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.office_name }}</small></p>
                                                     <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.office_address }}</small></p>
                                                     <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.start_date }} - {{ w.end_date }}</small></p>
+                                                    <br>
                                                 </td>
                                                 <td>
+                                                    <br>
                                                     <p class="mb-0 text-muted" style="line-height: 14px;"><small>{{ w.responsibilities|safe }}</small></p>
+                                                    <br>
                                                 </td>
                                             </tr>
                                             {% endfor %}

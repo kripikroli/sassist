@@ -3,7 +3,10 @@ media
 static/crm/css
 static/crm/fonts
 static/crm/img
-static/crm/backup
 static/crm/modules
+static/partners/css
+static/partners/fonts
+static/partners/img
+static/partners/modules
 templates/crm/backup
 sassist/settings.py

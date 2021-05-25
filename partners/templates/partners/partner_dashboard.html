@@ -1,0 +1,77 @@
+{% extends "partners/base.html" %}
+
+{% block title %}
+    Care Partners Dashboard
+{% endblock title %}
+
+
+{% block page_title %}
+    Care Partners Dashboard
+{% endblock page_title %}
+
+{% block page_content %}
+    
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="hero bg-primary text-white">
+                <div class="hero-inner">
+                <h2>Welcome, {{ partner_user.auth_user_id.first_name }}</h2>
+                <p class="lead">You're almost done, please fill in some information about your account to complete the registration.</p>
+                <div class="mt-4">
+                    <a href="{% url 'partners:partner_account_update_view' %}" class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i> Complete Account Setup </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <h2 class="section-title">Start earning your first paycheck!</h2>
+        <p class="section-lead">These are the next simple steps to become a full-pledged Care Partner.</p>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Setup Resume</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="empty-state" data-height="400" style="height: 400px;">
+                            <div class="empty-state-icon bg-primary">
+                                <i class="fas fa-question"></i>
+                            </div>
+                            <h2>Boost Your Online Presence</h2>
+                            <p class="lead">
+                                Showcase your work experiences, education, skills, and qualifications in a standardized format.
+                            </p>
+                            <a href="#" class="btn btn-primary mt-4">Setup My Resume</a>
+                            <a href="#" class="mt-4 bb">Need Help?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Pre-Screening Process</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="empty-state" data-height="400" style="height: 400px;">
+                            <div class="empty-state-icon bg-danger">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <h2>Background Brief Review</h2>
+                            <p class="lead">
+                                One of our staff will conduct a unique pre-screening call for verification.
+                            </p>
+                            <a href="#" class="btn btn-warning mt-4">Set A Schedule</a>
+                            <a href="#" class="mt-4 bb">Find Hints</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+   
+
+{% endblock page_content %}

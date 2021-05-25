@@ -68,7 +68,7 @@ hr {
                         <ul class="list-unstyled list-unstyled-border list-unstyled-noborder">
                             <li class="media">
                                 <div class="circular_image">
-                                    <img alt="image" class="mr-5 rounded-circle" width="100%" src="/media/{{ partner_user.profile_pic }}">
+                                    <img alt="image" class="mr-5 rounded-circle" width="100%" src="{{ partner_user.profile_pic.url }}">
                                 </div>
                                 <div class="media-body ml-3">
                                     <div class="media-right"><div class="text-primary">Active</div></div>
@@ -695,6 +695,7 @@ hr {
                                                     <div class="form-group mb-2">
                                                         <label class="col-lg-12 mb-1">Designation</label>
                                                         <div class="col-lg-12 mt-0">
+                                                            <input name="wd_id_1" type="hidden" value="{{ w.id }}" class="form-control">
                                                             <input value="{{ w.designation }}" type="text" name="work_designation_1" class="form-control work_designation_1">
                                                         </div>
                                                     </div>
@@ -762,6 +763,7 @@ hr {
                                                     <div class="form-group mb-2">
                                                         <label class="col-lg-12 mb-1">Designation</label>
                                                         <div class="col-lg-12 mt-0">
+                                                            <input name="wd_id_2" type="hidden" value="{{ w.id }}" class="form-control">
                                                             <input value="{{ w.designation }}" type="text" name="work_designation_2" class="form-control work_designation_2">
                                                         </div>
                                                     </div>
@@ -829,6 +831,7 @@ hr {
                                                     <div class="form-group mb-2">
                                                         <label class="col-lg-12 mb-1">Designation</label>
                                                         <div class="col-lg-12 mt-0">
+                                                            <input name="wd_id_3" type="hidden" value="{{ w.id }}" class="form-control">
                                                             <input value="{{ w.designation }}" type="text" name="work_designation_3" class="form-control work_designation_3">
                                                         </div>
                                                     </div>

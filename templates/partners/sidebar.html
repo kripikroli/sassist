@@ -1,0 +1,36 @@
+{% load static %}
+
+{% url 'partners:partner_account_update_view' as partner_account_update %}
+
+<div class="main-sidebar sidebar-style-2">
+    <aside id="sidebar-wrapper">
+        <div class="sidebar-brand mt-2">
+            <img src="{% static 'crm/img/logo.png' %}" alt="logo" width="50" class="">
+        </div>
+        <div class="sidebar-brand sidebar-brand-sm">
+            <a href="index.html">CPRx</a>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="menu-header">Dashboard</li>
+        </ul>
+
+        <ul class="sidebar-menu">
+            <li class="menu-header">Account</li>
+
+            <li class="dropdown {% if request.path == partner_account_update %}active{% endif %}">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-user"></i><span>Profile</span></a>
+                <ul class="dropdown-menu">
+                    <li class='{% if request.path == partner_account_update %}active{% endif %}'><a class="nav-link" href="{% url 'partners:partner_account_update_view' %}">Update Profile</a></li>
+                </ul>
+            </li>
+        </ul>
+
+
+
+        <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+            <a href="{% url 'logout_view' %}" class="btn btn-primary btn-lg btn-block btn-icon-split">
+            <i class="fas fa-sign-out-alt"></i> LOGOUT
+            </a>
+        </div>   
+    </aside>
+</div>
