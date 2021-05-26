@@ -1,0 +1,198 @@
+{% extends "partners/base.html" %}
+
+{% load static %}
+
+{% block custom_css %}
+<style>
+hr {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  width: 50%;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    My Education
+{% endblock title %}
+
+
+{% block page_title %}
+    My Education
+{% endblock page_title %}
+
+{% block page_content %}
+    <form id="educationForm">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12">
+            <div class="row mt-4">
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="lead">Add Education</p>
+                            <!-- Education -------------------------------->
+                            <div class="educ_div">
+
+                                <div class="row educ_div_row first_educ">
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Degree</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <select class="form-control degree" name="degree[]">
+                                                    <option value=1>High School</option>
+                                                    <option value=2>Associate</option>
+                                                    <option value=3 selected>Bachelor</option>
+                                                    <option value=4>Master</option>
+                                                    <option value=5>Doctorate</option>
+                                                    <option value=6>Unspecified</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">School</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="school[]" class="form-control school">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Field</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="field[]" class="form-control field">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Graduated</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="graduated[]" class="form-control graduated" id="graduated" placeholder="YYYY-MM-DD">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Address</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" class="form-control school_address" name="school_address[]">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <hr>
+
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="btn float-right mt-5">
+
+                                <a href="#remove_educ" class="btn btn-warning remove_educ" id="remove_educ">Remove</a>
+                                <a href="#add_educ" class="btn btn-primary add_educ" id="add_educ">Add More</a>
+
+                            </div>
+
+                            <!-- endEducation -------------------------------->
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-body">
+
+                            <div class="row mb-5">
+                                <div class="col-lg-12">
+                                    <div class='progress mb-3' style="height:auto">
+                                        <div class="progress-bar bg-warning" id="progressbar" role="progressbar" data-width="0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="display:none;width: 0%;height: 15px;border-radius: 15px;">0%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-block submit_btn mt-5">SAVE EDUCATION</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+{% endblock page_content %}
+
+{% block custom_js %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static 'partners/modules/sweetalert/sweetalert.min.js' %}"></script>
+<script src="{% static 'partners/js/page/modules-sweetalert.js' %}"></script>
+
+<script>
+    /*
+        Add education button
+        Remove education button
+    */
+    $(".add_educ").click(function(){
+        if($(".educ_div").find(".educ_div_row").length < 3){
+            var educ_row = $(".first_educ").clone();
+            educ_row.removeClass("first_educ");
+            educ_row.find(".school").val("");
+            educ_row.find(".degree").val(3);
+            educ_row.find(".field").val("");
+            educ_row.find(".school_address").val("");
+            $(".educ_div").append(educ_row);
+        }
+        
+    });
+
+    $(".remove_educ").click(function(){
+        if($(".educ_div").find(".educ_div_row").length > 1){
+            $(".educ_div").children().last().remove();
+        }
+        else{
+
+        }
+    });
+
+
+    /*
+        Ajax request
+        Sending data to server
+    */
+    $(".submit_btn").click(function(){
+
+        var form = new FormData($("#educationForm")[0]);
+        
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.status == 200){
+                console.log(xhr.responseText);
+            }
+        }
+        xhr.open("POST","{% url 'partners:partner_education_view' %}", true);
+
+        $("#progressbar").show();
+
+        xhr.upload.addEventListener("progress", function(ev) {
+            if(ev.lengthComputable) {
+                var percentage = (ev.loaded/ev.total*100|0);
+                $("#progressbar").css({"width":""+percentage+"%"}).text("Uploaded .."+percentage+"%");
+                setTimeout(function(){
+                    $(document).ready(function() {
+                        swal('Success', 'You just added education!', 'success').then(function() {
+                            window.location.href = "{% url 'partners:partner_resume_panel_view' %}";
+                    })});
+                }, 1000);
+                
+            }
+            
+        });
+
+        xhr.send(form);
+        
+    })
+
+</script>
+
+{% endblock custom_js %}

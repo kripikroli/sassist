@@ -79,3 +79,55 @@ class PartnerUpdateView(View):
         partner_user.save()
 
         return HttpResponse("Saved")
+
+
+class PartnerResumePanelView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        context = {
+            'partner_user': partner_user,
+        }
+
+        return render(request, 'partners/partner_resume_panel.html', context)
+
+
+class PartnerEducationView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        context = {
+            'partner_user': partner_user,
+            'partner_education': partner_user.partnereducations.all()
+        }
+
+        return render(request, 'partners/partner_education.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerEducation
+        pe_degree_type = request.POST.getlist('degree[]')
+        pe_school_name = request.POST.getlist('school[]')
+        pe_field_name = request.POST.getlist('field[]')
+        pe_date_graduated = request.POST.getlist('graduated[]')
+        pe_school_address = request.POST.getlist('school_address[]')
+
+        # Saving education
+        i = 0
+        for degree_type in pe_degree_type:
+            education_obj = PartnerEducation(
+                degree_type=degree_type,
+                school_name=pe_school_name[i],
+                field_name=pe_field_name[i],
+                date_graduated=pe_date_graduated[i],
+                school_address=pe_school_address[i],
+                auth_user_id=partner_user
+            )
+            education_obj.save()
+            i += 1
+
+        return HttpResponse("Saved")

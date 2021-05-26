@@ -1,0 +1,167 @@
+{% extends "partners/base.html" %}
+
+
+{% block custom_css %}
+<style>
+.wizard-steps .wizard-step:before {
+    content: "+";
+    bottom: 10px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    My Resume Wizard
+{% endblock title %}
+
+
+{% block page_title %}
+    My Resume Wizard
+{% endblock page_title %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <div class="alert alert-info alert-has-icon">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <div class="alert-title">Friendly Reminder</div>
+                    By clicking Save My Account, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookies Policy</a>. You may receive SMS Notifications from us and can opt out any time.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mt-4">
+                        <div class="col-12 col-lg-8 offset-lg-2">
+                            
+                            <div class="wizard-steps">
+                               
+                                <div class="wizard-step wizard-step-active setup_profile clickable">
+                                    <div class="wizard-step-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        Setup Profile
+                                    </div>
+                                </div>
+
+                                <div class="wizard-step clickable">
+                                    <div class="wizard-step-icon">
+                                        <i class="fas fa-graduation-cap"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        My Education
+                                    </div>
+                                </div>
+
+                                <div class="wizard-step clickable">
+                                    <div class="wizard-step-icon">
+                                        <i class="far fa-id-badge"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        My Licenses
+                                    </div>
+                                </div>
+
+                                <div class="wizard-step clickable">
+                                    <div class="wizard-step-icon">
+                                        <i class="fas fa-certificate"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        My Certifications
+                                    </div>
+                                </div> 
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-12 col-lg-8 offset-lg-2">
+                            <div class="wizard-steps">
+                                <div class="wizard-step">
+                                    <div class="wizard-step-icon">
+                                        <i class="fas fa-user-astronaut"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        My Skills
+                                    </div>
+                                </div>
+
+                                <div class="wizard-step">
+                                    <div class="wizard-step-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        My References
+                                    </div>
+                                </div>
+
+                                <div class="wizard-step">
+                                    <div class="wizard-step-icon">
+                                        <i class="fas fa-user-md"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        My Work History
+                                    </div>
+                                </div>
+
+                                <div class="wizard-step">
+                                    <div class="wizard-step-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        My Documents
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-12 col-lg-8 offset-lg-2">
+                            <div class="wizard-steps">
+
+                                <div class="wizard-step">
+                                    <div class="wizard-step-icon">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        Professional Summary
+                                    </div>
+                                </div>
+
+
+                                <div class="wizard-step">
+                                    <div class="wizard-step-icon">
+                                        <i class="fas fa-envelope-open-text"></i>
+                                    </div>
+                                    <div class="wizard-step-label">
+                                        Letter to Patients
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock page_content %}
