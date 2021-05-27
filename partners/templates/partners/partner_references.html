@@ -1,0 +1,218 @@
+{% extends "partners/base.html" %}
+
+{% load static %}
+
+{% block custom_css %}
+<style>
+hr {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  width: 50%;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    My References
+{% endblock title %}
+
+
+{% block page_title %}
+    My References
+{% endblock page_title %}
+
+{% block page_content %}
+    <form id="referencesForm">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12">
+            <div class="row mt-4">
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="lead">Add References</p>
+                            
+                            <!-- References -------------------------------->
+                            <div class="references_div">
+
+                                <div class="row references_div_row first_references">
+
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Name</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="reference_name[]" class="form-control reference_name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Position</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="reference_position[]" class="form-control reference_position">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Phone</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="reference_phone_number[]" class="form-control reference_phone_number">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Email</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="email" name="reference_email[]" class="form-control reference_email">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Office Name</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="reference_office_name[]" class="form-control reference_office_name">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Office Address</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" class="form-control reference_office_address[]" name="reference_office_address[]">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Start Date</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="reference_start_date[]" class="form-control reference_start_date" placeholder="YYYY-MM-DD">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">End Date</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="reference_end_date[]" class="form-control reference_end_date" placeholder="YYYY-MM-DD">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr/>
+
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="btn float-right mt-4">
+
+                                <a href="#remove_references" class="btn btn-warning remove_references" id="remove_references">Remove</a>
+                                <a href="#add_references" class="btn btn-primary add_references" id="add_references">Add More</a>
+
+                            </div>
+
+                            <!-- endReferences -------------------------------->
+
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-body">
+
+                            <div class="row mb-5">
+                                <div class="col-lg-12">
+                                    <div class='progress mb-3' style="height:auto">
+                                        <div class="progress-bar bg-warning" id="progressbar" role="progressbar" data-width="0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="display:none;width: 0%;height: 15px;border-radius: 15px;">0%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-block submit_btn mt-5">SAVE REFERENCES</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+{% endblock page_content %}
+
+{% block custom_js %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static 'partners/modules/sweetalert/sweetalert.min.js' %}"></script>
+<script src="{% static 'partners/js/page/modules-sweetalert.js' %}"></script>
+
+<script>
+    
+    /*
+        Add references button
+        Remove references button
+    */
+    $(".add_references").click(function(){
+        
+        if($(".references_div").find(".references_div_row").length < 3){
+            var references_row = $(".first_references").clone();
+            references_row.removeClass("first_references");
+            references_row.find(".reference_name").val("");
+            references_row.find(".reference_position").val("");
+            references_row.find(".reference_phone_number").val("");
+            references_row.find(".reference_email").val("");
+            references_row.find(".reference_office_name").val("");
+            references_row.find(".reference_office_address").val("");
+            references_row.find(".reference_start_date").val("");
+            references_row.find(".reference_end_date").val("");
+            $(".references_div").append(references_row);
+        }
+    });
+
+    $(".remove_references").click(function(){
+        if($(".references_div").find(".references_div_row").length > 1){
+            $(".references_div").children().last().remove();
+        }
+        else{
+        }
+    });
+
+
+    /*
+        Ajax request
+        Sending data to server
+    */
+    $(".submit_btn").click(function(){
+
+        var form = new FormData($("#referencesForm")[0]);
+        
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.status == 200){
+                console.log(xhr.responseText);
+            }
+        }
+        xhr.open("POST","{% url 'partners:partner_references_view' %}", true);
+
+        $("#progressbar").show();
+
+        xhr.upload.addEventListener("progress", function(ev) {
+            if(ev.lengthComputable) {
+                var percentage = (ev.loaded/ev.total*100|0);
+                $("#progressbar").css({"width":""+percentage+"%"}).text("Uploaded .."+percentage+"%");
+                setTimeout(function(){
+                    $(document).ready(function() {
+                        swal('Success', 'You just added references!', 'success').then(function() {
+                            window.location.href = "{% url 'partners:partner_resume_panel_view' %}";
+                    })});
+                }, 1000);
+                
+            }
+            
+        });
+
+        xhr.send(form);
+        
+    })
+
+</script>
+
+{% endblock custom_js %}

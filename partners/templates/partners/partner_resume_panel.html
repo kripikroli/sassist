@@ -3,15 +3,32 @@
 
 {% block custom_css %}
 <style>
+
+.wizard-steps {
+    display: block;
+    bottom: 10px;
+}
+
+.wizard-steps .clickable {
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
 .wizard-steps .wizard-step:before {
     content: "+";
     bottom: 10px;
 }
 
-.clickable {
-    cursor: pointer;
+.circular_image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  float: left;
+  overflow: hidden;
+  background-color: blue;
+  display:inline-block;
+  vertical-align:center;
 }
-
 
 </style>
 {% endblock custom_css %}
@@ -27,136 +44,317 @@
 
 {% block page_content %}
     <div class="row">
-        <div class="col-12 col-md-12 col-sm-12">
-            <div class="alert alert-info alert-has-icon">
-                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
-                <div class="alert-body">
-                    <div class="alert-title">Friendly Reminder</div>
-                    By clicking Save My Account, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookies Policy</a>. You may receive SMS Notifications from us and can opt out any time.
+        <div class="col-12 col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                
+                    <div class="wizard-steps">
+                        
+                        <div class="wizard-step wizard-step-active clickable">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                Setup Profile
+                            </div>
+                        </div>
+
+                        <div class="wizard-step clickable">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                My Education
+                            </div>
+                        </div>
+
+                        <div class="wizard-step clickable">
+                            <div class="wizard-step-icon">
+                                <i class="far fa-id-badge"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                My Licenses
+                            </div>
+                        </div>
+
+                        <div class="wizard-step clickable">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                My Certifications
+                            </div>
+                        </div>
+
+                        <div class="wizard-step clickable">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-user-astronaut"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                My Skills
+                            </div>
+                        </div>
+
+                        <div class="wizard-step clickable">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                My References
+                            </div>
+                        </div>
+
+                        <div class="wizard-step clickable">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                My Work History
+                            </div>
+                        </div>
+
+                        <div class="wizard-step clickable">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                My Documents
+                            </div>
+                        </div>
+                  
+                        <div class="wizard-step clickable">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                Professional Summary
+                            </div>
+                        </div>
+
+
+                        <div class="wizard-step clickable">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-envelope-open-text"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                Letter to Patients
+                            </div>
+                        </div>          
+                    </div>     
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-md-8 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mt-4">
-                        <div class="col-12 col-lg-8 offset-lg-2">
+                    <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
+                        <li class="media">
+                            <div class="circular_image">
+                                <img alt="image" class="mr-5 rounded-circle" width="100%" src="{{ partner_user.profile_pic.url }}">
+                            </div>
                             
-                            <div class="wizard-steps">
-                               
-                                <div class="wizard-step wizard-step-active setup_profile clickable">
-                                    <div class="wizard-step-icon">
-                                        <i class="fas fa-check"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        Setup Profile
-                                    </div>
-                                </div>
+                            <div class="media-body ml-4">
+                    
+                                <dl class="row">
 
-                                <div class="wizard-step clickable">
-                                    <div class="wizard-step-icon">
-                                        <i class="fas fa-graduation-cap"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        My Education
-                                    </div>
-                                </div>
+                                    <dt class="col-sm-2"></dt>
+                                    <dd class="col-sm-10"><span class="text-dark">{{ partner_user.auth_user_id.first_name }} {{ partner_user.auth_user_id.last_name }}</span></dd>
 
-                                <div class="wizard-step clickable">
-                                    <div class="wizard-step-icon">
-                                        <i class="far fa-id-badge"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        My Licenses
-                                    </div>
-                                </div>
+                                    <dt class="col-sm-2"><i class="far fa-envelope float-right mt-1"></i></dt>
+                                    <dd class="col-sm-10">{{ partner_user.auth_user_id.email }}</dd>
 
-                                <div class="wizard-step clickable">
-                                    <div class="wizard-step-icon">
-                                        <i class="fas fa-certificate"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        My Certifications
-                                    </div>
-                                </div> 
+                                    <dt class="col-sm-2"><i class="fas fa-hourglass-start float-right mt-1"></i></dt>
+                                    <dd class="col-sm-10">{{ partner_user.date_of_birth }}</dd>
 
-                            </div>
-                        </div>
-                    </div>
+                                    <dt class="col-sm-2"><i class="fas fa-map-pin float-right mt-1"></i></dt>
+                                    <dd class="col-sm-10">
+                                        
+                                            {% if partner_user.address_line_1 %} {{ partner_user.address_line_1 }}{% endif %}
+                                            {% if partner_user.address_line_2 %} {{ partner_user.address_line_2 }}{% endif %}
+                                        <br>
+                                            {% if partner_user.address_town %} {{ partner_user.address_town }}, {% endif %}
+                                            {% if partner_user.address_region %} {{ partner_user.address_region }}{% endif %}
+                                        <br>
+                                            {% if partner_user.address_country %} {{ partner_user.address_country }},{% endif %}
+                                            {% if partner_user.address_zip_code %} {{ partner_user.address_zip_code }}{% endif %}
+                                        
+                                    </dd>
 
-                    <div class="row mt-4">
-                        <div class="col-12 col-lg-8 offset-lg-2">
-                            <div class="wizard-steps">
-                                <div class="wizard-step">
-                                    <div class="wizard-step-icon">
-                                        <i class="fas fa-user-astronaut"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        My Skills
-                                    </div>
-                                </div>
-
-                                <div class="wizard-step">
-                                    <div class="wizard-step-icon">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        My References
-                                    </div>
-                                </div>
-
-                                <div class="wizard-step">
-                                    <div class="wizard-step-icon">
-                                        <i class="fas fa-user-md"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        My Work History
-                                    </div>
-                                </div>
-
-                                <div class="wizard-step">
-                                    <div class="wizard-step-icon">
-                                        <i class="fas fa-file-pdf"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        My Documents
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-12 col-lg-8 offset-lg-2">
-                            <div class="wizard-steps">
-
-                                <div class="wizard-step">
-                                    <div class="wizard-step-icon">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        Professional Summary
-                                    </div>
-                                </div>
-
-
-                                <div class="wizard-step">
-                                    <div class="wizard-step-icon">
-                                        <i class="fas fa-envelope-open-text"></i>
-                                    </div>
-                                    <div class="wizard-step-label">
-                                        Letter to Patients
-                                    </div>
-                                </div>
-
+                                </dl>
                                 
                             </div>
-                        </div>
-                    </div>
+                            <div class="media-progressbar">
+                                <div class="progress-text">{{ partner_user.progress_mark }}%</div>
+                                <div class="progress" data-height="2">
+                                <div class="progress-bar bg-primary" data-width="{{ partner_user.progress_mark }}%"></div>
+                                </div>
+                            </div>
+                            <form method="GET">
+                                <div class="media-cta">
+                                    <a class="btn btn-icon btn-light" href="{% url 'partners:partner_account_update_view' %}"><i class="fa fa-edit"></i> Edit</a>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
 
+                    <div class="list-group">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="lead mb-0">Professional Summary</h6>
+                                <small class="text-muted">{{ partner_professional_summary.get_days_ago }} days ago</small>
+                            </div>
+                            
+                            <div mb-0">{{ partner_professional_summary.summary|safe }}</div>
+                           
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="lead mb-2">Education</h6>
+                                <small class="text-muted">{% with partner_education|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                           
+                            {% for e in partner_education %}
+                            <div>
+                                <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ e.field_name }} | {{ e.school_name }}</strong></p>
+                                <p class="mb-0" style="line-height: 18px;">{{ e.get_degree_type_display }}</p>
+                                <p class="mb-0" style="line-height: 18px;">{{ e.school_address }}</p>
+                                <p class="mb-3" style="line-height: 18px;">{{ e.date_graduated }}</p>
+                            </div>
+                            {% endfor %}
+                         
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="lead mb-2">Licenses</h6>
+                                <small class="text-muted">{% with partner_licenses|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            {% for l in partner_licenses %}
+                            <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ l.license_name }}</strong></p>
+                            <p class="mb-0" style="line-height: 18px;">{{ l.license_code }}</p>
+                            <p class="mb-0" style="line-height: 18px;">Acquired in {{ l.address_acquired }}</p>
+                            <p class="mb-3" style="line-height: 18px;">This is valid until <span class="text-danger">{{ l.expiration_date }}</span></p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="lead mb-2">Certifications</h6>
+                                <small class="text-muted">{% with partner_certifications|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            {% for c in partner_certifications %}
+                            <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ c.cert_name }}</strong></p>
+                            <p class="mb-0" style="line-height: 18px;">{{ c.cert_code }}</p>
+                            <p class="mb-0" style="line-height: 18px;">Acquired in {{ c.address_acquired }}</p>
+                            <p class="mb-3" style="line-height: 18px;">This is valid until <span class="text-danger">{{ c.expiration_date }}</span></p>
+
+                            {% endfor %}
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h6 class="lead mb-2">Skills</h6>
+                            <small class="text-muted">{% with partner_skills|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+                            <div class="badges">
+                                {% for s in partner_skills %}
+                                <span class="badge badge-primary">{{ s.skill_name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h6 class="lead mb-2">Work History</h6>
+                            <small class="text-muted">{% with partner_works|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th>Information</th>
+                                                <th>Responsibilities</th>
+                                            </tr>
+                                            {% for w in partner_works %}
+                                            <tr>
+                                                <td class="">
+                                                    <br>
+                                                    <p class="mb-1 text-dark" style="line-height: 18px;"><strong>{{ w.designation }}</strong></p>
+                                                    <p class="mb-0" style="line-height: 18px;">{{ w.phone_number }}</p>
+                                                    <p class="mb-0" style="line-height: 18px;">{{ w.email }}</p>
+                                                    <p class="mb-0" style="line-height: 18px;">{{ w.office_name }}</p>
+                                                    <p class="mb-0" style="line-height: 18px;">{{ w.office_address }}</p>
+                                                    <p class="mb-0" style="line-height: 18px;">{{ w.start_date }} - {{ w.end_date }}</p>
+                                                    <br>
+                                                </td>
+                                                <td class="">
+                                                    <br>
+                                                    <p class="mb-0" style="line-height: 18px;">{{ w.responsibilities|safe }}</p>
+                                                    <br>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h6 class="lead mb-2">References</h6>
+                            <small class="text-muted">{% with partner_references|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th>Personnel</th>
+                                                <th>Contact</th>
+                                                <th>Office</th>
+                                            </tr>
+                                            {% for r in partner_references %}
+                                            <tr>
+                                                <td>
+                                                    <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ r.name }}</strong></p>
+                                                    <p class="mb-0" style="line-height: 18px;">{{ r.position }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0 text-muted" style="line-height: 18px;">{{ r.phone_number }}</p>
+                                                    <p class="mb-0 text-muted" style="line-height: 18px;">{{ r.email }}</p>
+                                                </td>
+                                                <td>
+                                                    <br>
+                                                    <p class="mb-0 text-muted" style="line-height: 18px;">{{ r.office_name }}</p>
+                                                    <p class="mb-0 text-muted" style="line-height: 18px;">{{ r.office_address }}</p>
+                                                    <p class="mb-0 text-muted" style="line-height: 18px;">{{ r.start_date }} - {{ r.end_date }}</p>
+                                                    <br>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="lead mb-0">Letter to Patients</h6>
+                                <small class="text-muted">{{ partner_cover.get_days_ago }} days ago</small>
+                            </div>
+                            
+                            <div mb-0">{{ partner_cover.letter|safe }}</div>
+                           
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>

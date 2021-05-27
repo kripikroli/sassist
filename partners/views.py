@@ -86,8 +86,18 @@ class PartnerResumePanelView(View):
     def get(self, request, *args, **kwargs):
 
         partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        partner_professional_summary = PartnerProfessionalSummary.objects.get(auth_user_id=partner_user.id)
+        partner_cover = PartnerCoverLetter.objects.get(auth_user_id=partner_user.id)
         context = {
             'partner_user': partner_user,
+            'partner_professional_summary': partner_professional_summary,
+            'partner_education': partner_user.partnereducations.all(),
+            'partner_licenses': partner_user.partnerlicenses.all(),
+            'partner_certifications': partner_user.partnercertifications.all(),
+            'partner_skills': partner_user.partnerskills.all(),
+            'partner_works': partner_user.partnerworkhistories.all(),
+            'partner_references': partner_user.partnerreferences.all(),
+            'partner_cover': partner_cover
         }
 
         return render(request, 'partners/partner_resume_panel.html', context)
@@ -129,5 +139,326 @@ class PartnerEducationView(View):
             )
             education_obj.save()
             i += 1
+
+        return HttpResponse("Saved")
+
+
+class PartnerLicensesView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        context = {
+            'partner_user': partner_user,
+            'partner_licenses': partner_user.partnerlicenses.all()
+        }
+
+        return render(request, 'partners/partner_licenses.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerLicense
+        pl_license_name = request.POST.getlist('license_name[]')
+        pl_license_code = request.POST.getlist('license_code[]')
+        pl_expiration_date = request.POST.getlist('license_expiration_date[]')
+        pl_address_acquired = request.POST.getlist('license_address[]')
+        pl_is_compact = request.POST.getlist('license_is_compact[]')
+
+        # Saving licenses
+        i = 0
+        for license_name in pl_license_name:
+            license_obj = PartnerLicense(
+                license_name=license_name,
+                license_code=pl_license_code[i],
+                expiration_date=pl_expiration_date[i],
+                address_acquired=pl_address_acquired[i],
+                is_compact=pl_is_compact[i],
+                auth_user_id=partner_user
+            )
+            license_obj.save()
+            i += 1
+
+        return HttpResponse("Saved")
+
+
+class PartnerCertificationsView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        context = {
+            'partner_user': partner_user,
+            'partner_certifications': partner_user.partnercertifications.all()
+        }
+
+        return render(request, 'partners/partner_certifications.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerCertification
+        pc_cert_name = request.POST.getlist('certification_name[]')
+        pc_cert_code = request.POST.getlist('certification_code[]')
+        pc_expiration_date = request.POST.getlist('certification_expiration_date[]')
+        pc_address_acquired = request.POST.getlist('certification_address[]')
+
+        # Saving certifications
+        i = 0
+        for cert_name in pc_cert_name:
+            cert_obj = PartnerCertification(
+                cert_name=cert_name,
+                cert_code=pc_cert_code[i],
+                expiration_date=pc_expiration_date[i],
+                address_acquired=pc_address_acquired[i],
+                auth_user_id=partner_user
+            )
+            cert_obj.save()
+            i += 1
+
+        return HttpResponse("Saved")
+
+
+class PartnerReferencesView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        context = {
+            'partner_user': partner_user,
+            'partner_references': partner_user.partnerreferences.all()
+        }
+
+        return render(request, 'partners/partner_references.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerReference
+        pr_name = request.POST.getlist('reference_name[]')
+        pr_position = request.POST.getlist('reference_position[]')
+        pr_phone_number = request.POST.getlist('reference_phone_number[]')
+        pr_email = request.POST.getlist('reference_email[]')
+        pr_office_name = request.POST.getlist('reference_office_name[]')
+        pr_office_address = request.POST.getlist('reference_office_address[]')
+        pr_start_date = request.POST.getlist('reference_start_date[]')
+        pr_end_date = request.POST.getlist('reference_end_date[]')
+
+        # Saving references
+        i = 0
+        for reference in pr_name:
+            reference_obj = PartnerReference(
+                name=reference,
+                position=pr_position[i],
+                phone_number=pr_phone_number[i],
+                email=pr_email[i],
+                office_name=pr_office_name[i],
+                office_address=pr_office_address[i],
+                start_date=pr_start_date[i],
+                end_date=pr_end_date[i],
+                auth_user_id=partner_user
+            )
+            reference_obj.save()
+            i += 1
+
+        return HttpResponse("Saved")
+
+
+class PartnerSkillsView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        context = {
+            'partner_user': partner_user,
+            'partner_skills': partner_user.partnerskills.all()
+        }
+
+        return render(request, 'partners/partner_skills.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerSkill
+        ps_skills = request.POST.get('skills')
+
+        return HttpResponse("Saved")
+
+
+class PartnerWorkExperiencesView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        context = {
+            'partner_user': partner_user,
+            'partner_work_experiences': partner_user.partnerworkhistories.all()
+        }
+
+        return render(request, 'partners/partner_work_experiences.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerWorkHistory - 1
+        work_designation_1 = request.POST.get('work_designation_1', None)
+        work_phone_number_1 = request.POST.get('work_phone_number_1', None)
+        work_email_1 = request.POST.get('work_email_1', None)
+        work_office_name_1 = request.POST.get('work_office_name_1', None)
+        work_office_address_1 = request.POST.get('work_office_address_1', None)
+        work_start_date_1 = request.POST.get('work_start_date_1', None)
+        work_end_date_1 = request.POST.get('work_end_date_1', None)
+        work_responsibilities_1 = request.POST.get('work_responsibility_1', None)
+
+        work_r_1 = "".join(work_responsibilities_1.splitlines())
+        work_r_1 = work_r_1.replace("\"", "\'")
+
+        # PartnerWorkHistory - 2
+        work_designation_2 = request.POST.get('work_designation_2', None)
+        work_phone_number_2 = request.POST.get('work_phone_number_2', None)
+        work_email_2 = request.POST.get('work_email_2', None)
+        work_office_name_2 = request.POST.get('work_office_name_2', None)
+        work_office_address_2 = request.POST.get('work_office_address_2', None)
+        work_start_date_2 = request.POST.get('work_start_date_2', None)
+        work_end_date_2 = request.POST.get('work_end_date_2', None)
+        work_responsibilities_2 = request.POST.get('work_responsibility_2', None)
+
+        work_r_2 = "".join(work_responsibilities_2.splitlines())
+        work_r_2 = work_r_2.replace("\"", "\'")
+
+        # PartnerWorkHistory - 3
+        work_designation_3 = request.POST.get('work_designation_3', None)
+        work_phone_number_3 = request.POST.get('work_phone_number_3', None)
+        work_email_3 = request.POST.get('work_email_3', None)
+        work_office_name_3 = request.POST.get('work_office_name_3', None)
+        work_office_address_3 = request.POST.get('work_office_address_3', None)
+        work_start_date_3 = request.POST.get('work_start_date_3', None)
+        work_end_date_3 = request.POST.get('work_end_date_3', None)
+        work_responsibilities_3 = request.POST.get('work_responsibility_3', None)
+
+        work_r_3 = "".join(work_responsibilities_3.splitlines())
+        work_r_3 = work_r_3.replace("\"", "\'")
+
+        # Saving work history 1
+
+        if work_designation_1 == None and work_phone_number_1 == None and work_email_1 == None:
+            work_history_1_obj = PartnerWorkHistory(
+                designation='',
+                phone_number='',
+                email='',
+                office_name='',
+                office_address='',
+                start_date='',
+                end_date='',
+                responsibilities='',
+                auth_user_id=partner_user,
+            )
+            work_history_1_obj.save()
+
+        else:
+            work_history_1_obj = PartnerWorkHistory(
+                designation=work_designation_1,
+                phone_number=work_phone_number_1,
+                email=work_email_1,
+                office_name=work_office_name_1,
+                office_address=work_office_address_1,
+                start_date=work_start_date_1,
+                end_date=work_end_date_1,
+                responsibilities=work_r_1,
+                auth_user_id=partner_user,
+            )
+            work_history_1_obj.save()
+
+
+        # Saving work history 2
+        if work_designation_2 == None and work_phone_number_2 == None and work_email_2 == None:
+            work_history_2_obj = PartnerWorkHistory(
+                designation='',
+                phone_number='',
+                email='',
+                office_name='',
+                office_address='',
+                start_date='',
+                end_date='',
+                responsibilities='',
+                auth_user_id=partner_user,
+            )
+            work_history_2_obj.save()
+
+        else:
+            work_history_2_obj = PartnerWorkHistory(
+                designation=work_designation_2,
+                phone_number=work_phone_number_2,
+                email=work_email_2,
+                office_name=work_office_name_2,
+                office_address=work_office_address_2,
+                start_date=work_start_date_2,
+                end_date=work_end_date_2,
+                responsibilities=work_r_2,
+                auth_user_id=partner_user,
+            )
+            work_history_2_obj.save()
+
+        # Saving work history 3
+        if work_designation_3 == None and work_phone_number_3 == None and work_email_3 == None:
+            work_history_3_obj = PartnerWorkHistory(
+                designation='',
+                phone_number='',
+                email='',
+                office_name='',
+                office_address='',
+                start_date='',
+                end_date='',
+                responsibilities='',
+                auth_user_id=partner_user,
+            )
+            work_history_3_obj.save()
+        
+        else:
+            work_history_3_obj = PartnerWorkHistory(
+            designation=work_designation_3,
+            phone_number=work_phone_number_3,
+            email=work_email_3,
+            office_name=work_office_name_3,
+            office_address=work_office_address_3,
+            start_date=work_start_date_3,
+            end_date=work_end_date_3,
+            responsibilities=work_r_3,
+            auth_user_id=partner_user,
+            )
+            work_history_3_obj.save()
+
+        return HttpResponse("Saved")
+
+
+class PartnerProfessionalSummaryView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        context = {
+            'partner_user': partner_user,
+            'partner_professional_summary': partner_user.partnerprofessionalsummaries.all()
+        }
+
+        return render(request, 'partners/partner_professional_summary.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerProfessionalSummary
+        professional_summary = request.POST.get('professional_summary')
+        summary = "".join(professional_summary.splitlines())
+        summary = summary.replace("\"", "\'")
+
+        #Saving professional summary
+        professional_summary_obj = PartnerProfessionalSummary(summary=summary, auth_user_id=partner_user)
+        professional_summary_obj.save()
 
         return HttpResponse("Saved")

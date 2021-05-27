@@ -5,6 +5,12 @@ from .views import (
     PartnerUpdateView,
     PartnerResumePanelView,
     PartnerEducationView,
+    PartnerLicensesView,
+    PartnerCertificationsView,
+    PartnerReferencesView,
+    PartnerSkillsView,
+    PartnerWorkExperiencesView,
+    PartnerProfessionalSummaryView,
 )
 
 app_name = 'partners'
@@ -21,5 +27,11 @@ urlpatterns = [
     path('resume-panel/', PartnerResumePanelView.as_view(), name='partner_resume_panel_view'),
 
     path('my-education/', PartnerEducationView.as_view(), name='partner_education_view'),
+    path('my-licenses/', PartnerLicensesView.as_view(), name='partner_licenses_view'),
+    path('my-certifications/', PartnerCertificationsView.as_view(), name='partner_certifications_view'),
+    path('my-references/', PartnerReferencesView.as_view(), name='partner_references_view'),
+    path('my-skills/', PartnerSkillsView.as_view(), name='partner_skills_view'),
+    path('my-work-experiences/', PartnerWorkExperiencesView.as_view(), name='partner_work_experiences_view'),
+    path('my-professional-summary/', PartnerProfessionalSummaryView.as_view(), name='partner_professional_summary_view'),
 
 ]
