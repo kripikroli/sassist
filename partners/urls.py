@@ -11,6 +11,7 @@ from .views import (
     PartnerSkillsView,
     PartnerWorkExperiencesView,
     PartnerProfessionalSummaryView,
+    PartnerMediaUpload,
 )
 
 app_name = 'partners'
@@ -33,5 +34,6 @@ urlpatterns = [
     path('my-skills/', PartnerSkillsView.as_view(), name='partner_skills_view'),
     path('my-work-experiences/', PartnerWorkExperiencesView.as_view(), name='partner_work_experiences_view'),
     path('my-professional-summary/', PartnerProfessionalSummaryView.as_view(), name='partner_professional_summary_view'),
+    path('my-documents/', PartnerMediaUpload.as_view(), name='partner_media_upload_view'),
 
 ]

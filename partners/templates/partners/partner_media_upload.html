@@ -1,0 +1,302 @@
+{% extends "partners/base.html" %}
+
+{% load static %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'partners/modules/izitoast/css/iziToast.min.css' %}">
+
+<style>
+.dropzone .dz-message .small-message {
+  font-size: 14px;
+}
+
+.circular_image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  float: left;
+  overflow: hidden;
+  background-color: blue;
+  display:inline-block;
+  vertical-align:center;
+}
+
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    Partner Add Media
+{% endblock title %}
+
+
+{% block page_title %}
+    Partner Add Media
+{% endblock page_title %}
+
+{% block page_content %}
+    
+    <div class="section-body">
+
+            <div class="row">
+                <div class="col-12 col-md-6 col-sm-12">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Partner</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
+                                <li class="media">
+                                    <div class="circular_image">
+                                        <img alt="image" class="mr-5 rounded-circle" width="100%" src="{{ partner_user.profile_pic.url }}">
+                                    </div>
+                                    
+                                    <div class="media-body ml-4">
+                            
+                                        <dl class="row">
+
+                                            <dt class="col-sm-2"></dt>
+                                            <dd class="col-sm-10"><span class="text-dark">{{ partner_user.auth_user_id.first_name }} {{ partner_user.auth_user_id.last_name }}</span></dd>
+
+                                            <dt class="col-sm-2"><i class="far fa-envelope float-right mt-1"></i></dt>
+                                            <dd class="col-sm-10">{{ partner_user.auth_user_id.email }}</dd>
+
+                                            <dt class="col-sm-2"><i class="fas fa-hourglass-start float-right mt-1"></i></dt>
+                                            <dd class="col-sm-10">{{ partner_user.date_of_birth }}</dd>
+
+                                            <dt class="col-sm-2"><i class="fas fa-map-pin float-right mt-1"></i></dt>
+                                            <dd class="col-sm-10">
+                                                
+                                                    {% if partner_user.address_line_1 %} {{ partner_user.address_line_1 }}{% endif %}
+                                                    {% if partner_user.address_line_2 %} {{ partner_user.address_line_2 }}{% endif %}
+                                                <br>
+                                                    {% if partner_user.address_town %} {{ partner_user.address_town }}, {% endif %}
+                                                    {% if partner_user.address_region %} {{ partner_user.address_region }}{% endif %}
+                                                <br>
+                                                    {% if partner_user.address_country %} {{ partner_user.address_country }},{% endif %}
+                                                    {% if partner_user.address_zip_code %} {{ partner_user.address_zip_code }}{% endif %}
+                                                
+                                            </dd>
+
+                                        </dl>
+                                        
+                                    </div>
+                                    <div class="media-progressbar">
+                                        <div class="progress-text">{{ partner_user.progress_mark }}%</div>
+                                        <div class="progress" data-height="2">
+                                        <div class="progress-bar bg-primary" data-width="{{ partner_user.progress_mark }}%"></div>
+                                        </div>
+                                    </div>
+                                    <form method="GET">
+                                        <div class="media-cta">
+                                            <a class="btn btn-icon btn-light" href="{% url 'partners:partner_account_update_view' %}"><i class="fa fa-edit"></i> Edit</a>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        
+                        <div id="media_files" class="card-body">
+                            <div class="lead mb-2">All Files</div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tbody id="inside-tbody">
+                                        <tr>
+                                            <th>
+                                            </th>
+                                            <th>File Name</th>
+                                            <th>Uploaded At</th>
+                                            <th>Format</th>
+                                            <th>Actions</th>
+                                        </tr>
+
+                                        {% for media in partner_education_media %}
+                                        <tr>
+                                            <td class="p-0 text-center text-muted">
+                                                ED
+                                            </td>
+
+                                            <td>{{ media.media_filename|slice:":-4"|slice:":5" }}</td>
+                                            
+                                            <td>{{ media.created|date:"Y-m-d" }}</td>
+
+                                            {% if media.media_format == 1 %}
+                                                <td><div class="badge badge-success">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 2 %}
+                                                <td><div class="badge badge-info">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 3 %}
+                                                <td><div class="badge badge-warning">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+
+
+                                            <td>
+                                                <a href="?remove_ed={{ media.id }}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
+                                                <a target="_blank" href="/media/{{ media.media_content }}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                        {% for media in partner_lc_media %}
+                                        <tr>
+                                            <td class="p-0 text-center text-muted">
+                                                LC
+                                            </td>
+
+                                            <td>{{ media.media_filename|slice:":-4"|slice:":5" }}</td>
+                                            
+                                            <td>{{ media.created|date:"Y-m-d" }}</td>
+
+                                            {% if media.media_format == 1 %}
+                                                <td><div class="badge badge-success">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 2 %}
+                                                <td><div class="badge badge-info">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 3 %}
+                                                <td><div class="badge badge-warning">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+
+
+                                            <td>
+                                                <a href="?remove_lc={{ media.id }}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
+                                                <a target="_blank" href="/media/{{ media.media_content }}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                        {% for media in partner_other_media %}
+                                        <tr>
+                                            <td class="p-0 text-center text-muted">
+                                                OD
+                                            </td>
+
+                                            <td>{{ media.media_filename|slice:":-4"|slice:":5" }}</td>
+                                            
+                                            <td>{{ media.created|date:"Y-m-d" }}</td>
+
+                                            {% if media.media_format == 1 %}
+                                                <td><div class="badge badge-success">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 2 %}
+                                                <td><div class="badge badge-info">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+                                            {% if media.media_format == 3 %}
+                                                <td><div class="badge badge-warning">{{ media.get_media_format_display }}</div></td>
+                                            {% endif %}
+
+
+                                            <td>
+                                                <a href="?remove_od={{ media.id }}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
+                                                <a target="_blank" href="{{ media.media_content.url }}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Media</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="lead">Education</div>
+                                    <div id="alert-box-educ"></div>
+                                    <form id="educdropzone" class="dropzone dz">
+                                        {% csrf_token %}
+                                        <input id="partner-id" name="partner_id" type="hidden" value="{{ partner_user.id }}" />
+                                        <div class="dz-message" data-dz-message>
+                                        
+                                            <span>
+                                                Drop files for Education
+                                            </span>
+                                            <p class="small-message text-muted">Choose only <span class="text-primary">.PNG</span>, <span class="text-primary">.JPG</span> and <span class="text-primary">.PDF</span> formats</p>
+                                        </div>
+                                        
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="lead">Licenses and Certifications</div>
+                                    <div id="alert-box-lc"></div>
+                                    <form id="lcdropzone" class="dropzone dz">
+                                        {% csrf_token %}
+                                        <input id="partner-id" name="partner_id" type="hidden" value="{{ partner_user.id }}" />
+                                        <div class="dz-message" data-dz-message>
+                                        
+                                            <span>
+                                                Drop files for Licenses and Certifications
+                                            </span>
+                                            <p class="small-message text-muted">Choose only <span class="text-primary">.PNG</span>, <span class="text-primary">.JPG</span> and <span class="text-primary">.PDF</span> formats</p>
+                                        </div>
+                                        
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="lead">Other Documents</div>
+                                    <div id="alert-box-other"></div>
+                                    <form id="otherdropzone" class="dropzone dz">
+                                        {% csrf_token %}
+                                        <input id="partner-id" name="partner_id" type="hidden" value="{{ partner_user.id }}" />
+                                        <div class="dz-message" data-dz-message>
+                                        
+                                            <span>
+                                                Drop files for Other Documents
+                                            </span>
+                                            <p class="small-message text-muted">Choose only <span class="text-primary">.PNG</span>, <span class="text-primary">.JPG</span> and <span class="text-primary">.PDF</span> formats</p>
+                                        </div>
+                                        
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+    
+    </div>
+        
+
+
+{% endblock page_content %}
+
+
+{% block custom_js %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static 'partners/upload.js' %}" defer></script>
+<script src="{% static 'partners/modules/moment.min.js' %}" defer></script>
+<script src="{% static 'partners/modules/izitoast/js/iziToast.min.js' %}"></script>
+
+<script>
+
+</script>
+
+{% endblock custom_js %}
