@@ -40,66 +40,24 @@
             <div class="row">
                 <div class="col-12 col-md-6 col-sm-12">
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Partner</h4>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
-                                <li class="media">
-                                    <div class="circular_image">
-                                        <img alt="image" class="mr-5 rounded-circle" width="100%" src="{{ partner_user.profile_pic.url }}">
-                                    </div>
-                                    
-                                    <div class="media-body ml-4">
-                            
-                                        <dl class="row">
-
-                                            <dt class="col-sm-2"></dt>
-                                            <dd class="col-sm-10"><span class="text-dark">{{ partner_user.auth_user_id.first_name }} {{ partner_user.auth_user_id.last_name }}</span></dd>
-
-                                            <dt class="col-sm-2"><i class="far fa-envelope float-right mt-1"></i></dt>
-                                            <dd class="col-sm-10">{{ partner_user.auth_user_id.email }}</dd>
-
-                                            <dt class="col-sm-2"><i class="fas fa-hourglass-start float-right mt-1"></i></dt>
-                                            <dd class="col-sm-10">{{ partner_user.date_of_birth }}</dd>
-
-                                            <dt class="col-sm-2"><i class="fas fa-map-pin float-right mt-1"></i></dt>
-                                            <dd class="col-sm-10">
-                                                
-                                                    {% if partner_user.address_line_1 %} {{ partner_user.address_line_1 }}{% endif %}
-                                                    {% if partner_user.address_line_2 %} {{ partner_user.address_line_2 }}{% endif %}
-                                                <br>
-                                                    {% if partner_user.address_town %} {{ partner_user.address_town }}, {% endif %}
-                                                    {% if partner_user.address_region %} {{ partner_user.address_region }}{% endif %}
-                                                <br>
-                                                    {% if partner_user.address_country %} {{ partner_user.address_country }},{% endif %}
-                                                    {% if partner_user.address_zip_code %} {{ partner_user.address_zip_code }}{% endif %}
-                                                
-                                            </dd>
-
-                                        </dl>
-                                        
-                                    </div>
-                                    <div class="media-progressbar">
-                                        <div class="progress-text">{{ partner_user.progress_mark }}%</div>
-                                        <div class="progress" data-height="2">
-                                        <div class="progress-bar bg-primary" data-width="{{ partner_user.progress_mark }}%"></div>
-                                        </div>
-                                    </div>
-                                    <form method="GET">
-                                        <div class="media-cta">
-                                            <a class="btn btn-icon btn-light" href="{% url 'partners:partner_account_update_view' %}"><i class="fa fa-edit"></i> Edit</a>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                   
 
                     <div class="card">
                         
                         <div id="media_files" class="card-body">
+                            <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
+                                <li class="media">
+                                    <p class="lead mr-5">Resume Progress</p>
+                                    <div id="media-progressbar" class="media-progressbar">
+                                        <div class="progress-text">{{ progress_mark }}%</div>
+                                        <div class="progress" data-height="6">
+                                            <div class="progress-bar bg-primary" data-width="{{ progress_mark }}%"></div>
+                                        </div>
+                                    </div>
+                    
+                                </li>
+                            </ul>
+
                             <div class="lead mb-2">All Files</div>
                             <div class="table-responsive">
                                 <table class="table table-striped">
@@ -136,7 +94,7 @@
 
                                             <td>
                                                 <a href="?remove_ed={{ media.id }}" class="btn btn-icon btn-danger mr-2"> <i class="fas fa-times"></i> </a>
-                                                <a target="_blank" href="/media/{{ media.media_content }}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
+                                                <a target="_blank" href="{{ media.media_content.url }}" class="btn btn-icon btn-light"><i class="fas fa-eye"></i> PREVIEW</a>
                                             </td>
 
                                         </tr>

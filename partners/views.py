@@ -12,7 +12,6 @@ from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView, View
 
 from profiles.models import CustomUser, PartnerUser
-
 from .models import (
     PartnerEducation,
     PartnerLicense,
@@ -26,6 +25,7 @@ from .models import (
     PartnerProfessionalSummary,
     PartnerWorkHistory,
 )
+from .utils import get_progress_value
 
 
 class PartnerDashboardView(View):
@@ -86,18 +86,37 @@ class PartnerResumePanelView(View):
     def get(self, request, *args, **kwargs):
 
         partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
-        partner_professional_summary = PartnerProfessionalSummary.objects.get(auth_user_id=partner_user.id)
-        partner_cover = PartnerCoverLetter.objects.get(auth_user_id=partner_user.id)
+
+        progress_mark = 10
+
+        try:
+            partner_professional_summary = PartnerProfessionalSummary.objects.get(auth_user_id=partner_user.id)
+        except:
+            partner_professional_summary = None
+
+        try:
+            partner_cover = PartnerCoverLetter.objects.get(auth_user_id=partner_user.id)
+        except:
+            partner_cover = None
+
+        partner_education = partner_user.partnereducations.all()
+        partner_licenses = partner_user.partnerlicenses.all()
+        partner_certifications = partner_user.partnercertifications.all()
+        partner_skills = partner_user.partnerskills.all()
+        partner_works = partner_user.partnerworkhistories.all()
+        partner_references = partner_user.partnerreferences.all()
+        
         context = {
             'partner_user': partner_user,
             'partner_professional_summary': partner_professional_summary,
-            'partner_education': partner_user.partnereducations.all(),
-            'partner_licenses': partner_user.partnerlicenses.all(),
-            'partner_certifications': partner_user.partnercertifications.all(),
-            'partner_skills': partner_user.partnerskills.all(),
-            'partner_works': partner_user.partnerworkhistories.all(),
-            'partner_references': partner_user.partnerreferences.all(),
-            'partner_cover': partner_cover
+            'partner_education': partner_education,
+            'partner_licenses': partner_licenses,
+            'partner_certifications': partner_certifications,
+            'partner_skills': partner_skills,
+            'partner_works': partner_works,
+            'partner_references': partner_references,
+            'partner_cover': partner_cover,
+            'progress_mark': get_progress_value(request.user.id)
         }
 
         return render(request, 'partners/partner_resume_panel.html', context)
@@ -286,6 +305,12 @@ class PartnerSkillsView(View):
         # PartnerSkill
         ps_skills = request.POST.get('skills')
 
+        # Saving skills
+        skill_list = ps_skills.split(',')
+        for skill in skill_list:
+            skill_obj = PartnerSkill(skill_name=skill, auth_user_id=partner_user)
+            skill_obj.save()
+
         return HttpResponse("Saved")
 
 
@@ -464,6 +489,34 @@ class PartnerProfessionalSummaryView(View):
         return HttpResponse("Saved")
 
 
+class PartnerCoverLetterView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        context = {
+            'partner_user': partner_user,
+            'partner_cover_letter': partner_user.partnerprofessionalsummaries.all()
+        }
+
+        return render(request, 'partners/partner_cover_letter.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerCoverLetter
+        cover_letter = request.POST.get('cover_letter')
+        cover_l = "".join(cover_letter.splitlines())
+        cover_l = cover_l.replace("\"", "\'")
+
+        #Saving cover letter
+        cover_letter_obj = PartnerCoverLetter(letter=cover_l, auth_user_id=partner_user)
+        cover_letter_obj.save()
+
+        return HttpResponse("Saved")
+
+
 class PartnerMediaUpload(View):
 
     def get(self, request, *args, **kwargs):
@@ -499,7 +552,8 @@ class PartnerMediaUpload(View):
             "partner_user": partner_user,
             "partner_education_media": partner_education_media,
             "partner_lc_media": partner_lc_media,
-            "partner_other_media": partner_other_media
+            "partner_other_media": partner_other_media,
+            "progress_mark": get_progress_value(request.user.id)
         }
 
         return render(request, 'partners/partner_media_upload.html', context)
@@ -534,7 +588,7 @@ def educ_media_upload_view(request):
             data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
             data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
 
-            return JsonResponse({'ex': False, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
+            return JsonResponse({'ex': False, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od, 'pm': get_progress_value(request.user.id)})
         
         else:
 
@@ -545,7 +599,7 @@ def educ_media_upload_view(request):
             data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
             data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
 
-            return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
+            return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od, 'pm': get_progress_value(request.user.id)})
 
     return HttpResponse()
 
@@ -580,7 +634,7 @@ def lc_media_upload_view(request):
             data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
             data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
 
-            return JsonResponse({'ex': False, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
+            return JsonResponse({'ex': False, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od, 'pm': get_progress_value(request.user.id)})
         
         else:
 
@@ -591,7 +645,7 @@ def lc_media_upload_view(request):
             data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
             data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
 
-            return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
+            return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od, 'pm': get_progress_value(request.user.id)})
 
     return HttpResponse()
 
@@ -625,7 +679,7 @@ def other_media_upload_view(request):
             data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
             data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
 
-            return JsonResponse({'ex': False, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
+            return JsonResponse({'ex': False, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od, 'pm': get_progress_value(request.user.id)})
         
         else:
 
@@ -636,6 +690,6 @@ def other_media_upload_view(request):
             data_lc = serialize("json", qs_lc, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
             data_od = serialize("json", qs_od, fields=('id', 'media_filename', 'media_format', 'media_content', 'created'))
 
-            return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od})
+            return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od, 'pm': get_progress_value(request.user.id)})
 
     return HttpResponse()

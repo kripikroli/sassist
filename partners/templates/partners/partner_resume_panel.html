@@ -44,192 +44,64 @@
 
 {% block page_content %}
     <div class="row">
-        <div class="col-12 col-md-4 col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                
-                    <div class="wizard-steps">
-                        
-                        <div class="wizard-step wizard-step-active clickable">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                Setup Profile
-                            </div>
-                        </div>
-
-                        <div class="wizard-step clickable">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                My Education
-                            </div>
-                        </div>
-
-                        <div class="wizard-step clickable">
-                            <div class="wizard-step-icon">
-                                <i class="far fa-id-badge"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                My Licenses
-                            </div>
-                        </div>
-
-                        <div class="wizard-step clickable">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-certificate"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                My Certifications
-                            </div>
-                        </div>
-
-                        <div class="wizard-step clickable">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-user-astronaut"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                My Skills
-                            </div>
-                        </div>
-
-                        <div class="wizard-step clickable">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                My References
-                            </div>
-                        </div>
-
-                        <div class="wizard-step clickable">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-user-md"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                My Work History
-                            </div>
-                        </div>
-
-                        <div class="wizard-step clickable">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                My Documents
-                            </div>
-                        </div>
-                  
-                        <div class="wizard-step clickable">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                Professional Summary
-                            </div>
-                        </div>
-
-
-                        <div class="wizard-step clickable">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-envelope-open-text"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                Letter to Patients
-                            </div>
-                        </div>          
-                    </div>     
-                </div>
-            </div>
-        </div>
-
         <div class="col-12 col-md-8 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
                         <li class="media">
-                            <div class="circular_image">
-                                <img alt="image" class="mr-5 rounded-circle" width="100%" src="{{ partner_user.profile_pic.url }}">
-                            </div>
-                            
-                            <div class="media-body ml-4">
-                    
-                                <dl class="row">
-
-                                    <dt class="col-sm-2"></dt>
-                                    <dd class="col-sm-10"><span class="text-dark">{{ partner_user.auth_user_id.first_name }} {{ partner_user.auth_user_id.last_name }}</span></dd>
-
-                                    <dt class="col-sm-2"><i class="far fa-envelope float-right mt-1"></i></dt>
-                                    <dd class="col-sm-10">{{ partner_user.auth_user_id.email }}</dd>
-
-                                    <dt class="col-sm-2"><i class="fas fa-hourglass-start float-right mt-1"></i></dt>
-                                    <dd class="col-sm-10">{{ partner_user.date_of_birth }}</dd>
-
-                                    <dt class="col-sm-2"><i class="fas fa-map-pin float-right mt-1"></i></dt>
-                                    <dd class="col-sm-10">
-                                        
-                                            {% if partner_user.address_line_1 %} {{ partner_user.address_line_1 }}{% endif %}
-                                            {% if partner_user.address_line_2 %} {{ partner_user.address_line_2 }}{% endif %}
-                                        <br>
-                                            {% if partner_user.address_town %} {{ partner_user.address_town }}, {% endif %}
-                                            {% if partner_user.address_region %} {{ partner_user.address_region }}{% endif %}
-                                        <br>
-                                            {% if partner_user.address_country %} {{ partner_user.address_country }},{% endif %}
-                                            {% if partner_user.address_zip_code %} {{ partner_user.address_zip_code }}{% endif %}
-                                        
-                                    </dd>
-
-                                </dl>
-                                
-                            </div>
-                            <div class="media-progressbar">
-                                <div class="progress-text">{{ partner_user.progress_mark }}%</div>
-                                <div class="progress" data-height="2">
-                                <div class="progress-bar bg-primary" data-width="{{ partner_user.progress_mark }}%"></div>
+                            <p class="lead mr-5">Resume Progress</p>
+                            <div id="media-progressbar" class="media-progressbar">
+                                <div class="progress-text">{{ progress_mark }}%</div>
+                                <div class="progress" data-height="6">
+                                    <div class="progress-bar bg-primary" data-width="{{ progress_mark }}%"></div>
                                 </div>
                             </div>
-                            <form method="GET">
-                                <div class="media-cta">
-                                    <a class="btn btn-icon btn-light" href="{% url 'partners:partner_account_update_view' %}"><i class="fa fa-edit"></i> Edit</a>
-                                </div>
-                            </form>
+            
                         </li>
                     </ul>
 
                     <div class="list-group">
+
+                        {% if partner_professional_summary %}
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="lead mb-0">Professional Summary</h6>
-                                <small class="text-muted">{{ partner_professional_summary.get_days_ago }} days ago</small>
+                                <small class="text-muted">Added {{ partner_professional_summary.get_days_ago }} days ago</small>
                             </div>
                             
-                            <div mb-0">{{ partner_professional_summary.summary|safe }}</div>
+                            <div>{{ partner_professional_summary.summary|safe }}</div>
                            
+                            <div id="editable-prosum" class="d-flex w-100 justify-content-between">
+                                <p></p>
+                                <a href="#" style="display:none;"><i class="fas fa-pencil-alt"></i></a>
+                            </div>
                         </div>
+                        {% endif %}
 
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        {% if partner_education|length > 0 %}
+                        <div class="list-group-item list-group-item-action flex-column align-items-start education">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="lead mb-2">Education</h6>
-                                <small class="text-muted">{% with partner_education|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                                <small class="text-muted">Added {% with partner_education|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
                             </div>
-                           
                             {% for e in partner_education %}
-                            <div>
-                                <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ e.field_name }} | {{ e.school_name }}</strong></p>
+                            <div id="editable-education">
+                                
+                                <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ e.field_name }} | {{ e.school_name }}</strong> <a id="atag" href="#" style="display:none;"><i class="fas fa-pencil-alt"></i></a></p>
                                 <p class="mb-0" style="line-height: 18px;">{{ e.get_degree_type_display }}</p>
                                 <p class="mb-0" style="line-height: 18px;">{{ e.school_address }}</p>
                                 <p class="mb-3" style="line-height: 18px;">{{ e.date_graduated }}</p>
                             </div>
                             {% endfor %}
-                         
+                            
                         </div>
+                        {% endif %}
 
+                        {% if partner_licenses|length > 0 %}
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="lead mb-2">Licenses</h6>
-                                <small class="text-muted">{% with partner_licenses|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                                <small class="text-muted">Added {% with partner_licenses|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
                             </div>
                             {% for l in partner_licenses %}
                             <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ l.license_name }}</strong></p>
@@ -237,12 +109,18 @@
                             <p class="mb-0" style="line-height: 18px;">Acquired in {{ l.address_acquired }}</p>
                             <p class="mb-3" style="line-height: 18px;">This is valid until <span class="text-danger">{{ l.expiration_date }}</span></p>
                             {% endfor %}
+                            <div class="d-flex w-100 justify-content-between">
+                                <p></p>
+                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                            </div>
                         </div>
+                        {% endif %}
 
+                        {% if partner_certifications|length > 0 %}
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="lead mb-2">Certifications</h6>
-                                <small class="text-muted">{% with partner_certifications|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                                <small class="text-muted">Added {% with partner_certifications|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
                             </div>
                             {% for c in partner_certifications %}
                             <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ c.cert_name }}</strong></p>
@@ -251,24 +129,36 @@
                             <p class="mb-3" style="line-height: 18px;">This is valid until <span class="text-danger">{{ c.expiration_date }}</span></p>
 
                             {% endfor %}
+                            <div class="d-flex w-100 justify-content-between">
+                                <p></p>
+                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                            </div>
                         </div>
+                        {% endif %}
 
+                        {% if partner_skills|length > 0 %}
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                             <h6 class="lead mb-2">Skills</h6>
-                            <small class="text-muted">{% with partner_skills|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            <small class="text-muted">Added {% with partner_skills|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
                             </div>
                             <div class="badges">
                                 {% for s in partner_skills %}
                                 <span class="badge badge-primary">{{ s.skill_name }}</span>
                                 {% endfor %}
                             </div>
+                            <div class="d-flex w-100 justify-content-between">
+                                <p></p>
+                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                            </div>
                         </div>
+                        {% endif %}
 
+                        {% if partner_works|length > 0 %}
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                             <h6 class="lead mb-2">Work History</h6>
-                            <small class="text-muted">{% with partner_works|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            <small class="text-muted">Added {% with partner_works|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
                             </div>
 
                             <div class="col-12">
@@ -302,12 +192,18 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="d-flex w-100 justify-content-between">
+                                <p></p>
+                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                            </div>
                         </div>
+                        {% endif %}
 
+                        {% if partner_references|length > 0 %}
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                             <h6 class="lead mb-2">References</h6>
-                            <small class="text-muted">{% with partner_references|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
+                            <small class="text-muted">Added {% with partner_references|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
                             </div>
 
                             <div class="col-12">
@@ -342,24 +238,252 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="d-flex w-100 justify-content-between">
+                                <p></p>
+                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                            </div>
                         </div>
+                        {% endif %}
 
+                        {% if partner_cover %}
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="lead mb-0">Letter to Patients</h6>
-                                <small class="text-muted">{{ partner_cover.get_days_ago }} days ago</small>
+                                <small class="text-muted">Added {{ partner_cover.get_days_ago }} days ago</small>
                             </div>
-                            
                             <div mb-0">{{ partner_cover.letter|safe }}</div>
-                           
+                            <div class="d-flex w-100 justify-content-between">
+                                <p></p>
+                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                            </div>
                         </div>
+                        {% endif %}
 
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-12 col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="wizard-steps">
+                        <div class="wizard-step clickable wizard-step-warning">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                Setup Profile
+                            </div>
+                        </div>
+
+                        <div id="add_professional_summary" class="wizard-step clickable {% if partner_professional_summary %}wizard-step-active{% endif %}">
+                            <div class="wizard-step-icon">
+                                {% if partner_professional_summary %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-user-tie"></i>
+                                {% endif %}
+                            </div>
+                            <div class="wizard-step-label">
+                                Professional Summary
+                            </div>
+                        </div>
+
+                        <div id="add_education" class="wizard-step clickable {% if partner_education|length > 0 %}wizard-step-active{% endif %}">
+                            <div class="wizard-step-icon">
+                                {% if partner_education|length > 0 %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-graduation-cap"></i>
+                                {% endif %}
+                            </div>
+                            <div class="wizard-step-label">
+                                My Education
+                            </div>
+                        </div>
+
+                        <div id="add_licenses" class="wizard-step clickable {% if partner_licenses|length > 0 %}wizard-step-active{% endif %}">
+                            <div class="wizard-step-icon">
+                                {% if partner_licenses|length > 0 %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="far fa-id-badge"></i>
+                                {% endif %}
+                            </div>
+                            <div class="wizard-step-label">
+                                My Licenses
+                            </div>
+                        </div>
+
+                        <div id="add_certifications" class="wizard-step clickable {% if partner_certifications|length > 0 %}wizard-step-active{% endif %}">
+                            <div class="wizard-step-icon">
+                                {% if partner_certifications|length > 0 %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-certificate"></i>
+                                {% endif %}
+                            </div>
+                            <div class="wizard-step-label">
+                                My Certifications
+                            </div>
+                        </div>
+
+                        <div id="add_skills" class="wizard-step clickable {% if partner_skills|length > 0 %}wizard-step-active{% endif %}">
+                            <div class="wizard-step-icon">
+                                {% if partner_skills|length > 0 %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-user-astronaut"></i>
+                                {% endif %}
+                            </div>
+                            <div class="wizard-step-label">
+                                My Skills
+                            </div>
+                        </div>
+
+                        <div id="add_references" class="wizard-step clickable {% if partner_references|length > 0 %}wizard-step-active{% endif %}">
+                            <div class="wizard-step-icon">
+                                {% if partner_references|length > 0 %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-users"></i>
+                                {% endif %}
+                            </div>
+                            <div class="wizard-step-label">
+                                My References
+                            </div>
+                        </div>
+
+                        <div id="add_work_experiences" class="wizard-step clickable {% if partner_works|length > 0 %}wizard-step-active{% endif %}">
+                            <div class="wizard-step-icon">
+                                {% if partner_works|length > 0 %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-user-md"></i>
+                                {% endif %}
+                            </div>
+                            <div class="wizard-step-label">
+                                My Work History
+                            </div>
+                        </div>
+
+                        <div id="add_cover_letter" class="wizard-step clickable {% if partner_cover %}wizard-step-active{% endif %}">
+                            <div class="wizard-step-icon">
+                                {% if partner_cover %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-envelope-open-text"></i>
+                                {% endif %}
+                            </div>
+                            <div class="wizard-step-label">
+                                Letter to Patients
+                            </div>
+                        </div>   
+
+                        <div id="add_media_documents" class="wizard-step clickable wizard-step-warning">
+                            <div class="wizard-step-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                                My Documents
+                            </div>
+                        </div>
+                               
+                    </div>     
+                </div>
+            </div>
+
+            
+        </div>
     </div>
-
-
-
 {% endblock page_content %}
+
+
+{% block custom_js %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+    /*
+        add_education
+    */
+    const addEducation = document.getElementById('add_education')
+    addEducation.addEventListener('click', ()=> {
+        window.location.href = "{% url 'partners:partner_education_view' %}";
+    })
+
+    /*
+        add_licenses
+    */
+    const addLicenses = document.getElementById('add_licenses')
+    addLicenses.addEventListener('click', ()=> {
+        window.location.href = "{% url 'partners:partner_licenses_view' %}";
+    })
+
+    /*
+        add_certifications
+    */
+    const addCertifications = document.getElementById('add_certifications')
+    addCertifications.addEventListener('click', ()=> {
+        window.location.href = "{% url 'partners:partner_certifications_view' %}";
+    })
+
+    /*
+        add_skills
+    */
+    const addSkills = document.getElementById('add_skills')
+    addSkills.addEventListener('click', ()=> {
+        window.location.href = "{% url 'partners:partner_skills_view' %}";
+    })
+
+    /*
+        add_references
+    */
+    const addReferences = document.getElementById('add_references')
+    addReferences.addEventListener('click', ()=> {
+        window.location.href = "{% url 'partners:partner_references_view' %}";
+    })
+
+    /*
+        add_work_experiences
+    */
+    const addWorkExperiences = document.getElementById('add_work_experiences')
+    addWorkExperiences.addEventListener('click', ()=> {
+        window.location.href = "{% url 'partners:partner_work_experiences_view' %}";
+    })
+
+    /*
+        add_professional_summary
+    */
+    const addProfessionalSummary = document.getElementById('add_professional_summary')
+    addProfessionalSummary.addEventListener('click', ()=> {
+        window.location.href = "{% url 'partners:partner_professional_summary_view' %}";
+    })
+
+    /*
+        add_cover_letter
+    */
+    const addCoverLetter = document.getElementById('add_cover_letter')
+    addCoverLetter.addEventListener('click', ()=> {
+        window.location.href = "{% url 'partners:partner_cover_letter_view' %}";
+    })
+    
+    /*
+        add_media_documents
+    */
+    const addMediaDocuments = document.getElementById('add_media_documents')
+    addMediaDocuments.addEventListener('click', ()=> {
+        window.location.href = "{% url 'partners:partner_media_upload_view' %}";
+    })
+
+    $('.list-group').on('mouseenter', 'div[class="list-group-item list-group-item-action flex-column align-items-start"]', function(e){
+        $("#editable-prosum > a").show();
+    })
+
+    $('.list-group').on('mouseleave', 'div[class="list-group-item list-group-item-action flex-column align-items-start"]', function(e){
+        $("#editable-prosum > a").hide();
+    })
+    
+</script>
+{% endblock custom_js %}

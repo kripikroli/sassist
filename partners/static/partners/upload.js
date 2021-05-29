@@ -2,6 +2,7 @@ const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
 const partnerID = document.getElementById('partner-id').value
 const mediaEduc = document.getElementById('media_files')
 const mediaFiles = document.getElementById("inside-tbody")
+const progressBar = document.getElementById("media-progressbar")
 
 
 firstTR = `
@@ -79,7 +80,7 @@ const handleFileName = (filename) => {
     return filename.split('.').slice(0, -1).join('.').slice(0, 5)
 }
 
-const handleMediaFiles = (data_ed, data_lc, data_od) => {
+const handleMediaFiles = (data_ed, data_lc, data_od, pm) => {
 
     console.log(data_ed)
     
@@ -110,7 +111,7 @@ const handleMediaFiles = (data_ed, data_lc, data_od) => {
     }
 
     for (i=0; i<data_lc.length; i++) {
-        html_ed += `
+        html_lc += `
             <tr>
                 <td class="p-0 text-center text-muted">
                     LC
@@ -132,7 +133,7 @@ const handleMediaFiles = (data_ed, data_lc, data_od) => {
     }
 
     for (i=0; i<data_od.length; i++) {
-        html_ed += `
+        html_od += `
             <tr>
                 <td class="p-0 text-center text-muted">
                     OD
@@ -154,11 +155,18 @@ const handleMediaFiles = (data_ed, data_lc, data_od) => {
     }
 
 
+    progressBar.innerHTML = `
+        <div class="progress-text">${pm}%</div>
+        <div class="progress" data-height="6" style="height: 6px;">
+            <div class="progress-bar bg-primary" data-width="${pm}%" style="width:${pm}%"></div>
+        </div>
+    `
+
     mediaFiles.innerHTML = firstTR + html_ed + html_lc + html_od
 }
 
 const uploadEducDropzone = new Dropzone('#educdropzone', {
-    url: '/crm/educ_media_upload/',
+    url: '/partners/educ_media_upload/',
     init: function() {
         this.on('sending', function(file, xhr, formData) {
             console.log('sending')
@@ -168,6 +176,7 @@ const uploadEducDropzone = new Dropzone('#educdropzone', {
         })
         this.on('success', function(file, response){
             const ex = response.ex
+            const pm = response.pm
             const data_ed = JSON.parse(response.data_ed)
             const data_lc = JSON.parse(response.data_lc)
             const data_od = JSON.parse(response.data_od)
@@ -178,7 +187,7 @@ const uploadEducDropzone = new Dropzone('#educdropzone', {
                 handleAlerts('success')
             }
             
-            handleMediaFiles(data_ed, data_lc, data_od)
+            handleMediaFiles(data_ed, data_lc, data_od, pm)
             
         })
     },
@@ -189,7 +198,7 @@ const uploadEducDropzone = new Dropzone('#educdropzone', {
 
 
 const uploadLCDropzone = new Dropzone('#lcdropzone', {
-    url: '/crm/lc_media_upload/',
+    url: '/partners/lc_media_upload/',
     init: function() {
         this.on('sending', function(file, xhr, formData) {
             console.log('sending')
@@ -198,6 +207,7 @@ const uploadLCDropzone = new Dropzone('#lcdropzone', {
         })
         this.on('success', function(file, response){
             const ex = response.ex
+            const pm = response.pm
             const data_ed = JSON.parse(response.data_ed)
             const data_lc = JSON.parse(response.data_lc)
             const data_od = JSON.parse(response.data_od)
@@ -208,7 +218,7 @@ const uploadLCDropzone = new Dropzone('#lcdropzone', {
                 handleAlerts('success')
             }
             
-            handleMediaFiles(data_ed, data_lc, data_od)
+            handleMediaFiles(data_ed, data_lc, data_od, pm)
 
         })
     },
@@ -219,7 +229,7 @@ const uploadLCDropzone = new Dropzone('#lcdropzone', {
 
 
 const uploadOtherDropzone = new Dropzone('#otherdropzone', {
-    url: '/crm/other_media_upload/',
+    url: '/partners/other_media_upload/',
     init: function() {
         this.on('sending', function(file, xhr, formData) {
             console.log('sending')
@@ -228,6 +238,7 @@ const uploadOtherDropzone = new Dropzone('#otherdropzone', {
         })
         this.on('success', function(file, response){
             const ex = response.ex
+            const pm = response.pm
             const data_ed = JSON.parse(response.data_ed)
             const data_lc = JSON.parse(response.data_lc)
             const data_od = JSON.parse(response.data_od)
@@ -238,7 +249,7 @@ const uploadOtherDropzone = new Dropzone('#otherdropzone', {
                 handleAlerts('success')
             }
             
-            handleMediaFiles(data_ed, data_lc, data_od)
+            handleMediaFiles(data_ed, data_lc, data_od, pm)
 
         })
     },
