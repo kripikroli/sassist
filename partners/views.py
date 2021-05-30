@@ -305,11 +305,15 @@ class PartnerSkillsView(View):
         # PartnerSkill
         ps_skills = request.POST.get('skills')
 
+        # Delete skills first
+        PartnerSkill.objects.filter(auth_user_id=partner_user).delete()
+
         # Saving skills
         skill_list = ps_skills.split(',')
         for skill in skill_list:
-            skill_obj = PartnerSkill(skill_name=skill, auth_user_id=partner_user)
-            skill_obj.save()
+            if skill != '':
+                skill_obj = PartnerSkill(skill_name=skill, auth_user_id=partner_user)
+                skill_obj.save()
 
         return HttpResponse("Saved")
 
@@ -319,9 +323,16 @@ class PartnerWorkExperiencesView(View):
     def get(self, request, *args, **kwargs):
 
         partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+        work_history_id = request.GET.get('work_id', None)
+
+        if work_history_id:
+            partner_work_experiences = PartnerWorkHistory.objects.get(id=work_history_id, auth_user_id=partner_user)
+        else:
+            partner_work_experiences = None
+
         context = {
             'partner_user': partner_user,
-            'partner_work_experiences': partner_user.partnerworkhistories.all()
+            'partner_work_experiences': partner_work_experiences
         }
 
         return render(request, 'partners/partner_work_experiences.html', context)
@@ -330,133 +341,51 @@ class PartnerWorkExperiencesView(View):
 
         partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
 
-        # PartnerWorkHistory - 1
-        work_designation_1 = request.POST.get('work_designation_1', None)
-        work_phone_number_1 = request.POST.get('work_phone_number_1', None)
-        work_email_1 = request.POST.get('work_email_1', None)
-        work_office_name_1 = request.POST.get('work_office_name_1', None)
-        work_office_address_1 = request.POST.get('work_office_address_1', None)
-        work_start_date_1 = request.POST.get('work_start_date_1', None)
-        work_end_date_1 = request.POST.get('work_end_date_1', None)
-        work_responsibilities_1 = request.POST.get('work_responsibility_1', None)
+        # PartnerWorkHistory
+        work_designation = request.POST.get('work_designation', None)
+        work_phone_number = request.POST.get('work_phone_number', None)
+        work_email = request.POST.get('work_email', None)
+        work_office_name = request.POST.get('work_office_name', None)
+        work_office_address = request.POST.get('work_office_address', None)
+        work_start_date = request.POST.get('work_start_date', None)
+        work_end_date = request.POST.get('work_end_date', None)
+        work_responsibilities = request.POST.get('work_responsibility', None)
+        w_id = request.POST.get('w_id', None)
+        delete = request.POST.get('delete', None)
 
-        work_r_1 = "".join(work_responsibilities_1.splitlines())
-        work_r_1 = work_r_1.replace("\"", "\'")
+        work_r = "".join(work_responsibilities.splitlines())
+        work_r = work_r.replace("\"", "\'")
 
-        # PartnerWorkHistory - 2
-        work_designation_2 = request.POST.get('work_designation_2', None)
-        work_phone_number_2 = request.POST.get('work_phone_number_2', None)
-        work_email_2 = request.POST.get('work_email_2', None)
-        work_office_name_2 = request.POST.get('work_office_name_2', None)
-        work_office_address_2 = request.POST.get('work_office_address_2', None)
-        work_start_date_2 = request.POST.get('work_start_date_2', None)
-        work_end_date_2 = request.POST.get('work_end_date_2', None)
-        work_responsibilities_2 = request.POST.get('work_responsibility_2', None)
+        # Saving work history
 
-        work_r_2 = "".join(work_responsibilities_2.splitlines())
-        work_r_2 = work_r_2.replace("\"", "\'")
-
-        # PartnerWorkHistory - 3
-        work_designation_3 = request.POST.get('work_designation_3', None)
-        work_phone_number_3 = request.POST.get('work_phone_number_3', None)
-        work_email_3 = request.POST.get('work_email_3', None)
-        work_office_name_3 = request.POST.get('work_office_name_3', None)
-        work_office_address_3 = request.POST.get('work_office_address_3', None)
-        work_start_date_3 = request.POST.get('work_start_date_3', None)
-        work_end_date_3 = request.POST.get('work_end_date_3', None)
-        work_responsibilities_3 = request.POST.get('work_responsibility_3', None)
-
-        work_r_3 = "".join(work_responsibilities_3.splitlines())
-        work_r_3 = work_r_3.replace("\"", "\'")
-
-        # Saving work history 1
-
-        if work_designation_1 == None and work_phone_number_1 == None and work_email_1 == None:
-            work_history_1_obj = PartnerWorkHistory(
-                designation='',
-                phone_number='',
-                email='',
-                office_name='',
-                office_address='',
-                start_date='',
-                end_date='',
-                responsibilities='',
-                auth_user_id=partner_user,
-            )
-            work_history_1_obj.save()
-
+        if w_id != 'blank':
+            if delete == 'delete':
+                PartnerWorkHistory.objects.get(id=w_id).delete()
+            else:
+                work_history_obj = PartnerWorkHistory.objects.get(id=w_id)
+                work_history_obj.designation = work_designation
+                work_history_obj.phone_number = work_phone_number
+                work_history_obj.email=work_email
+                work_history_obj.office_name=work_office_name
+                work_history_obj.office_address=work_office_address
+                work_history_obj.start_date=work_start_date
+                work_history_obj.end_date=work_end_date
+                work_history_obj.responsibilities=work_r
+                work_history_obj.auth_user_id=partner_user
+                work_history_obj.save()
         else:
-            work_history_1_obj = PartnerWorkHistory(
-                designation=work_designation_1,
-                phone_number=work_phone_number_1,
-                email=work_email_1,
-                office_name=work_office_name_1,
-                office_address=work_office_address_1,
-                start_date=work_start_date_1,
-                end_date=work_end_date_1,
-                responsibilities=work_r_1,
+            work_history_obj = PartnerWorkHistory(
+                designation=work_designation,
+                phone_number=work_phone_number,
+                email=work_email,
+                office_name=work_office_name,
+                office_address=work_office_address,
+                start_date=work_start_date,
+                end_date=work_end_date,
+                responsibilities=work_r,
                 auth_user_id=partner_user,
             )
-            work_history_1_obj.save()
-
-
-        # Saving work history 2
-        if work_designation_2 == None and work_phone_number_2 == None and work_email_2 == None:
-            work_history_2_obj = PartnerWorkHistory(
-                designation='',
-                phone_number='',
-                email='',
-                office_name='',
-                office_address='',
-                start_date='',
-                end_date='',
-                responsibilities='',
-                auth_user_id=partner_user,
-            )
-            work_history_2_obj.save()
-
-        else:
-            work_history_2_obj = PartnerWorkHistory(
-                designation=work_designation_2,
-                phone_number=work_phone_number_2,
-                email=work_email_2,
-                office_name=work_office_name_2,
-                office_address=work_office_address_2,
-                start_date=work_start_date_2,
-                end_date=work_end_date_2,
-                responsibilities=work_r_2,
-                auth_user_id=partner_user,
-            )
-            work_history_2_obj.save()
-
-        # Saving work history 3
-        if work_designation_3 == None and work_phone_number_3 == None and work_email_3 == None:
-            work_history_3_obj = PartnerWorkHistory(
-                designation='',
-                phone_number='',
-                email='',
-                office_name='',
-                office_address='',
-                start_date='',
-                end_date='',
-                responsibilities='',
-                auth_user_id=partner_user,
-            )
-            work_history_3_obj.save()
-        
-        else:
-            work_history_3_obj = PartnerWorkHistory(
-            designation=work_designation_3,
-            phone_number=work_phone_number_3,
-            email=work_email_3,
-            office_name=work_office_name_3,
-            office_address=work_office_address_3,
-            start_date=work_start_date_3,
-            end_date=work_end_date_3,
-            responsibilities=work_r_3,
-            auth_user_id=partner_user,
-            )
-            work_history_3_obj.save()
+            work_history_obj.save()
 
         return HttpResponse("Saved")
 
@@ -466,9 +395,15 @@ class PartnerProfessionalSummaryView(View):
     def get(self, request, *args, **kwargs):
 
         partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        try:
+            partner_professional_summary = PartnerProfessionalSummary.objects.get(auth_user_id=partner_user.id)
+        except:
+            partner_professional_summary = None
+
         context = {
             'partner_user': partner_user,
-            'partner_professional_summary': partner_user.partnerprofessionalsummaries.all()
+            'partner_professional_summary': partner_professional_summary
         }
 
         return render(request, 'partners/partner_professional_summary.html', context)
@@ -477,14 +412,25 @@ class PartnerProfessionalSummaryView(View):
 
         partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
 
+        try:
+            partner_professional_summary = PartnerProfessionalSummary.objects.get(auth_user_id=partner_user.id)
+        except:
+            partner_professional_summary = None
+      
         # PartnerProfessionalSummary
         professional_summary = request.POST.get('professional_summary')
         summary = "".join(professional_summary.splitlines())
         summary = summary.replace("\"", "\'")
 
-        #Saving professional summary
-        professional_summary_obj = PartnerProfessionalSummary(summary=summary, auth_user_id=partner_user)
-        professional_summary_obj.save()
+        if partner_professional_summary:
+            #Updating old professional summary
+            partner_professional_summary.summary = summary
+            partner_professional_summary.auth_user_id = partner_user
+            partner_professional_summary.save()
+        else:
+            #Saving new professional summary
+            professional_summary_obj = PartnerProfessionalSummary(summary=summary, auth_user_id=partner_user)
+            professional_summary_obj.save()
 
         return HttpResponse("Saved")
 
@@ -492,11 +438,16 @@ class PartnerProfessionalSummaryView(View):
 class PartnerCoverLetterView(View):
 
     def get(self, request, *args, **kwargs):
-
         partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        try:
+            partner_cover_letter = PartnerCoverLetter.objects.get(auth_user_id=partner_user.id)
+        except:
+            partner_cover_letter = None
+
         context = {
             'partner_user': partner_user,
-            'partner_cover_letter': partner_user.partnerprofessionalsummaries.all()
+            'partner_cover_letter': partner_cover_letter
         }
 
         return render(request, 'partners/partner_cover_letter.html', context)
@@ -505,14 +456,25 @@ class PartnerCoverLetterView(View):
 
         partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
 
+        try:
+            partner_cover_letter = PartnerCoverLetter.objects.get(auth_user_id=partner_user.id)
+        except:
+            partner_cover_letter = None
+
         # PartnerCoverLetter
         cover_letter = request.POST.get('cover_letter')
         cover_l = "".join(cover_letter.splitlines())
         cover_l = cover_l.replace("\"", "\'")
 
-        #Saving cover letter
-        cover_letter_obj = PartnerCoverLetter(letter=cover_l, auth_user_id=partner_user)
-        cover_letter_obj.save()
+        if partner_cover_letter:
+            #Updating old cover letter
+            partner_cover_letter.letter = cover_l
+            partner_cover_letter.auth_user_id = partner_user
+            partner_cover_letter.save()
+        else:
+            #Savin new cover letter
+            cover_letter_obj = PartnerCoverLetter(letter=cover_l, auth_user_id=partner_user)
+            cover_letter_obj.save()
 
         return HttpResponse("Saved")
 
@@ -693,3 +655,193 @@ def other_media_upload_view(request):
             return JsonResponse({'ex': True, 'data_ed': data_ed, 'data_lc': data_lc, 'data_od': data_od, 'pm': get_progress_value(request.user.id)})
 
     return HttpResponse()
+
+
+class PartnerEducationUpdateView(View):
+
+    def get(self, request, *args, **kwargs):
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        p_education = PartnerEducation.objects.filter(auth_user_id=partner_user.id)
+
+        context = {
+            "partner_user": partner_user,
+            "p_education": p_education,
+        }
+
+        return render(request, 'partners/partner_education_update.html', context)
+
+    def post(self, request, *args, **kwargs):
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerEducation
+        pe_ids = request.POST.getlist('education_id[]')
+        pe_degree_type = request.POST.getlist('degree[]')
+        pe_school_name = request.POST.getlist('school[]')
+        pe_field_name = request.POST.getlist('field[]')
+        pe_date_graduated = request.POST.getlist('graduated[]')
+        pe_school_address = request.POST.getlist('school_address[]')
+        pe_delete = request.POST.getlist('delete[]')
+
+        # Saving education
+        i = 0
+        for degree_type in pe_degree_type:
+            if pe_delete[i] == 'delete':
+                PartnerEducation.objects.get(id=pe_ids[i]).delete()
+            else:
+                education_obj = PartnerEducation.objects.get(id=pe_ids[i])      
+                education_obj.degree_type = degree_type
+                education_obj.school_name = pe_school_name[i]
+                education_obj.field_name = pe_field_name[i]
+                education_obj.date_graduated = pe_date_graduated[i]
+                education_obj.school_address = pe_school_address[i]
+                education_obj.auth_user_id = partner_user
+                education_obj.save()
+                   
+            i += 1
+
+        return HttpResponse("Saved")
+
+
+class PartnerLicensesUpdateView(View):
+
+    def get(self, request, *args, **kwargs):
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        p_license = PartnerLicense.objects.filter(auth_user_id=partner_user.id)
+
+        context = {
+            "partner_user": partner_user,
+            "p_license": p_license,
+        }
+
+        return render(request, 'partners/partner_licenses_update.html', context)
+
+    def post(self, request, *args, **kwargs):
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerLicense
+        pl_ids = request.POST.getlist('license_id[]')
+        pl_license_name = request.POST.getlist('license_name[]')
+        pl_license_code = request.POST.getlist('license_code[]')
+        pl_expiration_date = request.POST.getlist('license_expiration_date[]')
+        pl_address_acquired = request.POST.getlist('license_address[]')
+        pl_is_compact = request.POST.getlist('license_is_compact[]')
+        pl_delete = request.POST.getlist('delete[]')
+
+        # Saving licenses
+        i = 0
+        for license_name in pl_license_name:
+            if pl_delete[i] == 'delete':
+                PartnerLicense.objects.get(id=pl_ids[i]).delete()
+            else:
+                license_obj = PartnerLicense.objects.get(id=pl_ids[i])
+                license_obj.license_name=license_name
+                license_obj.license_code=pl_license_code[i]
+                license_obj.expiration_date=pl_expiration_date[i]
+                license_obj.address_acquired=pl_address_acquired[i]
+                license_obj.is_compact=pl_is_compact[i]
+                license_obj.auth_user_id=partner_user
+                license_obj.save()
+            i += 1
+
+        return HttpResponse("Saved")
+
+
+class PartnerCertificationsUpdateView(View):
+
+    def get(self, request, *args, **kwargs):
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        p_certification = PartnerCertification.objects.filter(auth_user_id=partner_user.id)
+
+        context = {
+            "partner_user": partner_user,
+            "p_certification": p_certification,
+        }
+
+        return render(request, 'partners/partner_certifications_update.html', context)
+
+    def post(self, request, *args, **kwargs):
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerCertification
+        pc_ids = request.POST.getlist('certification_id[]')
+        pc_cert_name = request.POST.getlist('certification_name[]')
+        pc_cert_code = request.POST.getlist('certification_code[]')
+        pc_expiration_date = request.POST.getlist('certification_expiration_date[]')
+        pc_address_acquired = request.POST.getlist('certification_address[]')
+        pc_file = request.FILES.getlist('certification_file[]')
+        pc_delete = request.POST.getlist('delete[]')
+
+        # Saving licenses
+        i = 0
+        for cert_name in pc_cert_name:
+            if pc_delete[i] == 'delete':
+                PartnerCertification.objects.get(id=pc_ids[i]).delete()
+            else:
+                cert_obj = PartnerCertification.objects.get(id=pc_ids[i])
+                cert_obj.cert_name=cert_name
+                cert_obj.cert_code=pc_cert_code[i]
+                cert_obj.expiration_date=pc_expiration_date[i]
+                cert_obj.address_acquired=pc_address_acquired[i]
+                cert_obj.auth_user_id=partner_user
+                cert_obj.save()
+            i += 1
+
+        return HttpResponse("Saved")
+
+
+class PartnerReferencesUpdateView(View):
+
+    def get(self, request, *args, **kwargs):
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        p_reference = PartnerReference.objects.filter(auth_user_id=partner_user.id)
+
+        context = {
+            "partner_user": partner_user,
+            "p_reference": p_reference,
+        }
+
+        return render(request, 'partners/partner_references_update.html', context)
+
+    def post(self, request, *args, **kwargs):
+        partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
+
+        # PartnerReference
+        pr_ids = request.POST.getlist('reference_id[]')
+        pr_name = request.POST.getlist('reference_name[]')
+        pr_position = request.POST.getlist('reference_position[]')
+        pr_phone_number = request.POST.getlist('reference_phone_number[]')
+        pr_email = request.POST.getlist('reference_email[]')
+        pr_office_name = request.POST.getlist('reference_office_name[]')
+        pr_office_address = request.POST.getlist('reference_office_address[]')
+        pr_start_date = request.POST.getlist('reference_start_date[]')
+        pr_end_date = request.POST.getlist('reference_end_date[]')
+        pr_delete = request.POST.getlist('delete[]')
+
+        # Saving references
+        i = 0
+        for reference in pr_name:
+            if pr_delete[i] == 'delete':
+                PartnerReference.objects.get(id=pr_ids[i]).delete()
+            else:
+                reference_obj = PartnerReference.objects.get(id=pr_ids[i])
+                reference_obj.name=reference
+                reference_obj.position=pr_position[i]
+                reference_obj.phone_number=pr_phone_number[i]
+                reference_obj.email=pr_email[i]
+                reference_obj.office_name=pr_office_name[i]
+                reference_obj.office_address=pr_office_address[i]
+                reference_obj.start_date=pr_start_date[i]
+                reference_obj.end_date=pr_end_date[i]
+                reference_obj.auth_user_id=partner_user
+                reference_obj.save()
+            i += 1
+
+        return HttpResponse("Saved")
+
+
+
+

@@ -4,6 +4,7 @@ from .views import (
     educ_media_upload_view,
     lc_media_upload_view,
     other_media_upload_view,
+
     PartnerDashboardView,
     PartnerUpdateView,
     PartnerResumePanelView,
@@ -16,6 +17,11 @@ from .views import (
     PartnerProfessionalSummaryView,
     PartnerCoverLetterView,
     PartnerMediaUpload,
+
+    PartnerEducationUpdateView,
+    PartnerLicensesUpdateView,
+    PartnerCertificationsUpdateView,
+    PartnerReferencesUpdateView,
 )
 
 app_name = 'partners'
@@ -45,5 +51,11 @@ urlpatterns = [
     path('my-professional-summary/', PartnerProfessionalSummaryView.as_view(), name='partner_professional_summary_view'),
     path('my-cover-letter/', PartnerCoverLetterView.as_view(), name='partner_cover_letter_view'),
     path('my-documents/', PartnerMediaUpload.as_view(), name='partner_media_upload_view'),
+
+    path('my-education/update/', PartnerEducationUpdateView.as_view(), name='partner_education_update_view'),
+    path('my-licenses/update/', PartnerLicensesUpdateView.as_view(), name='partner_licenses_update_view'),
+    path('my-certifications/update/', PartnerCertificationsUpdateView.as_view(), name='partner_certifications_update_view'),
+    path('my-references/update/', PartnerReferencesUpdateView.as_view(), name='partner_references_update_view'),
+
 
 ]

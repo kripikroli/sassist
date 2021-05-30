@@ -1,0 +1,170 @@
+{% extends "partners/base.html" %}
+
+{% load static %}
+
+{% block custom_css %}
+<style>
+hr {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 0;
+  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+}
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    My Education Update
+{% endblock title %}
+
+
+{% block page_title %}
+    My Education Update
+{% endblock page_title %}
+
+{% block page_content %}
+    <form id="educationForm">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12">
+            <div class="row mt-4">
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="lead">Update Education</p>
+                            <!-- Education -------------------------------->
+                            {% for education in p_education %}
+                            <div class="educ_div_data">
+                                <div class="row educ_div_row_data">
+                                    <div class="col-lg-12">
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Degree</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <select class="form-control degree" name="degree[]">
+                                                    <option value=1 {% if education.degree_type == 1 %} selected{% endif %}>High School</option>
+                                                    <option value=2 {% if education.degree_type == 2 %} selected{% endif %}>Associate</option>
+                                                    <option value=3 {% if education.degree_type == 3 %} selected{% endif %}>Bachelor</option>
+                                                    <option value=4 {% if education.degree_type == 4 %} selected{% endif %}>Master</option>
+                                                    <option value=5 {% if education.degree_type == 5 %} selected{% endif %}>Doctorate</option>
+                                                    <option value=6 {% if education.degree_type == 6 %} selected{% endif %}>Unspecified</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">School</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="school[]" class="form-control school" value="{{ education.school_name }}">
+                                                <input type="hidden" name="education_id[]" value="{{ education.id }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Field</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="field[]" class="form-control field" value="{{ education.field_name }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Graduated</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="graduated[]" class="form-control graduated" value="{{ education.date_graduated }}">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Address</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" value="{{ education.school_address }}" class="form-control school_address" name="school_address[]">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1 text-danger">Delete</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" class="form-control is-invalid" name="delete[]">
+                                                <div class="invalid-feedback">Type "delete" if you want to remove this entry.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <!-- endEducation -------------------------------->
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-body">
+
+                            <div class="row mb-5">
+                                <div class="col-lg-12">
+                                    <div class='progress mb-3' style="height:auto">
+                                        <div class="progress-bar bg-warning" id="progressbar" role="progressbar" data-width="0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="display:none;width: 0%;height: 15px;border-radius: 15px;">0%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-block submit_btn mt-5">SAVE EDUCATION</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+{% endblock page_content %}
+
+{% block custom_js %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static 'partners/modules/sweetalert/sweetalert.min.js' %}"></script>
+<script src="{% static 'partners/js/page/modules-sweetalert.js' %}"></script>
+
+<script>
+    
+    /*
+        Ajax request
+        Sending data to server
+    */
+    $(".submit_btn").click(function(){
+
+        var form = new FormData($("#educationForm")[0]);
+        
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.status == 200){
+                console.log(xhr.responseText);
+            }
+        }
+        xhr.open("POST","{% url 'partners:partner_education_update_view' %}", true);
+
+        $("#progressbar").show();
+
+        xhr.upload.addEventListener("progress", function(ev) {
+            if(ev.lengthComputable) {
+                var percentage = (ev.loaded/ev.total*100|0);
+                $("#progressbar").css({"width":""+percentage+"%"}).text("Uploaded .."+percentage+"%");
+                setTimeout(function(){
+                    $(document).ready(function() {
+                        swal('Success', 'You just added education!', 'success').then(function() {
+                            window.location.href = "{% url 'partners:partner_resume_panel_view' %}";
+                    })});
+                }, 1000);
+                
+            }
+            
+        });
+
+        xhr.send(form);
+        
+    })
+
+</script>
+
+{% endblock custom_js %}

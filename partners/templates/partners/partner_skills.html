@@ -52,7 +52,7 @@ hr {
                             <div class="form-group mb-2">
                                 <label class="col-lg-12 mb-1">List of skills</label>
                                 <div class="col-lg-12 mt-0">
-                                    <input type="text" name="skills" data-role="tagsinput"/>
+                                    <input type="text" name="skills" value="{% for skill in partner_skills  %} {{skill.skill_name}} , {% endfor %}" data-role="tagsinput"/>
                                     <small id="tagsinputHelp" class="form-text text-muted">e.g. You need to type and hit enter.</small>
                                 </div>
                             </div>

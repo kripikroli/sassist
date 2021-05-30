@@ -36,7 +36,7 @@ hr {
                         <p class="lead">Compose Cover Letter</p>
                         
                         <div class="col-lg-12">
-                            <textarea class="form-control" name="cover_letter" id="cover_letter"></textarea>
+                            <textarea class="form-control" name="cover_letter" id="cover_letter">{% if partner_cover_letter %}{{ partner_cover_letter.letter }}{% endif %}</textarea>
                         </div>
 
                     </div>

@@ -63,7 +63,7 @@
                     <div class="list-group">
 
                         {% if partner_professional_summary %}
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start professional_summary">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="lead mb-0">Professional Summary</h6>
                                 <small class="text-muted">Added {{ partner_professional_summary.get_days_ago }} days ago</small>
@@ -71,9 +71,9 @@
                             
                             <div>{{ partner_professional_summary.summary|safe }}</div>
                            
-                            <div id="editable-prosum" class="d-flex w-100 justify-content-between">
+                            <div id="editable_professional_summary" class="d-flex w-100 justify-content-between">
                                 <p></p>
-                                <a href="#" style="display:none;"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{% url 'partners:partner_professional_summary_view' %}" class="btn btn-icon btn-sm btn-primary" style="display:none;"><i class="fas fa-pencil-alt"></i></a>
                             </div>
                         </div>
                         {% endif %}
@@ -85,7 +85,7 @@
                                 <small class="text-muted">Added {% with partner_education|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
                             </div>
                             {% for e in partner_education %}
-                            <div id="editable-education">
+                            <div>
                                 
                                 <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ e.field_name }} | {{ e.school_name }}</strong> <a id="atag" href="#" style="display:none;"><i class="fas fa-pencil-alt"></i></a></p>
                                 <p class="mb-0" style="line-height: 18px;">{{ e.get_degree_type_display }}</p>
@@ -93,51 +93,57 @@
                                 <p class="mb-3" style="line-height: 18px;">{{ e.date_graduated }}</p>
                             </div>
                             {% endfor %}
-                            
+                            <div id="editable_education" class="d-flex w-100 justify-content-between">
+                                <p></p>
+                                <a href="{% url 'partners:partner_education_update_view' %}" class="btn btn-icon btn-sm btn-primary" style="display:none;"><i class="fas fa-pencil-alt"></i></a>
+                            </div>
                         </div>
                         {% endif %}
 
                         {% if partner_licenses|length > 0 %}
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start licenses">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="lead mb-2">Licenses</h6>
                                 <small class="text-muted">Added {% with partner_licenses|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
                             </div>
                             {% for l in partner_licenses %}
-                            <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ l.license_name }}</strong></p>
-                            <p class="mb-0" style="line-height: 18px;">{{ l.license_code }}</p>
-                            <p class="mb-0" style="line-height: 18px;">Acquired in {{ l.address_acquired }}</p>
-                            <p class="mb-3" style="line-height: 18px;">This is valid until <span class="text-danger">{{ l.expiration_date }}</span></p>
+                            <div>
+                                <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ l.license_name }}</strong></p>
+                                <p class="mb-0" style="line-height: 18px;">{{ l.license_code }}</p>
+                                <p class="mb-0" style="line-height: 18px;">Acquired in {{ l.address_acquired }}</p>
+                                <p class="mb-3" style="line-height: 18px;">This is valid until <span class="text-danger">{{ l.expiration_date }}</span></p>
+                            </div>
                             {% endfor %}
-                            <div class="d-flex w-100 justify-content-between">
+                            <div id="editable_licenses" class="d-flex w-100 justify-content-between">
                                 <p></p>
-                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                                <a href="{% url 'partners:partner_licenses_update_view' %}" class="btn btn-icon btn-sm btn-primary" style="display:none;"><i class="fas fa-pencil-alt"></i></a>
                             </div>
                         </div>
                         {% endif %}
 
                         {% if partner_certifications|length > 0 %}
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start certifications">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="lead mb-2">Certifications</h6>
                                 <small class="text-muted">Added {% with partner_certifications|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
                             </div>
                             {% for c in partner_certifications %}
-                            <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ c.cert_name }}</strong></p>
-                            <p class="mb-0" style="line-height: 18px;">{{ c.cert_code }}</p>
-                            <p class="mb-0" style="line-height: 18px;">Acquired in {{ c.address_acquired }}</p>
-                            <p class="mb-3" style="line-height: 18px;">This is valid until <span class="text-danger">{{ c.expiration_date }}</span></p>
-
+                            <div>
+                                <p class="mb-0 text-dark" style="line-height: 18px;"><strong>{{ c.cert_name }}</strong></p>
+                                <p class="mb-0" style="line-height: 18px;">{{ c.cert_code }}</p>
+                                <p class="mb-0" style="line-height: 18px;">Acquired in {{ c.address_acquired }}</p>
+                                <p class="mb-3" style="line-height: 18px;">This is valid until <span class="text-danger">{{ c.expiration_date }}</span></p>
+                            </div>
                             {% endfor %}
-                            <div class="d-flex w-100 justify-content-between">
+                            <div id="editable_certifications" class="d-flex w-100 justify-content-between">
                                 <p></p>
-                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                                <a href="{% url 'partners:partner_certifications_update_view' %}" class="btn btn-icon btn-sm btn-primary" style="display:none;"><i class="fas fa-pencil-alt"></i></a>
                             </div>
                         </div>
                         {% endif %}
 
                         {% if partner_skills|length > 0 %}
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start skills">
                             <div class="d-flex w-100 justify-content-between">
                             <h6 class="lead mb-2">Skills</h6>
                             <small class="text-muted">Added {% with partner_skills|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
@@ -147,15 +153,15 @@
                                 <span class="badge badge-primary">{{ s.skill_name }}</span>
                                 {% endfor %}
                             </div>
-                            <div class="d-flex w-100 justify-content-between">
+                            <div id="editable_skills" class="d-flex w-100 justify-content-between">
                                 <p></p>
-                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                                <a href="{% url 'partners:partner_skills_view' %}" class="btn btn-icon btn-sm btn-primary" style="display:none;"><i class="fas fa-pencil-alt"></i></a>
                             </div>
                         </div>
                         {% endif %}
 
                         {% if partner_works|length > 0 %}
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start works">
                             <div class="d-flex w-100 justify-content-between">
                             <h6 class="lead mb-2">Work History</h6>
                             <small class="text-muted">Added {% with partner_works|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
@@ -163,14 +169,14 @@
 
                             <div class="col-12">
                                 <div class="table-responsive">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped works">
                                         <tbody>
                                             <tr>
                                                 <th>Information</th>
                                                 <th>Responsibilities</th>
                                             </tr>
                                             {% for w in partner_works %}
-                                            <tr>
+                                            <tr id="works_tr">
                                                 <td class="">
                                                     <br>
                                                     <p class="mb-1 text-dark" style="line-height: 18px;"><strong>{{ w.designation }}</strong></p>
@@ -181,8 +187,9 @@
                                                     <p class="mb-0" style="line-height: 18px;">{{ w.start_date }} - {{ w.end_date }}</p>
                                                     <br>
                                                 </td>
-                                                <td class="">
+                                                <td id="works_td">
                                                     <br>
+                                                    <p id="works_p" class="float-right"><a href="{% url 'partners:partner_work_experiences_view' %}?work_id={{ w.id }}" class="btn btn-icon btn-sm btn-primary" style="display:none"><i class="fas fa-pencil-alt"></i></a></p>
                                                     <p class="mb-0" style="line-height: 18px;">{{ w.responsibilities|safe }}</p>
                                                     <br>
                                                 </td>
@@ -192,15 +199,11 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <p></p>
-                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
-                            </div>
                         </div>
                         {% endif %}
 
                         {% if partner_references|length > 0 %}
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start references">
                             <div class="d-flex w-100 justify-content-between">
                             <h6 class="lead mb-2">References</h6>
                             <small class="text-muted">Added {% with partner_references|first as first %}{{ first.get_days_ago }}{% endwith %} days ago</small>
@@ -238,23 +241,23 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="d-flex w-100 justify-content-between">
+                            <div id="editable_references" class="d-flex w-100 justify-content-between">
                                 <p></p>
-                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                                <a href="{% url 'partners:partner_references_update_view' %}" class="btn btn-icon btn-sm btn-primary" style="display:none;"><i class="fas fa-pencil-alt"></i></a>
                             </div>
                         </div>
                         {% endif %}
 
                         {% if partner_cover %}
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start cover">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="lead mb-0">Letter to Patients</h6>
                                 <small class="text-muted">Added {{ partner_cover.get_days_ago }} days ago</small>
                             </div>
                             <div mb-0">{{ partner_cover.letter|safe }}</div>
-                            <div class="d-flex w-100 justify-content-between">
+                            <div id="editable_cover" class="d-flex w-100 justify-content-between">
                                 <p></p>
-                                <a href="#" class="btn btn-icon btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                                <a href="{% url 'partners:partner_cover_letter_view' %}" class="btn btn-icon btn-sm btn-primary" style="display:none;"><i class="fas fa-pencil-alt"></i></a>
                             </div>
                         </div>
                         {% endif %}
@@ -477,13 +480,95 @@
         window.location.href = "{% url 'partners:partner_media_upload_view' %}";
     })
 
-    $('.list-group').on('mouseenter', 'div[class="list-group-item list-group-item-action flex-column align-items-start"]', function(e){
-        $("#editable-prosum > a").show();
+    /*
+        show edit icon professional_summary
+    */
+    $('.list-group').on('mouseenter', 'div[class="list-group-item list-group-item-action flex-column align-items-start professional_summary"]', function(e){
+        $("#editable_professional_summary > a").show();
     })
 
-    $('.list-group').on('mouseleave', 'div[class="list-group-item list-group-item-action flex-column align-items-start"]', function(e){
-        $("#editable-prosum > a").hide();
+    $('.list-group').on('mouseleave', 'div[class="list-group-item list-group-item-action flex-column align-items-start professional_summary"]', function(e){
+        $("#editable_professional_summary > a").hide();
     })
+
+    /*
+        show edit icon education
+    */
+    $('.list-group').on('mouseenter', 'div[class="list-group-item list-group-item-action flex-column align-items-start education"]', function(e){
+        $("#editable_education > a").show();
+    })
+
+    $('.list-group').on('mouseleave', 'div[class="list-group-item list-group-item-action flex-column align-items-start education"]', function(e){
+        $("#editable_education > a").hide();
+    })
+
+    /*
+        show edit icon licenses
+    */
+    $('.list-group').on('mouseenter', 'div[class="list-group-item list-group-item-action flex-column align-items-start licenses"]', function(e){
+        $("#editable_licenses > a").show();
+    })
+
+    $('.list-group').on('mouseleave', 'div[class="list-group-item list-group-item-action flex-column align-items-start licenses"]', function(e){
+        $("#editable_licenses > a").hide();
+    })
+
+    /*
+        show edit icon certifications
+    */
+    $('.list-group').on('mouseenter', 'div[class="list-group-item list-group-item-action flex-column align-items-start certifications"]', function(e){
+        $("#editable_certifications > a").show();
+    })
+
+    $('.list-group').on('mouseleave', 'div[class="list-group-item list-group-item-action flex-column align-items-start certifications"]', function(e){
+        $("#editable_certifications > a").hide();
+    })
+
+    /*
+        show edit icon skills
+    */
+    $('.list-group').on('mouseenter', 'div[class="list-group-item list-group-item-action flex-column align-items-start skills"]', function(e){
+        $("#editable_skills > a").show();
+    })
+
+    $('.list-group').on('mouseleave', 'div[class="list-group-item list-group-item-action flex-column align-items-start skills"]', function(e){
+        $("#editable_skills > a").hide();
+    })
+
+    /*
+        show edit icon references
+    */
+    $('.list-group').on('mouseenter', 'div[class="list-group-item list-group-item-action flex-column align-items-start references"]', function(e){
+        $("#editable_references > a").show();
+    })
+
+    $('.list-group').on('mouseleave', 'div[class="list-group-item list-group-item-action flex-column align-items-start references"]', function(e){
+        $("#editable_references > a").hide();
+    })
+
+    /*
+        show edit icon cover
+    */
+    $('.list-group').on('mouseenter', 'div[class="list-group-item list-group-item-action flex-column align-items-start cover"]', function(e){
+        $("#editable_cover > a").show();
+    })
+
+    $('.list-group').on('mouseleave', 'div[class="list-group-item list-group-item-action flex-column align-items-start cover"]', function(e){
+        $("#editable_cover > a").hide();
+    })
+
+    /*
+        show edit icon works
+    */
+    $('.works').on('mouseenter', 'tbody > tr[id="works_tr"]', function(e){
+        $(this).find('#works_p').find('a').show();
+    })
+
+    $('.works').on('mouseleave', 'tbody > tr[id="works_tr"]', function(e){
+        $(this).find('#works_p').find('a').hide();
+    })
+
+
     
 </script>
 {% endblock custom_js %}

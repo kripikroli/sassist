@@ -36,7 +36,7 @@ hr {
                         <p class="lead">Compose Professional Summary</p>
                         
                         <div class="col-lg-12">
-                            <textarea class="form-control" name="professional_summary" id="professional_summary"></textarea>
+                            <textarea class="form-control" name="professional_summary" id="professional_summary">{% if partner_professional_summary %}{{ partner_professional_summary.summary }}{% endif %}</textarea>
                         </div>
 
                     </div>

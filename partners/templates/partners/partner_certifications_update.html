@@ -1,0 +1,163 @@
+{% extends "partners/base.html" %}
+
+{% load static %}
+
+{% block custom_css %}
+<style>
+hr {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 0;
+  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+}
+</style>
+{% endblock custom_css %}
+
+{% block title %}
+    My Certifications Update
+{% endblock title %}
+
+
+{% block page_title %}
+    My Certifications Update
+{% endblock page_title %}
+
+{% block page_content %}
+    <form id="certificationsForm">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12">
+            <div class="row mt-4">
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="lead">Update Certifications</p>
+                            
+                            <!-- Certifications -------------------------------->
+                            {% for certification in p_certification %}
+                            <div class="certifications_div_data">
+
+                                <div class="row certifications_div_row_data">
+
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Name</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="certification_name[]" class="form-control certification_name" value="{{ certification.cert_name }}">
+                                                <input type="hidden" name="certification_id[]" value="{{ certification.id }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Code</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="certification_code[]" class="form-control certification_code" value="{{ certification.cert_code }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Expiration Date</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" name="certification_expiration_date[]" class="form-control certification_expiration_date" value="{{ certification.expiration_date }}">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1">Address</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" value="{{ certification.address_acquired }}" class="form-control certification_address" name="certification_address[]">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-2">
+                                            <label class="col-lg-12 mb-1 text-danger">Delete</label>
+                                            <div class="col-lg-12 mt-0">
+                                                <input type="text" class="form-control is-invalid" name="delete[]">
+                                                <div class="invalid-feedback">Type "delete" if you want to remove this entry.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <hr/>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <!-- endCertifications -------------------------------->
+
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-body">
+
+                            <div class="row mb-5">
+                                <div class="col-lg-12">
+                                    <div class='progress mb-3' style="height:auto">
+                                        <div class="progress-bar bg-warning" id="progressbar" role="progressbar" data-width="0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="display:none;width: 0%;height: 15px;border-radius: 15px;">0%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-block submit_btn mt-5">SAVE CERTIFICATIONS</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+{% endblock page_content %}
+
+{% block custom_js %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static 'partners/modules/sweetalert/sweetalert.min.js' %}"></script>
+<script src="{% static 'partners/js/page/modules-sweetalert.js' %}"></script>
+
+<script>
+    
+    /*
+        Ajax request
+        Sending data to server
+    */
+    $(".submit_btn").click(function(){
+
+        var form = new FormData($("#certificationsForm")[0]);
+        
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.status == 200){
+                console.log(xhr.responseText);
+            }
+        }
+        xhr.open("POST","{% url 'partners:partner_certifications_update_view' %}", true);
+
+        $("#progressbar").show();
+
+        xhr.upload.addEventListener("progress", function(ev) {
+            if(ev.lengthComputable) {
+                var percentage = (ev.loaded/ev.total*100|0);
+                $("#progressbar").css({"width":""+percentage+"%"}).text("Uploaded .."+percentage+"%");
+                setTimeout(function(){
+                    $(document).ready(function() {
+                        swal('Success', 'You just added certifications!', 'success').then(function() {
+                            window.location.href = "{% url 'partners:partner_resume_panel_view' %}";
+                    })});
+                }, 1000);
+                
+            }
+            
+        });
+
+        xhr.send(form);
+        
+    })
+
+</script>
+
+{% endblock custom_js %}
