@@ -47,19 +47,6 @@
         <div class="col-12 col-md-8 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
-                        <li class="media">
-                            <p class="lead mr-5">Resume Progress</p>
-                            <div id="media-progressbar" class="media-progressbar">
-                                <div class="progress-text">{{ progress_mark }}%</div>
-                                <div class="progress" data-height="6">
-                                    <div class="progress-bar bg-primary" data-width="{{ progress_mark }}%"></div>
-                                </div>
-                            </div>
-            
-                        </li>
-                    </ul>
-
                     <div class="list-group">
 
                         {% if partner_professional_summary %}
@@ -271,130 +258,312 @@
             <div class="card">
                 <div class="card-body">
 
-                    <div class="wizard-steps">
-                        <div class="wizard-step clickable wizard-step-warning">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                Setup Profile
+
+
+                    <section class="section">
+                        <div class="section-body">
+                            <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
+                                <li class="media">
+                                    <p class="lead mr-5">Resume Progress</p>
+                                    <div id="media-progressbar" class="media-progressbar">
+                                        <div class="progress-text">{{ progress_mark }}%</div>
+                                        <div class="progress" data-height="6">
+                                            <div class="progress-bar bg-primary" data-width="{{ progress_mark }}%"></div>
+                                        </div>
+                                    </div>
+                    
+                                </li>
+                            </ul>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="activities">
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-warning text-white shadow-primary">
+                                                <i class="fas fa-user-tie"></i>
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-warning">Setup Profile</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-warning" href="#">View</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>Create your account and verify your identity.</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-primary text-white shadow-primary">
+                                                {% if partner_professional_summary %}
+                                                    <i class="fas fa-check"></i>
+                                                {% else %}
+                                                    <i class="fas fa-user-tie"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-primary">Professional Summary</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-primary" href="{% url 'partners:partner_professional_summary_view' %}">Compose</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>It describes your relevant experience, skills, and achievements.</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-primary text-white shadow-primary">
+                                                {% if partner_education|length > 0 %}
+                                                    <i class="fas fa-check"></i>
+                                                {% else %}
+                                                    <i class="fas fa-graduation-cap"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-primary">Educational Attainment</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-primary" href="{% url 'partners:partner_education_view' %}">Add Entry</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>List the schools you attended and the degrees and fields you attained.</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-primary text-white shadow-primary">
+                                                {% if partner_licenses|length > 0 %}
+                                                    <i class="fas fa-check"></i>
+                                                {% else %}
+                                                    <i class="far fa-id-badge"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-primary">Acquired Licenses</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-primary" href="{% url 'partners:partner_licenses_view' %}">Add Entry</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>Credentials that prove you've acquired competencies and developed skills.</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-primary text-white shadow-primary">
+                                                {% if partner_certifications|length > 0 %}
+                                                    <i class="fas fa-check"></i>
+                                                {% else %}
+                                                    <i class="fas fa-certificate"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-primary">Acquired Certifications</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-primary" href="{% url 'partners:partner_certifications_view' %}">Add Entry</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>Proof that you have the knowledge and skills to perform something.</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-primary text-white shadow-primary">
+                                                {% if partner_skills|length > 0 %}
+                                                    <i class="fas fa-check"></i>
+                                                {% else %}
+                                                    <i class="fas fa-user-astronaut"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-primary">Professional Skills</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-primary" href="{% url 'partners:partner_skills_view' %}">Add Entry</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>Your skills can help your career progression over time.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-primary text-white shadow-primary">
+                                                {% if partner_references|length > 0 %}
+                                                    <i class="fas fa-check"></i>
+                                                {% else %}
+                                                    <i class="fas fa-users"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-primary">References</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-primary" href="{% url 'partners:partner_references_view' %}">Add Entry</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>People who can speak about your character and professional abilities.</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-primary text-white shadow-primary">
+                                                {% if partner_works|length > 0 %}
+                                                    <i class="fas fa-check"></i>
+                                                {% else %}
+                                                    <i class="fas fa-user-md"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-primary">Work Experiences</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-primary" href="{% url 'partners:partner_work_experiences_view' %}">Add Entry</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>List of the most recent jobs and work history.</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-primary text-white shadow-primary">
+                                                {% if partner_cover %}
+                                                    <i class="fas fa-check"></i>
+                                                {% else %}
+                                                    <i class="fas fa-envelope-open-text"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-primary">Cover Letter</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-primary" href="{% url 'partners:partner_cover_letter_view' %}">Write Letter</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>An opportunity to connect your skills to the employer's needs.</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="activity">
+                                            <div class="activity-icon bg-warning text-white shadow-primary">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </div>
+                                            <div class="activity-detail">
+                                                <div class="mb-2">
+                                                    <span class="text-job text-warning">My Documents</span>
+                                                    <span class="bullet"></span>
+                                                    <a class="btn btn-sm btn-warning" href="{% url 'partners:partner_media_upload_view' %}">Upload Files</a>
+                                                    <div class="float-right dropdown">
+                                                        <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-title">Options</div>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
+                                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>Relevant files and media documents to support your applications.</p>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <div id="add_professional_summary" class="wizard-step clickable {% if partner_professional_summary %}wizard-step-active{% endif %}">
-                            <div class="wizard-step-icon">
-                                {% if partner_professional_summary %}
-                                    <i class="fas fa-check"></i>
-                                {% else %}
-                                    <i class="fas fa-user-tie"></i>
-                                {% endif %}
-                            </div>
-                            <div class="wizard-step-label">
-                                Professional Summary
-                            </div>
-                        </div>
-
-                        <div id="add_education" class="wizard-step clickable {% if partner_education|length > 0 %}wizard-step-active{% endif %}">
-                            <div class="wizard-step-icon">
-                                {% if partner_education|length > 0 %}
-                                    <i class="fas fa-check"></i>
-                                {% else %}
-                                    <i class="fas fa-graduation-cap"></i>
-                                {% endif %}
-                            </div>
-                            <div class="wizard-step-label">
-                                My Education
-                            </div>
-                        </div>
-
-                        <div id="add_licenses" class="wizard-step clickable {% if partner_licenses|length > 0 %}wizard-step-active{% endif %}">
-                            <div class="wizard-step-icon">
-                                {% if partner_licenses|length > 0 %}
-                                    <i class="fas fa-check"></i>
-                                {% else %}
-                                    <i class="far fa-id-badge"></i>
-                                {% endif %}
-                            </div>
-                            <div class="wizard-step-label">
-                                My Licenses
-                            </div>
-                        </div>
-
-                        <div id="add_certifications" class="wizard-step clickable {% if partner_certifications|length > 0 %}wizard-step-active{% endif %}">
-                            <div class="wizard-step-icon">
-                                {% if partner_certifications|length > 0 %}
-                                    <i class="fas fa-check"></i>
-                                {% else %}
-                                    <i class="fas fa-certificate"></i>
-                                {% endif %}
-                            </div>
-                            <div class="wizard-step-label">
-                                My Certifications
-                            </div>
-                        </div>
-
-                        <div id="add_skills" class="wizard-step clickable {% if partner_skills|length > 0 %}wizard-step-active{% endif %}">
-                            <div class="wizard-step-icon">
-                                {% if partner_skills|length > 0 %}
-                                    <i class="fas fa-check"></i>
-                                {% else %}
-                                    <i class="fas fa-user-astronaut"></i>
-                                {% endif %}
-                            </div>
-                            <div class="wizard-step-label">
-                                My Skills
-                            </div>
-                        </div>
-
-                        <div id="add_references" class="wizard-step clickable {% if partner_references|length > 0 %}wizard-step-active{% endif %}">
-                            <div class="wizard-step-icon">
-                                {% if partner_references|length > 0 %}
-                                    <i class="fas fa-check"></i>
-                                {% else %}
-                                    <i class="fas fa-users"></i>
-                                {% endif %}
-                            </div>
-                            <div class="wizard-step-label">
-                                My References
-                            </div>
-                        </div>
-
-                        <div id="add_work_experiences" class="wizard-step clickable {% if partner_works|length > 0 %}wizard-step-active{% endif %}">
-                            <div class="wizard-step-icon">
-                                {% if partner_works|length > 0 %}
-                                    <i class="fas fa-check"></i>
-                                {% else %}
-                                    <i class="fas fa-user-md"></i>
-                                {% endif %}
-                            </div>
-                            <div class="wizard-step-label">
-                                My Work History
-                            </div>
-                        </div>
-
-                        <div id="add_cover_letter" class="wizard-step clickable {% if partner_cover %}wizard-step-active{% endif %}">
-                            <div class="wizard-step-icon">
-                                {% if partner_cover %}
-                                    <i class="fas fa-check"></i>
-                                {% else %}
-                                    <i class="fas fa-envelope-open-text"></i>
-                                {% endif %}
-                            </div>
-                            <div class="wizard-step-label">
-                                Letter to Patients
-                            </div>
-                        </div>   
-
-                        <div id="add_media_documents" class="wizard-step clickable wizard-step-warning">
-                            <div class="wizard-step-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <div class="wizard-step-label">
-                                My Documents
-                            </div>
-                        </div>
-                               
-                    </div>     
+                    </section>   
                 </div>
             </div>
 
@@ -408,77 +577,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script>
-    /*
-        add_education
-    */
-    const addEducation = document.getElementById('add_education')
-    addEducation.addEventListener('click', ()=> {
-        window.location.href = "{% url 'partners:partner_education_view' %}";
-    })
-
-    /*
-        add_licenses
-    */
-    const addLicenses = document.getElementById('add_licenses')
-    addLicenses.addEventListener('click', ()=> {
-        window.location.href = "{% url 'partners:partner_licenses_view' %}";
-    })
-
-    /*
-        add_certifications
-    */
-    const addCertifications = document.getElementById('add_certifications')
-    addCertifications.addEventListener('click', ()=> {
-        window.location.href = "{% url 'partners:partner_certifications_view' %}";
-    })
-
-    /*
-        add_skills
-    */
-    const addSkills = document.getElementById('add_skills')
-    addSkills.addEventListener('click', ()=> {
-        window.location.href = "{% url 'partners:partner_skills_view' %}";
-    })
-
-    /*
-        add_references
-    */
-    const addReferences = document.getElementById('add_references')
-    addReferences.addEventListener('click', ()=> {
-        window.location.href = "{% url 'partners:partner_references_view' %}";
-    })
-
-    /*
-        add_work_experiences
-    */
-    const addWorkExperiences = document.getElementById('add_work_experiences')
-    addWorkExperiences.addEventListener('click', ()=> {
-        window.location.href = "{% url 'partners:partner_work_experiences_view' %}";
-    })
-
-    /*
-        add_professional_summary
-    */
-    const addProfessionalSummary = document.getElementById('add_professional_summary')
-    addProfessionalSummary.addEventListener('click', ()=> {
-        window.location.href = "{% url 'partners:partner_professional_summary_view' %}";
-    })
-
-    /*
-        add_cover_letter
-    */
-    const addCoverLetter = document.getElementById('add_cover_letter')
-    addCoverLetter.addEventListener('click', ()=> {
-        window.location.href = "{% url 'partners:partner_cover_letter_view' %}";
-    })
-    
-    /*
-        add_media_documents
-    */
-    const addMediaDocuments = document.getElementById('add_media_documents')
-    addMediaDocuments.addEventListener('click', ()=> {
-        window.location.href = "{% url 'partners:partner_media_upload_view' %}";
-    })
 
     /*
         show edit icon professional_summary
