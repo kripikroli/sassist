@@ -1,0 +1,365 @@
+{% extends "partners/base.html" %}
+{% load static %}
+
+{% block custom_css %}
+<style>
+
+    .col-sm {
+        padding-right: 5px; 
+        padding-left: 5px; 
+    }
+
+    .input-group-text {
+        border: 1px solid #fff;
+        border-top: 1px solid #ced4da;
+        border-left: 1px solid #ced4da;
+        border-bottom: 1px solid #ced4da;
+    }
+
+    .form-control {
+        
+        border: 0px solid #ced4da;
+        border-top: 1px solid #ced4da;
+        border-right: 1px solid #ced4da;
+        border-bottom: 1px solid #ced4da;
+        
+    }
+
+    .job-list .list-group-item:last-child {
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+    }
+
+    .job-list .list-group-item:first-child {
+        border-bottom-right-radius: .25rem;
+        border-bottom-left-radius: .25rem;
+    }
+
+    .clickable {
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .ellipsis {
+        z-index: 11;
+    }
+
+    .dp_icon {
+        font-size: 1.25rem !important;
+        font-weight: 700;
+    }
+
+    .company_name {
+        line-height: 1rem!important;
+        font-size: 1rem!important;
+    }
+
+    .apply_phrase {
+        font-size: 1rem!important;
+        line-height: 1.5rem;
+        display: inline-block;
+    }
+
+    h4 {
+        font-size: 1.3rem !important;
+        font-weight: 620;
+    }
+
+    h4 .job_title {
+        font-size: 1.25rem !important;
+        font-weight: 600;
+    }
+
+    .btn_phrase {
+        font-size: 1rem !important;
+        font-weight: 800;
+    }
+
+    .job_information {
+        overflow-y: auto;
+        height: 900px;
+    }
+
+    hr {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        width: 100%;
+        border: 0;
+        border-top: 1px dashed rgba(0, 0, 0, 0.1);
+    }
+
+    .list-group-item.highlighted {
+        border-color: #007bff;
+    }
+
+    .card .card-body {
+        padding-bottom: 0px !important;
+    }
+
+    .filters {
+        padding: 0;
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        flex: 0 1 100%;
+        justify-content: flex-start;
+    }
+
+    .lgjobs {
+        background-color: #f8f9fa;
+    }
+
+</style>
+{% endblock custom_css%}
+
+{% block title %}
+    Find Jobs
+{% endblock title %}
+
+
+{% block page_title %}
+    Find Jobs
+{% endblock page_title %}
+
+{% block page_content %}
+    <div class="section-body">
+
+        <div class="row">
+            <div class="col-12">
+                
+                <div class="col-12 col-md-10 offset-lg-1">
+                    <div class="form-group">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text lead"><strong>What</strong></div>
+                            </div>
+                            <input type="text" class="form-control mr-3" id="inlineFormInputGroup" placeholder="Dialysis Technician">
+
+                            <div class="input-group-prepend">
+                                <div class="input-group-text lead"><strong>Where</strong></div>
+                            </div>
+                            <input type="text" class="form-control mr-3" id="inlineFormInputGroup" placeholder="Mays Landing, New Jersey">
+
+                            <button class="btn btn-primary mr-3">Find Jobs</button>
+
+                            <a href="" class="mt-3">Advanced Job Search</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row input-group">
+                            <div class="col-sm mb-1">
+                                <select class="custom-select" id="" onchange="location = window.location.href + this.value;">
+                                    <option selected="">Choose...</option>
+                                    <option value="?job_id=1">yyy</option>
+                                    <option value="?job_id=2">uuuu</option>
+                                    <option value="?var=kkk">kkk</option>
+                                </select>
+                            </div>
+                            <div class="col-sm mb-1">
+                                <select class="custom-select" id="">
+                                    <option selected="">Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col-sm mb-1">
+                                <select class="custom-select" id="">
+                                    <option selected="">Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col-sm mb-1">
+                                <select class="custom-select" id="">
+                                    <option selected="">Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col-sm mb-1">
+                                <select class="custom-select" id="">
+                                    <option selected="">Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col-sm mb-1">
+                                <select class="custom-select" id="">
+                                    <option selected="">Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col-sm mb-1">
+                                <select class="custom-select" id="">
+                                    <option selected="">Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col-sm mb-1">
+                                <select class="custom-select" id="">
+                                    <option selected="">Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12 col-md-6 col-sm-12">
+                <div class="job-list">
+                    <div class="list-group">
+                        {% for job in jobs %}
+                        <a href="?job_id={{ job.id }}&page={{ request.GET.page }}" class="mb-3 clickable list-group-item list-group-item-action flex-column align-items-start {% if request.GET.job_id == job.id|stringformat:'i' %}highlighted{% endif %}">
+                            <div class="ml-3 mt-3">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <div>
+                                        <h4 class="job_title" style="line-height: 1;">{{ job.title }}</h4>
+                                        <h6 class="company_name lead">{{ job.company_id.name }}</h6>
+                                        <h6 class="company_name lead">{{ job.company_id.address_town }}, {{ job.company_id.address_region }}, {{ job.company_id.address_country }}, {{ job.company_id.address_zip_code }}</h6>
+                                    </div>
+                                </div>
+                                <p><i class="ion-android-send apply_phrase text-primary"></i><span  class="apply_phrase ml-2 mt-1"> Apply with your CarePartneRx Resume</span></p>
+                                <p class="mb-2 text-muted">{{ job.short_description|safe }}</p>
+                                <small class="text-muted">30+ days ago</small>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <nav aria-label="Jobs Pagination">
+                                        <ul class="pagination">
+                                            {% if jobs.has_previous %}
+                                                <li class="page-item"><a class="page-link" href="{% url 'jobs:jobs_view' %}?page={{ jobs.previous_page_number }}">Previous</a></li>
+                                            {% else %}
+                                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                            {% endif %}
+                                            {% for i in jobs.paginator.page_range %}
+                                                    <li class="page-item {% if i == jobs.number %}active{% endif %}"><a class="page-link" href="{% url 'jobs:jobs_view' %}?page={{ i }}">{{ i }}</a></li>
+                                            {% endfor %}
+                                            {% if jobs.has_next %}
+                                                <li class="page-item"><a class="page-link" href="{% url 'jobs:jobs_view' %}?page={{ jobs.next_page_number }}">Next</a></li>
+                                            {% else %}
+                                                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                            {% endif %}
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <div class="col-12 col-md-6 col-sm-12">
+                        {% if job_id %}
+                        <div class="list-group">
+                            
+                            <div class="list-group-item flex-column align-items-start lgjobs">
+                                <div class="d-flex w-100 justify-content-between mt-2">
+                                    <div>
+                                        <h4 style="line-height: 1;">{{ job_info.title }}</h4>
+                                        <h6 class="company_name lead">{{ job_info.company_id.name }}</h6>
+                                        <h6 class="company_name lead">{{ job_info.company_id.address_town }}, {{ job_info.company_id.address_region }}, {{ job_info.company_id.address_country }}, {{ job_info.company_id.address_zip_code }}</h6>
+                                        <a class="btn btn-primary btn_phrase btn-lg text-white mt-2">APPLY NOW</a>
+                                    </div>
+
+                                    <div>
+                                        <a href="{% url 'jobs:jobs_view' %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                    </div>
+
+
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="job_information">
+                                    <div id="job_details">
+                                        <h4>Job Details</h4>
+                                        {% for job_detail in job_details %}
+                                            <p style="line-height: 20px;"><strong>{{ job_detail.job_key_detail_id.key_title }}</strong><br>{{ job_detail.detail }}</p>
+                                          
+                                        {% endfor %}
+                                    </div>
+                                    <hr>
+                                    <div id="job_description">
+                                        <h4>Job Full Description</h4>
+                                        {{ job_description.full_description|safe }}
+                                    </div>
+                                    <div id="job_abouts" class="mt-2">
+                                        
+                                            {% for job_about in job_abouts %}
+                                                    {% for key in job_key_about %}
+                                                        {% if key.id == job_about.job_key_about_id %}
+                                                            <strong>{{ key.key_title }}</strong>
+                                                            <ul> 
+                                                                {% for about in abouts %}
+                                                                    {% if about.job_key_about_id.id == key.id %}
+                                                                        <li>{{ about.about }}</li>
+                                                                    {% endif %} 
+                                                                {% endfor %}
+                                                               
+                                                            </ul>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                            {% endfor %}
+                                    </div>
+                                    <div id="btn_report">
+                                        <button class="btn btn-light btn-icon btn_phrase mt-1"><i class="fas fa-flag"></i> Report Job</button>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+
+                        <div class="list-group">
+                            
+                            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="card-body">
+                                    <div class="empty-state" data-height="400" style="height: 400px;">
+                                    <div class="empty-state-icon">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                    <h2>We couldn't find any data</h2>
+                                    <p class="lead">
+                                        Sorry we can't find any data, to get rid of this message, make at least 1 entry.
+                                    </p>
+                                    <a href="#" class="btn btn-primary mt-4">Create new One</a>
+                                    <a href="#" class="mt-4 bb">Need Help?</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+            
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}

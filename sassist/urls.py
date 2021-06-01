@@ -15,6 +15,7 @@ urlpatterns = [
 
     path('crm/', include('crm.urls', namespace='crm')),
     path('partners/', include('partners.urls', namespace='partners')),
+    path('jobs/', include('jobs.urls', namespace='jobs')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
