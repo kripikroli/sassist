@@ -4,6 +4,14 @@
 {% block custom_css %}
 <style>
 
+    .btn.btn-lg {
+        font-size: 14px;
+    }
+
+    .dropdown-menu a {
+        font-size: 14px;
+    }
+
     .col-sm {
         padding-right: 5px; 
         padding-left: 5px; 
@@ -147,72 +155,91 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="row input-group">
-                            <div class="col-sm mb-1">
-                                <select class="custom-select" id="" onchange="location = window.location.href + this.value;">
-                                    <option selected="">Choose...</option>
-                                    <option value="?job_id=1">yyy</option>
-                                    <option value="?job_id=2">uuuu</option>
-                                    <option value="?var=kkk">kkk</option>
-                                </select>
-                            </div>
-                            <div class="col-sm mb-1">
-                                <select class="custom-select" id="">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="col-sm mb-1">
-                                <select class="custom-select" id="">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="col-sm mb-1">
-                                <select class="custom-select" id="">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="col-sm mb-1">
-                                <select class="custom-select" id="">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="col-sm mb-1">
-                                <select class="custom-select" id="">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="col-sm mb-1">
-                                <select class="custom-select" id="">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="col-sm mb-1">
-                                <select class="custom-select" id="">
-                                    <option selected="">Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
+
+                        <div class="dropdown d-inline mr-2">
+                            <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter-from-age" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Date Posted
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="?job_id=24">Last 24 hours</a>
+                                <a class="dropdown-item" href="#">Last 3 days</a>
+                                <a class="dropdown-item" href="#">Last 7 days</a>
+                                <a class="dropdown-item" href="#">Last 14 days</a>
+                                <a class="dropdown-item" href="#">Last day visited</a>
                             </div>
                         </div>
+
+                        <div class="dropdown d-inline mr-2">
+                            <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Remote
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline mr-2">
+                            <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Salary Estimate
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline mr-2">
+                            <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Job Type
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline mr-2">
+                            <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Location
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="#">Exact location only</a>
+                                <a class="dropdown-item" href="#">within 5 miles</a>
+                                <a class="dropdown-item" href="#">within 10 miles</a>
+                                <a class="dropdown-item" href="#">within 15 miles</a>
+                                <a class="dropdown-item" href="#">within 25 miles</a>
+                                <a class="dropdown-item" href="#">within 50 miles</a>
+                                <a class="dropdown-item" href="#">within 100 miles</a>
+                                
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline mr-2">
+                            <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Company
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline mr-2">
+                            <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Experience Level
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                    
@@ -361,5 +388,8 @@
 {% endblock page_content %}
 
 {% block custom_js %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static 'jobs/filters.js' %}" defer></script>
 
 {% endblock custom_js %}
