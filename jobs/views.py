@@ -1,5 +1,8 @@
+from datetime import datetime, timedelta
+
 from django.shortcuts import render
 from django.views.generic import View, ListView
+from django.urls import resolve
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -7,12 +10,25 @@ from .models import Job, JobDescription, JobDetail, JobAbout, JobKeyAbout
 from profiles.models import PartnerUser
 
 class JobView(View):
+    # TODO: residency_requirement filter
 
     def get(self, request, *args, **kwargs):
 
         partner_user = PartnerUser.objects.get(auth_user_id=request.user.id)
-        page = request.GET.get('page', 1)
+        job_list = Job.objects.all()
+
+        current_url = request.META['QUERY_STRING']
+
         job_id = request.GET.get('job_id', None)
+        page = request.GET.get('page', 1)
+
+        from_age_param = request.GET.get('fromage', None)
+        remote_param = request.GET.get('remote', None)
+
+        if from_age_param:
+            # TODO: need a filter for last date visited
+            job_list = job_list.filter(created__gte=datetime.today()-timedelta(days=int(from_age_param)))
+
         job_info = None
         job_description = None
         job_details = None
@@ -28,7 +44,6 @@ class JobView(View):
             job_key_about = JobKeyAbout.objects.all()
             abouts = JobAbout.objects.filter(job_id=job_id)
 
-        job_list = Job.objects.all()
         paginator = Paginator(job_list, 10)
 
         try:

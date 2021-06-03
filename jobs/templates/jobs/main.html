@@ -4,11 +4,25 @@
 {% block custom_css %}
 <style>
 
-    .btn.btn-lg {
+    .btn-light.disabled, 
+    .btn-light.disabled:hover,
+    .btn-light.disabled:visited,
+    .btn-light.disabled:active,
+    .btn-light.disabled:focus {
+        color: #fff !important;
+        background-color: #595959 !important;
+        border-color: #595959 !important;
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .btn.btn-lg, .btn-danger {
         font-size: 14px;
     }
 
-    .dropdown-menu a {
+    .dropdown-item {
         font-size: 14px;
     }
 
@@ -141,12 +155,12 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text lead"><strong>What</strong></div>
                             </div>
-                            <input type="text" class="form-control mr-3" id="inlineFormInputGroup" placeholder="Dialysis Technician">
+                            <input type="text" class="form-control mr-3" id="what" placeholder="Dialysis Technician">
 
                             <div class="input-group-prepend">
                                 <div class="input-group-text lead"><strong>Where</strong></div>
                             </div>
-                            <input type="text" class="form-control mr-3" id="inlineFormInputGroup" placeholder="Mays Landing, New Jersey">
+                            <input type="text" class="form-control mr-3" id="where" placeholder="Mays Landing, New Jersey">
 
                             <button class="btn btn-primary mr-3">Find Jobs</button>
 
@@ -156,88 +170,94 @@
 
                     <div class="form-group">
 
-                        <div class="dropdown d-inline mr-2">
-                            <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter-from-age" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Date Posted
+                        <div class="dropdown d-inline mr-2 div_date_posted">
+                            <button class="btn btn-icon btn-light btn-lg dropdown-toggle mb-2 btn_date_posted" type="button" id="filter-from-age" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-3" id="btn_span_date_posted">Dated Posted</span><i class="fas fa-caret-down btn_i_date_posted"></i>
                             </button>
-                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="?job_id=24">Last 24 hours</a>
-                                <a class="dropdown-item" href="#">Last 3 days</a>
-                                <a class="dropdown-item" href="#">Last 7 days</a>
-                                <a class="dropdown-item" href="#">Last 14 days</a>
-                                <a class="dropdown-item" href="#">Last day visited</a>
+                            <div class="dropdown-menu" id="div_dd_date_posted_options" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <button class="dropdown-item" href="#" >Last 24 hours</button>
+                                <button class="dropdown-item" href="#">Last 3 days</button>
+                                <button class="dropdown-item" href="#">Last 7 days</button>
+                                <button class="dropdown-item" href="#">Last 14 days</button>
+                                <button class="dropdown-item" href="#">Last day visited</button>
                             </div>
                         </div>
 
                         <div class="dropdown d-inline mr-2">
                             <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Remote
+                                <span class="mr-3" id="btn_span_remote">Remote</span><i class="fas fa-caret-down btn_i_remote"></i>
                             </button>
                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <button class="dropdown-item" href="#">Action</button>
+                                <button class="dropdown-item" href="#">Another action</button>
+                                <button class="dropdown-item" href="#">Something else here</button>
                             </div>
                         </div>
 
                         <div class="dropdown d-inline mr-2">
                             <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Salary Estimate
+                                <span class="mr-3" id="btn_span_salary_estimate">Salary Estimate</span><i class="fas fa-caret-down btn_i_salary_estimate"></i>
                             </button>
                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <button class="dropdown-item" href="#">Action</button>
+                                <button class="dropdown-item" href="#">Another action</button>
+                                <button class="dropdown-item" href="#">Something else here</button>
                             </div>
                         </div>
 
                         <div class="dropdown d-inline mr-2">
                             <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Job Type
+                                <span class="mr-3" id="btn_span_job_type">Job Type</span><i class="fas fa-caret-down btn_i_job_type"></i>
                             </button>
                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <button class="dropdown-item" href="#">Action</button>
+                                <button class="dropdown-item" href="#">Another action</button>
+                                <button class="dropdown-item" href="#">Something else here</button>
                             </div>
                         </div>
 
                         <div class="dropdown d-inline mr-2">
                             <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Location
+                                <span class="mr-3" id="btn_span_location">Location</span><i class="fas fa-caret-down btn_i_location"></i>
                             </button>
                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="#">Exact location only</a>
-                                <a class="dropdown-item" href="#">within 5 miles</a>
-                                <a class="dropdown-item" href="#">within 10 miles</a>
-                                <a class="dropdown-item" href="#">within 15 miles</a>
-                                <a class="dropdown-item" href="#">within 25 miles</a>
-                                <a class="dropdown-item" href="#">within 50 miles</a>
-                                <a class="dropdown-item" href="#">within 100 miles</a>
+                                <button class="dropdown-item" href="#">Exact location only</button>
+                                <button class="dropdown-item" href="#">within 5 miles</button>
+                                <button class="dropdown-item" href="#">within 10 miles</button>
+                                <button class="dropdown-item" href="#">within 15 miles</button>
+                                <button class="dropdown-item" href="#">within 25 miles</button>
+                                <button class="dropdown-item" href="#">within 50 miles</button>
+                                <button class="dropdown-item" href="#">within 100 miles</button>
                                 
                             </div>
                         </div>
 
                         <div class="dropdown d-inline mr-2">
                             <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Company
+                                <span class="mr-3" id="btn_span_company">Company</span><i class="fas fa-caret-down btn_i_company"></i>
                             </button>
                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <button class="dropdown-item" href="#">Action</button>
+                                <button class="dropdown-item" href="#">Another action</button>
+                                <button class="dropdown-item" href="#">Something else here</button>
                             </div>
                         </div>
 
                         <div class="dropdown d-inline mr-2">
                             <button class="btn btn-light btn-lg dropdown-toggle mb-2" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Experience Level
+                                <span class="mr-3" id="btn_span_date_experience_level">Experience Level</span><i class="fas fa-caret-down btn_i_experience_level"></i>
                             </button>
                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <button class="dropdown-item" href="#">Action</button>
+                                <button class="dropdown-item" href="#">Another action</button>
+                                <button class="dropdown-item" href="#">Something else here</button>
                             </div>
+                        </div>
+
+                        <div class="dropdown d-inline mr-2">
+                            <button class="btn btn-danger dropdown-toggle mb-2" type="button" id="reset_filters" aria-haspopup="true" aria-expanded="false">
+                                Reset Filters
+                            </button>
                         </div>
 
                     </div>
