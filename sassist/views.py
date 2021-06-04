@@ -11,11 +11,15 @@ def login_view(request):
 
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
+        
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
+
             user = authenticate(username=username, password=password)
+            
             if user is not None:
+                
                 login(request, user)
                 if request.GET.get('next'):
                     return redirect(request.GET.get('next'))
@@ -26,7 +30,7 @@ def login_view(request):
                         return redirect('partners:partner_dashboard_view')
 
         else:
-            error_message = 'Oppsss... something went wrong'
+            error_message = form.errors
 
     context = {
         'form': form,
